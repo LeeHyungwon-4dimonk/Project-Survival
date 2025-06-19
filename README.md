@@ -13,7 +13,7 @@
 
 예시
 ```cs
-// 인스턴스명 Instance
+// 싱글톤 인스턴스명 Instance
 public static GameManager Instance { get; private set; } 
     
 // private 선언 및 언더바+카멜케이스
