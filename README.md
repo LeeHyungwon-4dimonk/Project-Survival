@@ -14,18 +14,18 @@
 예시
 ```cs
 // 인스턴스명 Instance
-    public static GameManager Instance { get; private set; } 
+public static GameManager Instance { get; private set; } 
     
 // private 선언 및 언더바+카멜케이스
-	private int _winScore;
+private int _winScore;
 
 // public은 프로퍼티로 사용 및 프로퍼티명 파스칼케이스
-    public int WinScore { get { return _winScore; } set { _winScore = value; } }
+public int WinScore { get { return _winScore; } set { _winScore = value; } }
 
 // 함수명 파스칼케이스, 지역변수명 카멜케이스
-	public void SaveData(GameData gameData){
-		_gameData = gameData;
-	}
+public void SaveData(GameData gameData){
+    _gameData = gameData;
+}
 
 ```
 
