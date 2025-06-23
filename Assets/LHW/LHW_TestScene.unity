@@ -243,9 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b97775efe7a4a49a38d0b0c1d6c4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
-  _slots: 5
-  _potion: {fileID: 11400000, guid: 7d862d8a20563ab4c8cce2d53db9f6d7, type: 2}
+  _inventorySize: 10
+  _testItem: {fileID: 11400000, guid: 7d862d8a20563ab4c8cce2d53db9f6d7, type: 2}
 --- !u!4 &2128570930
 Transform:
   m_ObjectHideFlags: 0
