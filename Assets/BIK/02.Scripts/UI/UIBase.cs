@@ -14,5 +14,5 @@ public class UIBase : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void Refresh() { }
+    public virtual void RefreshUI() { /* Do Nothing */}
 }
