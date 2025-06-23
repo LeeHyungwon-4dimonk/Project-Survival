@@ -3,21 +3,22 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    // public is used because of DataManager reference.
-    // I've tryed to protect the variable in using directly,
-    // but it still can be modified directly.
-    // If you have idea of protecting variable, please share.
-    [SerializeField] public LHWTestItem[] Items { get; private set; }
+
+    [SerializeField] private LHWTestItem[] _items;
+    [SerializeField] private int _slots;
+
+    public LHWTestItem[] Items => _items;
+    public int slots => _slots;
 
     #region Test
 
     // Test Scripts
-    /*
+    
     [SerializeField] LHWTestItem _potion;
 
     private void Awake()
     {
-        Items = new LHWTestItem[5];
+        _items = new LHWTestItem[_slots];
     }
 
     private void Update()
@@ -31,16 +32,16 @@ public class Inventory : MonoBehaviour
             UseItem(0);
         }
     }
-    */
+    
 
     #endregion
 
     public bool AddItem(LHWTestItem item)
     {
         int lastIndex = -1;
-        for (int i = 0; i < Items.Length; i++)
+        for (int i = 0; i < _items.Length; i++)
         {
-            if (Items[i] == null)
+            if (_items[i] == null)
             {
                 lastIndex = i;
                 break;
@@ -53,23 +54,23 @@ public class Inventory : MonoBehaviour
             return false;
         }
 
-        Items[lastIndex] = item;
+        _items[lastIndex] = item;
         OnItemChanged?.Invoke(lastIndex);
         return true;
     }
 
     public bool UseItem(int index)
     {
-        if(Items[index] == null) return false;
+        if(_items[index] == null) return false;
         // if item is Material, it can't used directly
-        if(Items[index].Type == ItemType.Material) return false;
+        if(_items[index].Type == ItemType.Material) return false;
 
-        if (Items[index].Type == ItemType.Usable)
+        if (_items[index].Type == ItemType.Usable)
         {
-            Items[index].Use();
-            Items[index] = null;
+            _items[index].Use();
+            _items[index] = null;
         }
-        else if (Items[index].Type == ItemType.Equip)
+        else if (_items[index].Type == ItemType.Equip)
         {
             // if there's Equipment item
         }
