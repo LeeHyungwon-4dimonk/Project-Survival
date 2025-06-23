@@ -29,12 +29,13 @@ public class InventorySlots
     public void UpdateInvetorySlots(LHWTestItem source, int amount)
     {
         _data = source;
-        _stackSize = amount;
+        _stackSize = amount <= _data.MaxStackSize ? amount : _data.MaxStackSize;
+
     }
 
     public bool RoomLeftInStack(int amountToAdd, out int amountRemaining)
     {
-        amountRemaining = _data.MaxStackSize - amountToAdd;
+        amountRemaining = _data.MaxStackSize - _stackSize;
         return RoomLeftInStack(amountToAdd);
     }
 

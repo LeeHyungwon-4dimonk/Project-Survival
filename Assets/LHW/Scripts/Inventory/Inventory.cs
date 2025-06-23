@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            _inventorySystem.AddItem(_testItem, 2);
+            _inventorySystem.AddItem(_testItem, 6);
         }
     }
 }

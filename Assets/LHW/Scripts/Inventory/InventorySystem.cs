@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class InventorySystem
 {
     [SerializeField] private List<InventorySlots> _inventorySlots;
@@ -15,51 +17,91 @@ public class InventorySystem
     {
         _inventorySlots = new List<InventorySlots>(size);
 
-        for(int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
             InventorySlots.Add(new InventorySlots());
         }
     }
 
+    /// <summary>
+    /// Add singular Item
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool AddItem(LHWTestItem item)
+    {
+        return AddItem(item, 1);
+    }
+
+    /// <summary>
+    /// Add item with amount
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amountToAdd"></param>
+    /// <returns></returns>
     public bool AddItem(LHWTestItem item, int amountToAdd)
     {
-        int lastIndex = -1;
-        for (int i = 0; i < _inventorySlots.Count; i++)
+        // if there's item stack already, try adding amount on the stack
+        if (AlreadyHasItemStack(item, out List<InventorySlots> inventorySlots))
         {
-            if (_inventorySlots[i].Data == null)
+            foreach (var slot in inventorySlots)
             {
-                _inventorySlots[i].UpdateInvetorySlots(item, amountToAdd);
-            }
-
-            if (_inventorySlots[i].Data == item && _inventorySlots[i].RoomLeftInStack(amountToAdd))
-            {
-                _inventorySlots[i].AddToStack(amountToAdd);
-                lastIndex = i;
-                OnInventorySlotChanged?.Invoke(_inventorySlots[i]);
-                break;
-            }
-            // need to be fixed(bug)
-            else if (_inventorySlots[i].Data == item)
-            {
-                _inventorySlots[i].RoomLeftInStack(amountToAdd, out int amountRemaining);
-                if (amountRemaining > 0)
+                if (slot.RoomLeftInStack(amountToAdd))
                 {
-                    _inventorySlots[i].AddToStack(amountRemaining);
-                    amountToAdd -= amountRemaining;
-                    OnInventorySlotChanged?.Invoke(_inventorySlots[i]);
-                    Debug.Log("This item Stack is Full");
-                    continue;
+                    slot.AddToStack(amountToAdd);
+                    OnInventorySlotChanged?.Invoke(slot);
+                    return true;
                 }
-            }            
+                else
+                {
+                    slot.RoomLeftInStack(amountToAdd, out int amountRemaining);
+                    if (amountRemaining > 0)
+                    {
+                        slot.AddToStack(amountRemaining);
+                        OnInventorySlotChanged?.Invoke(slot);
+                        amountToAdd -= amountRemaining;
+                    }
+                }
+            }
         }
 
-        if (lastIndex == -1)
+        // if there's no item stack, then try adding amount on the new stack
+        while (amountToAdd > 0)
         {
-            Debug.Log("Inventory is Full.");
-            return false;
+            if (HasEmptyStack(out InventorySlots emptySlot))
+            {
+                if (amountToAdd <= item.MaxStackSize)
+                {
+                    emptySlot.UpdateInvetorySlots(item, amountToAdd);
+                    OnInventorySlotChanged?.Invoke(emptySlot);
+                    return true;
+                }
+                else
+                {
+                    emptySlot.UpdateInvetorySlots(item, item.MaxStackSize);
+                    amountToAdd -= item.MaxStackSize;
+                }
+            }
+            else
+            {
+                Debug.Log("Inventory is full.1");
+                return false;
+            }
         }
 
-        Debug.Log("Item is Added.");
-        return true;
+        Debug.Log("Inventory is full.2");
+        return false;
+    }
+
+    public bool AlreadyHasItemStack(LHWTestItem item, out List<InventorySlots> inventorySlots)
+    {
+        inventorySlots = InventorySlots.Where(i => i.Data == item).ToList();
+        return inventorySlots != null && inventorySlots.Count > 0;
+    }
+
+    public bool HasEmptyStack(out InventorySlots emptySlot)
+    {
+        emptySlot = InventorySlots.FirstOrDefault(i => i.Data == null);
+        return emptySlot != null;
     }
 }
