@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -14,15 +12,5 @@ public class Inventory : MonoBehaviour
     private void Init()
     {
         _inventorySystem = new InventorySystem(_inventorySize);
-    }
-
-    [SerializeField] LHWTestItem _testItem;
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            _inventorySystem.AddItem(_testItem, 6);
-        }
     }
 }

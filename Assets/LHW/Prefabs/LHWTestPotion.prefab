@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 552785783273632693}
   - component: {fileID: 1022119233737450144}
   - component: {fileID: 3773048406132413383}
+  - component: {fileID: 8347970367156467332}
   m_Layer: 0
   m_Name: LHWTestPotion
   m_TagString: Untagged
@@ -99,7 +100,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7853982
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -162,3 +163,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 7d862d8a20563ab4c8cce2d53db9f6d7, type: 2}
+--- !u!114 &8347970367156467332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886260897416321407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133606235c4792047ae099eb3f671fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickUpRadius: 1
+  Data: {fileID: 11400000, guid: 7d862d8a20563ab4c8cce2d53db9f6d7, type: 2}
