@@ -14,6 +14,7 @@ public class PlayerInteractionHandler : MonoBehaviour
     private float _holdTime;
     private float _holdThreshold = 1.0f;
 
+    private InteractableObject _lastHighlighted;
 
     private void Update()
     {
@@ -47,16 +48,39 @@ public class PlayerInteractionHandler : MonoBehaviour
 
     private void DetectInteractable()
     {
+        // 감지
         _currentHit = Physics2D.OverlapCircle(transform.position, _interactRange, _interactableLayer);
+
+        // 감지 안 된 경우 처리
         if (_currentHit == null)
         {
             Debug.Log("Hit 없음");
+
+            // 이전 하이라이트 꺼줌
+            if (_lastHighlighted != null)
+            {
+                _lastHighlighted.SetHighlight(false);
+                _lastHighlighted = null;
+            }
+
             _currentInteractable = null;
             return;
         }
 
         Debug.Log($"감지됨: {_currentHit.name}");
+
         _currentInteractable = _currentHit.GetComponent<IInteractable>();
+
+        // 새로운 감지된 오브젝트가 이전과 다르면 하이라이트 갱신
+        var currentHighlight = _currentHit.GetComponent<InteractableObject>();
+        if (currentHighlight != null && currentHighlight != _lastHighlighted)
+        {
+            if (_lastHighlighted != null)
+                _lastHighlighted.SetHighlight(false);
+
+            currentHighlight.SetHighlight(true);
+            _lastHighlighted = currentHighlight;
+        }
     }
 
     private void OnDrawGizmosSelected()
