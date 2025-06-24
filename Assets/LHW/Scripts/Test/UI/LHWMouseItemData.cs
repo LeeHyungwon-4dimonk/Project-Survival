@@ -22,7 +22,7 @@ public class LHWMouseItemData : MonoBehaviour
     {
         AssignedInventorySlot.AssignItem(invSlot);
         ItemSprite.sprite = invSlot.Data.Icon;
-        ItemCount.text = invSlot.StackSize.ToString();
+        ItemCount.text = invSlot.StackSize > 1 ? invSlot.StackSize.ToString() : "";
         ItemSprite.color = Color.white;
     }
 
