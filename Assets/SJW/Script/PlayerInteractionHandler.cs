@@ -7,7 +7,7 @@ public class PlayerInteractionHandler : MonoBehaviour
 {
     [SerializeField] private float _interactRange = 1.5f;
     [SerializeField] private LayerMask _interactableLayer;
-    [SerializeField] private InteractionUIController _uiController;
+    [SerializeField] private UIController _uiController;
 
     private IInteractable _currentInteractable;
     private Collider2D _currentHit; // 추가
@@ -48,14 +48,21 @@ public class PlayerInteractionHandler : MonoBehaviour
     private void DetectInteractable()
     {
         _currentHit = Physics2D.OverlapCircle(transform.position, _interactRange, _interactableLayer);
-
         if (_currentHit == null)
         {
+            Debug.Log("Hit 없음");
             _currentInteractable = null;
             return;
         }
 
+        Debug.Log($"감지됨: {_currentHit.name}");
         _currentInteractable = _currentHit.GetComponent<IInteractable>();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _interactRange);
     }
 
 }
