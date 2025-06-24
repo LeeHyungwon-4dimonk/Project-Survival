@@ -26,6 +26,17 @@ public class InventorySlots
         _stackSize = -1;
     }
 
+    public void AssignItem(InventorySlots invSlot)
+    {
+        if(_data == invSlot.Data) AddToStack(invSlot._stackSize);
+        else
+        {
+            _data = invSlot.Data;
+            _stackSize = 0;
+            AddToStack(invSlot._stackSize);
+        }
+    }
+
     public void UpdateInvetorySlots(LHWTestItem source, int amount)
     {
         _data = source;

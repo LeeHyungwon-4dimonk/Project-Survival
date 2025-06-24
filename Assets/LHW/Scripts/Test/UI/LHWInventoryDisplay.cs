@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,15 +22,28 @@ public abstract class LHWInventoryDisplay : MonoBehaviour
     {
         foreach (var slot in SlotDitionary)
         {
-            if(slot.Value == updatedSlot)
+            if (slot.Value == updatedSlot)
             {
                 slot.Key.UpdateUISlot(updatedSlot);
             }
         }
     }
 
-    public void SlotClicked(LHWInventorySlot_UI clickedSlot)
+    public void SlotClicked(LHWInventorySlot_UI clickedUISlot)
     {
-        Debug.Log("Slot Clicked");
+        if (clickedUISlot.AssignedInventorySlot.Data != null && _mouseInventoryItem.AssignedInventorySlot.Data == null)
+        {
+            _mouseInventoryItem.UpdateMouseSlot(clickedUISlot.AssignedInventorySlot);
+            clickedUISlot.ClearSlot();
+            return;
+        }
+
+        if (clickedUISlot.AssignedInventorySlot.Data == null && _mouseInventoryItem.AssignedInventorySlot.Data != null)
+        {
+            clickedUISlot.AssignedInventorySlot.AssignItem(_mouseInventoryItem.AssignedInventorySlot);
+            clickedUISlot.UpdateUISlot();
+
+            _mouseInventoryItem.ClearSlot();
+        }
     }
 }

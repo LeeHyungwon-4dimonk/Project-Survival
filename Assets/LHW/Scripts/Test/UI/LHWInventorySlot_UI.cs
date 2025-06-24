@@ -41,7 +41,9 @@ public class LHWInventorySlot_UI : MonoBehaviour
         }
         else
         {
-            ClearSlot();
+            _itemSprite.color = Color.clear;
+            _itemSprite.sprite = null;
+            _itemCount.text = "";
         }
     }
 
