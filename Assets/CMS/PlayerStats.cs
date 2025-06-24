@@ -71,4 +71,17 @@ public class PlayerStats : MonoBehaviour
             Debug.Log("플레이어 사망");
         }
     }
+
+    public void TakeDamage(float damage)
+    {
+        _currentHealth -= damage;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+
+        Debug.Log($"플레이어가 {damage}의 피해를 받았습니다. 현재 체력: {_currentHealth}");
+
+        if(_currentHealth < 0)
+        {
+            CheckDeath();
+        }
+    }
 }
