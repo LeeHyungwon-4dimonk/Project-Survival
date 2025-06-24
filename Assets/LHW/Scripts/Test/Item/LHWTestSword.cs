@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// (For Test) Sword.
+/// </summary>
 [CreateAssetMenu(fileName = "LHWTestSword", menuName = "Data/LHWTestSword")]
 public class LHWTestSword : LHWTestItem
 {

@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +29,10 @@ public class LHWInventorySlot_UI : MonoBehaviour
         UpdateUISlot(slot);
     }
 
+    /// <summary>
+    /// Updates the inventory slot.
+    /// </summary>
+    /// <param name="slot"></param>
     public void UpdateUISlot(InventorySlots slot)
     {
         if(slot.Data != null)
@@ -47,11 +50,17 @@ public class LHWInventorySlot_UI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the inventory slot.
+    /// </summary>
     public void UpdateUISlot()
     {
         if(_assignedInventorySlot != null) UpdateUISlot(_assignedInventorySlot);
     }
 
+    /// <summary>
+    /// Clears the inventorySlot.
+    /// </summary>
     public void ClearSlot()
     {
         _assignedInventorySlot?.ClearSlot();
@@ -60,6 +69,9 @@ public class LHWInventorySlot_UI : MonoBehaviour
         _itemCount.text = "";
     }
 
+    /// <summary>
+    /// If the UISlot is clicked.
+    /// </summary>
     public void OnUISlotClick()
     {
         ParentDisplay?.SlotClicked(this);

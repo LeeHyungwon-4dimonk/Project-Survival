@@ -13,6 +13,10 @@ public class InventorySystem
     public int InventorySize => InventorySlots.Count;
     public Action<InventorySlots> OnInventorySlotChanged;
 
+    /// <summary>
+    /// Constructor that sets the size of slots.
+    /// </summary>
+    /// <param name="size"></param>
     public InventorySystem(int size)
     {
         _inventorySlots = new List<InventorySlots>(size);
@@ -41,17 +45,19 @@ public class InventorySystem
     /// <returns></returns>
     public bool AddItem(LHWTestItem item, int amountToAdd)
     {
-        // if there's item stack already, try adding amount on the stack
+        // if there's item stack already, try adding amount on the stack.
         if (AlreadyHasItemStack(item, out List<InventorySlots> inventorySlots))
         {
             foreach (var slot in inventorySlots)
             {
+                // if stack remains enough to add item amount.
                 if (slot.RoomLeftInStack(amountToAdd))
                 {
                     slot.AddToStack(amountToAdd);
                     OnInventorySlotChanged?.Invoke(slot);
                     return true;
                 }
+                // if not, try add part of the items in the remaining space.
                 else
                 {
                     slot.RoomLeftInStack(amountToAdd, out int amountRemaining);
@@ -65,23 +71,27 @@ public class InventorySystem
             }
         }
 
-        // if there's no item stack, then try adding amount on the new stack
+        // if there's no item stack or to add, then try adding amount on the new stack.
         while (amountToAdd > 0)
         {
+            // if there's empty slot.
             if (HasEmptyStack(out InventorySlots emptySlot))
             {
+                // if stack remains enough to add item amount.
                 if (amountToAdd <= item.MaxStackSize)
                 {
                     emptySlot.UpdateInvetorySlots(item, amountToAdd);
                     OnInventorySlotChanged?.Invoke(emptySlot);
                     return true;
                 }
+                // if not, try add part of the items in the remaining space.
                 else
                 {
                     emptySlot.UpdateInvetorySlots(item, item.MaxStackSize);
                     amountToAdd -= item.MaxStackSize;
                 }
             }
+            // if there's not, can't add to inventory
             else
             {
                 Debug.Log("Inventory is full.1");
@@ -93,12 +103,25 @@ public class InventorySystem
         return false;
     }
 
+    /// <summary>
+    /// Defines if there is same item in inventory.
+    /// if so, return InventorySlots that correspond to.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="inventorySlots"></param>
+    /// <returns></returns>
     public bool AlreadyHasItemStack(LHWTestItem item, out List<InventorySlots> inventorySlots)
     {
         inventorySlots = InventorySlots.Where(i => i.Data == item).ToList();
         return inventorySlots != null && inventorySlots.Count > 0;
     }
 
+    /// <summary>
+    /// Defines if there is empty slot in inventory.
+    /// if so, return the only first one.
+    /// </summary>
+    /// <param name="emptySlot"></param>
+    /// <returns></returns>
     public bool HasEmptyStack(out InventorySlots emptySlot)
     {
         emptySlot = InventorySlots.FirstOrDefault(i => i.Data == null);

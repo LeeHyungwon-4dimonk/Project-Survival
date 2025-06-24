@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LHWTestPotion
   m_EditorClassIdentifier: 
   <Name>k__BackingField: HPPotion
+  <Description>k__BackingField: "\uCCB4\uB825\uC744 \uC18C\uB7C9 \uD68C\uBCF5\uD560
+    \uC218 \uC788\uB294 \uD3EC\uC158\uC774\uB2E4."
   <Weight>k__BackingField: 1
   <Type>k__BackingField: 1
   <MaxStackSize>k__BackingField: 5

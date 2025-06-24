@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Attach to UI Component
+/// </summary>
 public class LHWStaticInventoryDisplay : LHWInventoryDisplay
 {
     [SerializeField] private Inventory _inventory;
@@ -20,6 +23,10 @@ public class LHWStaticInventoryDisplay : LHWInventoryDisplay
         AssignSlot(_inventorySystem);
     }
 
+    /// <summary>
+    /// Create Inventory Hotbar.
+    /// </summary>
+    /// <param name="invToDisplay"></param>
     public override void AssignSlot(InventorySystem invToDisplay)
     {
         _slotDictionary = new Dictionary<LHWInventorySlot_UI, InventorySlots>();

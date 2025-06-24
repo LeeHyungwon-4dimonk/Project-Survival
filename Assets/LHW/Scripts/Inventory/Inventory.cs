@@ -9,6 +9,9 @@ public class Inventory : MonoBehaviour
 
     private void Awake() => Init();
 
+    /// <summary>
+    /// Construct inventory.
+    /// </summary>
     private void Init()
     {
         _inventorySystem = new InventorySystem(_inventorySize);
