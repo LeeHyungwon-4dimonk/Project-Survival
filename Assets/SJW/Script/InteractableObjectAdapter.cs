@@ -18,7 +18,7 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 
     public string GetDescription()
     {
-        return "아이템 줍기"; // 나중에 확장 가능
+        return "E - 확인하기"; // 나중에 확장
     }
 
     public KeyCode GetKey()

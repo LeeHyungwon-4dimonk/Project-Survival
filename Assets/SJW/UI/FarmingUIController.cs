@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UIController : MonoBehaviour
+public class FarmingUIController : MonoBehaviour
 {
     [SerializeField] private GameObject interactionPanel;
     [SerializeField] private TMP_Text interactionText;

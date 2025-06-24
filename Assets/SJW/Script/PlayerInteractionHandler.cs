@@ -7,7 +7,7 @@ public class PlayerInteractionHandler : MonoBehaviour
 {
     [SerializeField] private float _interactRange = 1.5f;
     [SerializeField] private LayerMask _interactableLayer;
-    [SerializeField] private UIController _uiController;
+    [SerializeField] private FarmingUIController _uiController;
 
     private IInteractable _currentInteractable;
     private Collider2D _currentHit; // Ãß°¡

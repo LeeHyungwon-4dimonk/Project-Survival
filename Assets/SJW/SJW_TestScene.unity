@@ -619,7 +619,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "E - \uD655\uC778\uD558\uAE30"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23cb3c6dee2fabb4a9d5af06a8ae9233, type: 2}
   m_sharedMaterial: {fileID: -8000867820976626541, guid: 23cb3c6dee2fabb4a9d5af06a8ae9233, type: 2}
