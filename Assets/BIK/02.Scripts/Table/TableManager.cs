@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public enum TableType
 {
@@ -24,7 +25,9 @@ public class TableManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        LoadAllTables();
+        //LoadAllTables();
+
+        _loadDataCoroutine = StartCoroutine(LoadData());
     }
 
     #endregion // Singleton
@@ -36,6 +39,7 @@ public class TableManager : MonoBehaviour
     #region private fields
 
     private Dictionary<TableType, TableBase> _tables = new();
+    private Coroutine _loadDataCoroutine;
 
     #endregion // private fields
 
@@ -76,4 +80,18 @@ public class TableManager : MonoBehaviour
     }
 
     #endregion // private funcs
+
+    #region test
+
+    IEnumerator LoadData()
+    {
+        var url = "https://docs.google.com/spreadsheets/d/1m8bLxgbwbyxJfMyBUrq3p4cp4dNxJoEFsbu_cah6SB8/export?format=csv&gid=1916368705";
+        var www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+
+        string data = www.downloadHandler.text;
+        Debug.Log(data);
+    }
+
+    #endregion // test
 }
