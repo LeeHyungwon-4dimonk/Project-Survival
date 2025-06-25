@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// PopUp Inventory that player can hold.(Backpack Inventory)
+/// </summary>
 public class PlayerInventoryHolder : Inventory
 {
     [SerializeField] protected int _playerInventorySize;
@@ -24,6 +27,13 @@ public class PlayerInventoryHolder : Inventory
             OnPlayerBackpackDisplayRequested?.Invoke(_playerInventorySystem);
     }
 
+    /// <summary>
+    /// Add item to inventory.
+    /// Item is add primary to player hot bar, and into the backpack.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     public bool AddItem(LHWTestItem data, int amount)
     {
         if (_inventorySystem.AddItem(data, amount))

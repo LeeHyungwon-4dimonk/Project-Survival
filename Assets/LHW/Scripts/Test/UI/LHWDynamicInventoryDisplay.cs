@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Inventory UI Display, that is not permanently activated in scene.
+/// </summary>
 public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
 {
     [SerializeField] protected LHWInventorySlot_UI _slotPrefab;
@@ -10,6 +13,10 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
         base.Start();
     }
 
+    /// <summary>
+    /// Update the UI when display is activated.
+    /// </summary>
+    /// <param name="invToDisplay"></param>
     public void RefreshDynamicInventory(InventorySystem invToDisplay)
     {
         ClearSlots();
@@ -18,7 +25,11 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
         AssignSlot(invToDisplay);
     }
 
-    // It need to be applied Object Pool Patterns
+    /// <summary>
+    /// Print out the current status of inventory.
+    /// </summary>
+    /// <param name="invToDisplay"></param>
+    // It need to be applied Object Pool Patterns?
     public override void AssignSlot(InventorySystem invToDisplay)
     {
         _slotDictionary = new Dictionary<LHWInventorySlot_UI, InventorySlots>();
@@ -34,7 +45,10 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
         }
     }
 
-    // It need to be applied Object Pool Patterns
+    /// <summary>
+    /// Clear the inventory.
+    /// </summary>
+    // It need to be applied Object Pool Patterns?
     private void ClearSlots()
     {
         foreach(var item in transform.Cast<Transform>())

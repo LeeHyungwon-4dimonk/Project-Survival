@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Primary inventory.
+/// </summary>
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int _inventorySize;

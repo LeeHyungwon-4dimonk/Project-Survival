@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controls Dynamic Inventory UIs.
+/// </summary>
 public class LHWInventoryUIController : MonoBehaviour
 {
     public LHWDynamicInventoryDisplay ChestPanel;
@@ -24,6 +27,7 @@ public class LHWInventoryUIController : MonoBehaviour
         PlayerInventoryHolder.OnPlayerBackpackDisplayRequested -= DisplayPlayerBackpack;
     }
 
+    // I've set esc key to exit temporary. Can change inactivate key.
     void Update()
     {
          if(ChestPanel.gameObject.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -32,12 +36,21 @@ public class LHWInventoryUIController : MonoBehaviour
         if (PlayerBackpackPanel.gameObject.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
             PlayerBackpackPanel.gameObject.SetActive(false);
     }
+
+    /// <summary>
+    /// Display Dynamic Inventory.(Chest)
+    /// </summary>
+    /// <param name="chestInvToDisplay"></param>
     private void DisplayInventory(InventorySystem chestInvToDisplay)
     {
         ChestPanel.gameObject.SetActive(true);
         ChestPanel.RefreshDynamicInventory(chestInvToDisplay);
     }
 
+    /// <summary>
+    /// Display Player Backpack Inventory.
+    /// </summary>
+    /// <param name="playerInvToDisplay"></param>
     private void DisplayPlayerBackpack(InventorySystem playerInvToDisplay)
     {
         PlayerBackpackPanel.gameObject.SetActive(true);
