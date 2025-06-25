@@ -2,6 +2,9 @@ using UnityEngine;
 
 public enum ItemType { Material, Usable, Equip }
 
+/// <summary>
+/// Scriptable Object that contains Item Data.
+/// </summary>
 [CreateAssetMenu(fileName = "New Item", menuName = "Assets/New Item")]
 public class ItemSO : ScriptableObject
 {

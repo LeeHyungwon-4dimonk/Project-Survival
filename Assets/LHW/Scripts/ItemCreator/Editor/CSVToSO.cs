@@ -3,6 +3,11 @@ using UnityEditor;
 using System.IO;
 using System;
 
+/// <summary>
+/// Create Item base on CSV file.
+/// How to use : check the editor bar - Utilities - Generate Item
+/// Should not be contained in the build file.
+/// </summary>
 public class CSVToSO
 {
     private static string _itemCSVPath = "/LHW/Scripts/ItemCreator/Editor/CSV/TestItem.csv";
