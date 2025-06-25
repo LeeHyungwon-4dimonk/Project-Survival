@@ -22,36 +22,36 @@ public class OptionController : MonoBehaviour
     private float _initialBgm;
     private float _initialSfx;
 
-    private bool _isInitialized = false;
-
     private void Awake()
     {
         _okButton.onClick.AddListener(OnOk);
         _cancelButton.onClick.AddListener(OnCancel);
+
+        _bgmSlider.onValueChanged.AddListener(AudioManager.Instance.SetBgmVolume);
+        _sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSfxVolume);
+
+        float savedBgm = Mathf.Clamp(PlayerPrefs.GetFloat(PREF_BGM, 1f), 0.0001f, 1f);
+        float savedSfx = Mathf.Clamp(PlayerPrefs.GetFloat(PREF_SFX, 1f), 0.0001f, 1f);
+
+        _bgmSlider.value = savedBgm;
+        _sfxSlider.value = savedSfx;
     }
 
     private void OnEnable()
     {
-        if (!_isInitialized)
-        {
-            float savedBgm = PlayerPrefs.GetFloat(PREF_BGM, 1f);
-            float savedSfx = PlayerPrefs.GetFloat(PREF_SFX, 1f);
-
-            _bgmSlider.SetValueWithoutNotify(savedBgm);
-            _sfxSlider.SetValueWithoutNotify(savedSfx);
-
-            _bgmSlider.onValueChanged.AddListener(AudioManager.Instance.SetBgmVolume);
-            _sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSfxVolume);
-
-            _isInitialized = true;
-        }
-
         _initialBgm = _bgmSlider.value;
         _initialSfx = _sfxSlider.value;
     }
 
     private void OnOk()
     {
+        float bgm = Mathf.Clamp(_bgmSlider.value, 0.0001f, 1f);
+        float sfx = Mathf.Clamp(_sfxSlider.value, 0.0001f, 1f);
+
+        PlayerPrefs.SetFloat(PREF_BGM, bgm);
+        PlayerPrefs.SetFloat(PREF_SFX, sfx);
+        PlayerPrefs.Save();
+
         _optionPanel.SetActive(false);
     }
 
@@ -59,6 +59,7 @@ public class OptionController : MonoBehaviour
     {
         _bgmSlider.SetValueWithoutNotify(_initialBgm);
         _sfxSlider.SetValueWithoutNotify(_initialSfx);
+
         AudioManager.Instance.SetBgmVolume(_initialBgm);
         AudioManager.Instance.SetSfxVolume(_initialSfx);
 

@@ -11,13 +11,12 @@ public class AudioManager : MonoBehaviour
 
     #region Inspector Fields
     [Header("Audio Mixer")]
-    [SerializeField] private AudioMixer _audioMixer; 
-    [SerializeField] private AudioMixerGroup _bgmGroup;   
-    [SerializeField] private AudioMixerGroup _sfxGroup;    
+    [SerializeField] private AudioMixer _audioMixer;
+    [SerializeField] private AudioMixerGroup _bgmGroup;
+    [SerializeField] private AudioMixerGroup _sfxGroup;
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource _bgmSource;
-   
     [SerializeField] private AudioSource _sfxSource;
     #endregion
 
@@ -40,14 +39,23 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if (_bgmSource == null) _bgmSource = gameObject.AddComponent<AudioSource>();
-        _bgmSource.loop = true;
-        if (_sfxSource == null) _sfxSource = gameObject.AddComponent<AudioSource>();
-        _sfxSource.loop = false;
+        if (_bgmSource != null)
+        {
+            _bgmSource.loop = true;
+            _bgmSource.outputAudioMixerGroup = _bgmGroup;
+            _bgmSource.playOnAwake = false;
+        }
 
-        _bgmSource.outputAudioMixerGroup = _bgmGroup;
-        _sfxSource.outputAudioMixerGroup = _sfxGroup;
+        if (_sfxSource != null)
+        {
+            _sfxSource.loop = false;
+            _sfxSource.outputAudioMixerGroup = _sfxGroup;
+            _sfxSource.playOnAwake = false;
+        }
+    }
 
+    private void Start()
+    {
         float savedBgm = PlayerPrefs.GetFloat(PrefBgm, 1f);
         float savedSfx = PlayerPrefs.GetFloat(PrefSfx, 1f);
         SetBgmVolume(savedBgm);
@@ -56,11 +64,10 @@ public class AudioManager : MonoBehaviour
     #endregion
 
     #region Public Volume API
-  
     public void SetBgmVolume(float linear)
     {
         float clamped = Mathf.Clamp(linear, 0.0001f, 1f);
-        float dB = Mathf.Log10(clamped) * 20f;  
+        float dB = Mathf.Log10(clamped) * 20f;
         _audioMixer.SetFloat(MixerParamBgm, dB);
         PlayerPrefs.SetFloat(PrefBgm, clamped);
         PlayerPrefs.Save();
@@ -79,7 +86,7 @@ public class AudioManager : MonoBehaviour
     #region Public Playback Methods
     public void PlayBgm(AudioClip clip)
     {
-        if (clip == null) return;
+        if (_bgmSource == null || clip == null) return;
         if (_bgmSource.clip == clip && _bgmSource.isPlaying) return;
         _bgmSource.clip = clip;
         _bgmSource.Play();
@@ -87,22 +94,14 @@ public class AudioManager : MonoBehaviour
 
     public void StopBgm()
     {
+        if (_bgmSource == null) return;
         _bgmSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)
     {
-        if (clip == null) return;
-
-        var src = gameObject.AddComponent<AudioSource>();
-        src.outputAudioMixerGroup = _sfxGroup;
-        src.loop = false;
-
-        
-        src.volume = 1f;
-
-        src.PlayOneShot(clip);
-        Destroy(src, clip.length + 0.1f);
+        if (_sfxSource == null || clip == null) return;
+        _sfxSource.PlayOneShot(clip);
     }
     #endregion
 }
