@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -6,6 +7,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] protected InventorySystem _inventorySystem;
 
     public InventorySystem InventorySystem => _inventorySystem;
+
+    public static Action<InventorySystem> OnDynamicInventoryDisplayRequested;
 
     private void Awake() => Init();
 
