@@ -669,8 +669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6293c80cb76a74ca26c70f1cf1b1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ChestPanel: {fileID: 0}
-  PlayerBackpackPanel: {fileID: 0}
+  ChestPanel: {fileID: 276825429}
+  PlayerBackpackPanel: {fileID: 1989378718}
 --- !u!1001 &370294520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3699,7 +3699,7 @@ GameObject:
   - component: {fileID: 2128570936}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

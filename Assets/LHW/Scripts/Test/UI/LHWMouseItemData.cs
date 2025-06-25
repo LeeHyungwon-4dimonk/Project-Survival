@@ -13,10 +13,15 @@ public class LHWMouseItemData : MonoBehaviour
     [SerializeField] public TMP_Text ItemCount;
     [SerializeField] public InventorySlots AssignedInventorySlot;
 
+    private Transform _playerTransform;
+
     private void Awake()
     {
         ItemSprite.color = Color.clear;
         ItemCount.text = "";
+
+        _playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        if (_playerTransform == null) Debug.Log("Player nout found!");
     }
 
     /// <summary>
@@ -33,6 +38,19 @@ public class LHWMouseItemData : MonoBehaviour
         ItemSprite.color = Color.white;
     }
 
+    /// <summary>
+    /// Updates the mouse item slot.
+    /// </summary>
+    /// <param name="invSlot"></param>
+    public void UpdateMouseSlot()
+    {
+        ItemSprite.sprite = AssignedInventorySlot.Data.Icon;
+        // if item is stackable, return stack size.
+        // if not, don't print item amount.
+        ItemCount.text = AssignedInventorySlot.StackSize.ToString();
+        ItemSprite.color = Color.white;
+    }
+
     private void Update()
     {
         // Mouse Control
@@ -40,10 +58,23 @@ public class LHWMouseItemData : MonoBehaviour
         {
             transform.position = Mouse.current.position.ReadValue();
 
-            if(Mouse.current.leftButton.wasPressedThisFrame && !IsPointerOverUIObject())
+            if (Mouse.current.leftButton.wasPressedThisFrame && !IsPointerOverUIObject())
             {
-                ClearSlot();
-                // TODO : Drop the item on the ground.
+                // I don't know where to drop items, so selected direction temporary.
+                // Need to gather opinion where to drop item / object pooling need to be applied?
+                if (AssignedInventorySlot.Data.Prefab != null)
+                    Instantiate(AssignedInventorySlot.Data.Prefab, _playerTransform.position + _playerTransform.right * 1f, Quaternion.identity);
+
+                // Drop one items for each click
+                if (AssignedInventorySlot.StackSize > 1)
+                {
+                    AssignedInventorySlot.AddToStack(-1);
+                    UpdateMouseSlot();
+                }
+                else
+                {
+                    ClearSlot();
+                }
             }
         }
     }
