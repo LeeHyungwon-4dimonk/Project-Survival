@@ -1,0 +1,19 @@
+using UnityEngine;
+
+public enum ItemType { Material, Usable, Equip }
+
+[CreateAssetMenu(fileName = "New Item", menuName = "Assets/New Item")]
+public class ItemSO : ScriptableObject
+{
+    public string Name;
+    public string Description;
+    public float Weight;
+    public ItemType Type;
+
+    // if is stackable, input number larger than 1.
+    // if is unStackable, input 1.
+    public int MaxStackSize;
+    public int Energy;
+    public Sprite Icon;
+    public GameObject Prefab;
+}
