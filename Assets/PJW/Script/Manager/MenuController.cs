@@ -21,6 +21,15 @@ public class MenuController : MonoBehaviour
         btnQuit.onClick.AddListener(OnQuit);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuPopup != null)
+                menuPopup.SetActive(!menuPopup.activeSelf);
+        }
+    }
+
     private void OnBack()
     {
         if (menuPopup != null)
