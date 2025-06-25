@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 public class SceneManager : MonoBehaviour
 {
-    [SerializeField] private string sceneName = "";
-
-    private Button _button;
+    public static SceneManager Instance { get; private set; }
 
     private void Awake()
     {
-        _button = GetComponent<Button>();
-        _button.onClick.AddListener(OnClickLoadScene);
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void OnDestroy()
-    {
-        _button.onClick.RemoveListener(OnClickLoadScene);
-    }
-
-    private void OnClickLoadScene()
+    public void LoadScene(string sceneName)
     {
         if (!string.IsNullOrEmpty(sceneName))
         {
@@ -29,8 +29,10 @@ public class SceneManager : MonoBehaviour
         }
     }
 
-    internal static void LoadScene(string v)
+    /* 이동할 씬
+    public void LoadStage1()
     {
-    
+        LoadScene("Stage1");
     }
+    */
 }
