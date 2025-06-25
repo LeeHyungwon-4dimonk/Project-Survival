@@ -14,6 +14,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioMixerGroup _bgmGroup;
     [SerializeField] private AudioMixerGroup _sfxGroup;
+
+    [Header("Audio Sources")]
+    [SerializeField] private AudioSource _bgmSource;
+    [SerializeField] private AudioSource _sfxSource;
     #endregion
 
     #region Constants
@@ -22,11 +26,6 @@ public class AudioManager : MonoBehaviour
 
     private const string PrefBgm = "Pref_BgmVolume";
     private const string PrefSfx = "Pref_SfxVolume";
-    #endregion
-
-    #region Private Fields
-    private AudioSource _bgmSource;
-    private AudioSource _sfxSource;
     #endregion
 
     #region Unity Callbacks
@@ -40,16 +39,22 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _bgmSource = gameObject.AddComponent<AudioSource>();
-        _bgmSource.loop = true;
-        _bgmSource.outputAudioMixerGroup = _bgmGroup;
+        if (_bgmSource != null)
+        {
+            _bgmSource.loop = true;
+            _bgmSource.outputAudioMixerGroup = _bgmGroup;
+            _bgmSource.playOnAwake = false;
+        }
 
-        _sfxSource = gameObject.AddComponent<AudioSource>();
-        _sfxSource.loop = false;
-        _sfxSource.outputAudioMixerGroup = _sfxGroup;
+        if (_sfxSource != null)
+        {
+            _sfxSource.loop = false;
+            _sfxSource.outputAudioMixerGroup = _sfxGroup;
+            _sfxSource.playOnAwake = false;
+        }
     }
 
-    private void Start() 
+    private void Start()
     {
         float savedBgm = PlayerPrefs.GetFloat(PrefBgm, 1f);
         float savedSfx = PlayerPrefs.GetFloat(PrefSfx, 1f);
@@ -81,7 +86,7 @@ public class AudioManager : MonoBehaviour
     #region Public Playback Methods
     public void PlayBgm(AudioClip clip)
     {
-        if (clip == null) return;
+        if (_bgmSource == null || clip == null) return;
         if (_bgmSource.clip == clip && _bgmSource.isPlaying) return;
         _bgmSource.clip = clip;
         _bgmSource.Play();
@@ -89,12 +94,13 @@ public class AudioManager : MonoBehaviour
 
     public void StopBgm()
     {
+        if (_bgmSource == null) return;
         _bgmSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)
     {
-        if (clip == null) return;
+        if (_sfxSource == null || clip == null) return;
         _sfxSource.PlayOneShot(clip);
     }
     #endregion
