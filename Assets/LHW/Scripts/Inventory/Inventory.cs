@@ -1,5 +1,9 @@
+using System;
 using UnityEngine;
 
+/// <summary>
+/// Primary inventory.
+/// </summary>
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int _inventorySize;
@@ -7,12 +11,9 @@ public class Inventory : MonoBehaviour
 
     public InventorySystem InventorySystem => _inventorySystem;
 
-    private void Awake() => Init();
+    public static Action<InventorySystem> OnDynamicInventoryDisplayRequested;
 
-    /// <summary>
-    /// Construct inventory.
-    /// </summary>
-    private void Init()
+    protected virtual void Awake()
     {
         _inventorySystem = new InventorySystem(_inventorySize);
     }
