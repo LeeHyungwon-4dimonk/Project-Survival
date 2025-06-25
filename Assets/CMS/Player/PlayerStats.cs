@@ -69,6 +69,7 @@ public class PlayerStats : MonoBehaviour
         if (_currentHealth <= 0f)
         {
             Debug.Log("플레이어 사망");
+            Destroy(gameObject);
         }
     }
 
@@ -79,7 +80,7 @@ public class PlayerStats : MonoBehaviour
 
         Debug.Log($"플레이어가 {damage}의 피해를 받았습니다. 현재 체력: {_currentHealth}");
 
-        if(_currentHealth < 0)
+        if(_currentHealth <= 0)
         {
             CheckDeath();
         }

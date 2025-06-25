@@ -38,9 +38,17 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = _playerStats.MoveSpeed;
         }
+     
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseDir = (mouseWorldPos - transform.position).normalized;
 
-        Debug.Log($"Speed: {speed}");
-
+        float angle = Vector2.Angle(_moveInput, mouseDir);
+  
+        if (angle > 90f)
+        {
+            speed *= 0.8f; 
+        }
+  
         _rb.MovePosition(_rb.position + _moveInput * speed * Time.fixedDeltaTime);
     }
 }
