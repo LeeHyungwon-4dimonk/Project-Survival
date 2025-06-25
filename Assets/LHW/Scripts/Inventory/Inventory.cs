@@ -10,12 +10,7 @@ public class Inventory : MonoBehaviour
 
     public static Action<InventorySystem> OnDynamicInventoryDisplayRequested;
 
-    private void Awake() => Init();
-
-    /// <summary>
-    /// Construct inventory.
-    /// </summary>
-    private void Init()
+    protected virtual void Awake()
     {
         _inventorySystem = new InventorySystem(_inventorySize);
     }

@@ -9,11 +9,11 @@ public class LHWItemPickUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var inventory = collision.transform.GetComponent<Inventory>();
+        var inventory = collision.transform.GetComponent<PlayerInventoryHolder>();
 
         if(!inventory) return;
 
-        if(inventory.InventorySystem.AddItem(Data, 1))
+        if(inventory.AddItem(Data, 1))
         {
             Destroy(gameObject);
         }

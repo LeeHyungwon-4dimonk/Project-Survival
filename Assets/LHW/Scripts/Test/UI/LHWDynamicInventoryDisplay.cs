@@ -15,6 +15,7 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     {
         ClearSlots();
         _inventorySystem = invToDisplay;
+        if(_inventorySystem != null) _inventorySystem.OnInventorySlotChanged += UpdateSlot;
         AssignSlot(invToDisplay);
     }
 
@@ -43,5 +44,10 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
         }
 
         if(_slotDictionary != null) _slotDictionary.Clear();
+    }
+
+    private void OnDisable()
+    {
+        if (_inventorySystem != null) _inventorySystem.OnInventorySlotChanged -= UpdateSlot;
     }
 }

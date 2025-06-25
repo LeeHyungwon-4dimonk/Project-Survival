@@ -3,33 +3,44 @@ using UnityEngine.InputSystem;
 
 public class LHWInventoryUIController : MonoBehaviour
 {
-    public LHWDynamicInventoryDisplay InventoryPanel;
+    public LHWDynamicInventoryDisplay ChestPanel;
+    public LHWDynamicInventoryDisplay PlayerBackpackPanel;
 
     private void Awake()
     {
-        InventoryPanel.gameObject.SetActive(false);
+        ChestPanel.gameObject.SetActive(false);
+        PlayerBackpackPanel.gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
         Inventory.OnDynamicInventoryDisplayRequested += DisplayInventory;
+        PlayerInventoryHolder.OnPlayerBackpackDisplayRequested += DisplayPlayerBackpack;
     }
 
     private void OnDisable()
     {
         Inventory.OnDynamicInventoryDisplayRequested -= DisplayInventory;
+        PlayerInventoryHolder.OnPlayerBackpackDisplayRequested -= DisplayPlayerBackpack;
     }
 
     void Update()
     {
-        if (!InventoryPanel.gameObject.activeInHierarchy && Keyboard.current.tabKey.wasPressedThisFrame) DisplayInventory(new InventorySystem(20));
+         if(ChestPanel.gameObject.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
+            ChestPanel.gameObject.SetActive(false);
 
-        else if(InventoryPanel.gameObject.activeInHierarchy && Keyboard.current.tabKey.wasPressedThisFrame)
-            InventoryPanel.gameObject.SetActive(false);
+        if (PlayerBackpackPanel.gameObject.activeInHierarchy && Keyboard.current.escapeKey.wasPressedThisFrame)
+            PlayerBackpackPanel.gameObject.SetActive(false);
     }
-    public void DisplayInventory(InventorySystem invToDisplay)
+    private void DisplayInventory(InventorySystem chestInvToDisplay)
     {
-        InventoryPanel.gameObject.SetActive(true);
-        InventoryPanel.RefreshDynamicInventory(invToDisplay);
+        ChestPanel.gameObject.SetActive(true);
+        ChestPanel.RefreshDynamicInventory(chestInvToDisplay);
+    }
+
+    private void DisplayPlayerBackpack(InventorySystem playerInvToDisplay)
+    {
+        PlayerBackpackPanel.gameObject.SetActive(true);
+        PlayerBackpackPanel.RefreshDynamicInventory(playerInvToDisplay);
     }
 }
