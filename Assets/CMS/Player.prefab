@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7026229786067805170
+--- !u!1 &3101471636982054898
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3580913572939779929}
+  - component: {fileID: 4663996251748685191}
   m_Layer: 0
   m_Name: LookTransform
   m_TagString: Untagged
@@ -16,13 +16,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3580913572939779929
+--- !u!4 &4663996251748685191
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7026229786067805170}
+  m_GameObject: {fileID: 3101471636982054898}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -44,10 +44,12 @@ GameObject:
   - component: {fileID: 8902011560828426061}
   - component: {fileID: 6503298996901883522}
   - component: {fileID: 8916221334217874197}
-  - component: {fileID: 2820465849919712847}
-  - component: {fileID: 8140997656942133010}
-  - component: {fileID: 8504579993533245736}
-  - component: {fileID: 4845834272242880962}
+  - component: {fileID: 2795689190314697787}
+  - component: {fileID: 7944011996537995235}
+  - component: {fileID: 2151168113169201468}
+  - component: {fileID: 9032234039580139758}
+  - component: {fileID: 6893292189990434665}
+  - component: {fileID: 5165788454026875890}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -68,7 +70,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3580913572939779929}
+  - {fileID: 4663996251748685191}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5517580932697951082
@@ -179,20 +181,10 @@ MonoBehaviour:
   _maxHunger: 100
   _moveSpeed: 5
   _runSpeed: 7
---- !u!114 &2820465849919712847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9162771540310933599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9d59cc7d061a1245b59701c91d63f62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookTransform: {fileID: 3580913572939779929}
---- !u!114 &8140997656942133010
+  _maxStamina: 100
+  _staminaDecreaseRate: 10
+  _staminaRecoveryRate: 10
+--- !u!114 &2795689190314697787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,7 +197,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackDamage: 10
---- !u!114 &8504579993533245736
+--- !u!114 &7944011996537995235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162771540310933599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bfea4d988e904438867b51496d9317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: -10}
+  smoothSpeed: 5
+--- !u!114 &2151168113169201468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162771540310933599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d59cc7d061a1245b59701c91d63f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookTransform: {fileID: 4663996251748685191}
+--- !u!114 &9032234039580139758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162771540310933599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec404c7319d194d43ae786a594a256f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDamage: 10
+--- !u!114 &6893292189990434665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,7 +253,7 @@ MonoBehaviour:
   target: {fileID: 6510858786333333916}
   offset: {x: 0, y: 0, z: -10}
   smoothSpeed: 5
---- !u!58 &4845834272242880962
+--- !u!58 &5165788454026875890
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
