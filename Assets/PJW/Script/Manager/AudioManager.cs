@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+[DefaultExecutionOrder(-100)]
 public class AudioManager : MonoBehaviour
 {
    #region Singleton
@@ -14,10 +15,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer _audioMixer;
     [SerializeField] private AudioMixerGroup _bgmGroup;
     [SerializeField] private AudioMixerGroup _sfxGroup;
+    #endregion
 
-    [Header("Audio Sources")]
-    [SerializeField] private AudioSource _bgmSource;
-    [SerializeField] private AudioSource _sfxSource;
+    #region Private Fields
+    private AudioSource _bgmSource;
+    private AudioSource _sfxSource;
     #endregion
 
     #region Constants
@@ -36,20 +38,32 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        AudioSource[] sources = GetComponents<AudioSource>();
+        foreach (AudioSource source in sources)
+        {
+            if (source.outputAudioMixerGroup == _bgmGroup)
+            {
+                _bgmSource = source;
+            }
+            else if (source.outputAudioMixerGroup == _sfxGroup)
+            {
+                _sfxSource = source;
+            }
+        }
 
         if (_bgmSource != null)
         {
             _bgmSource.loop = true;
-            _bgmSource.outputAudioMixerGroup = _bgmGroup;
             _bgmSource.playOnAwake = false;
         }
 
         if (_sfxSource != null)
         {
             _sfxSource.loop = false;
-            _sfxSource.outputAudioMixerGroup = _sfxGroup;
             _sfxSource.playOnAwake = false;
         }
     }
@@ -63,12 +77,37 @@ public class AudioManager : MonoBehaviour
     }
     #endregion
 
-    #region Public Volume API
+    #region Public Properties
+    public float BgmVolume
+    {
+        get => _bgmSource != null ? _bgmSource.volume : 0f;
+        private set
+        {
+            if (_bgmSource != null)
+                _bgmSource.volume = Mathf.Clamp01(value);
+        }
+    }
+
+    public float SfxVolume
+    {
+        get => _sfxSource != null ? _sfxSource.volume : 0f;
+        private set
+        {
+            if (_sfxSource != null)
+                _sfxSource.volume = Mathf.Clamp01(value);
+        }
+    }
+    #endregion
+
+    #region Public Volume Methods
     public void SetBgmVolume(float linear)
     {
         float clamped = Mathf.Clamp(linear, 0.0001f, 1f);
         float dB = Mathf.Log10(clamped) * 20f;
-        _audioMixer.SetFloat(MixerParamBgm, dB);
+
+        if (_audioMixer != null)
+            _audioMixer.SetFloat(MixerParamBgm, dB);
+
         PlayerPrefs.SetFloat(PrefBgm, clamped);
         PlayerPrefs.Save();
     }
@@ -77,7 +116,10 @@ public class AudioManager : MonoBehaviour
     {
         float clamped = Mathf.Clamp(linear, 0.0001f, 1f);
         float dB = Mathf.Log10(clamped) * 20f;
-        _audioMixer.SetFloat(MixerParamSfx, dB);
+
+        if (_audioMixer != null)
+            _audioMixer.SetFloat(MixerParamSfx, dB);
+
         PlayerPrefs.SetFloat(PrefSfx, clamped);
         PlayerPrefs.Save();
     }
@@ -88,14 +130,15 @@ public class AudioManager : MonoBehaviour
     {
         if (_bgmSource == null || clip == null) return;
         if (_bgmSource.clip == clip && _bgmSource.isPlaying) return;
+
         _bgmSource.clip = clip;
         _bgmSource.Play();
     }
 
     public void StopBgm()
     {
-        if (_bgmSource == null) return;
-        _bgmSource.Stop();
+        if (_bgmSource != null)
+            _bgmSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)

@@ -10,25 +10,6 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject quitConfirmPanel;
 
-    [Header("Buttons")]
-    [SerializeField] private Button btnBack;
-    [SerializeField] private Button btnSettings;
-    [SerializeField] private Button btnQuit;
-    [SerializeField] private Button btnOk;     
-    [SerializeField] private Button btnCancel; 
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-
-        btnBack.onClick.AddListener(OnBack);
-        btnSettings.onClick.AddListener(OnSettings);
-        btnQuit.onClick.AddListener(OnQuit);
-
-        btnOk.onClick.AddListener(OnConfirmQuit);
-        btnCancel.onClick.AddListener(OnCancelQuit);
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -38,36 +19,41 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    private void OnBack()
+    // BackButton
+    public void OnBack()
     {
         if (menuPopup != null)
             menuPopup.SetActive(false);
     }
 
-    private void OnSettings()
+    // OptionButton
+    public void OnSettings()
     {
         if (optionPanel != null)
             optionPanel.SetActive(true);
     }
 
-    private void OnQuit()
+    // MenuQuit Button
+    public void OnQuit()
     {
         if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(true); 
+            quitConfirmPanel.SetActive(true);
     }
 
-    private void OnConfirmQuit()
+    // QuitPanel - OkButton
+    public void OnConfirmQuit()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false; 
 #else
-        Application.Quit();
+        Application.Quit(); 
 #endif
     }
 
-    private void OnCancelQuit()
+    // QuitPanel - QuitButton
+    public void OnCancelQuit()
     {
         if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(false); 
+            quitConfirmPanel.SetActive(false);
     }
 }
