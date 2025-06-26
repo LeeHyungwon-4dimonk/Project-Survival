@@ -20,19 +20,31 @@ public class CSVToSO
         {
             string[] splitData = s.Split(",");
 
-            if(splitData.Length != 6 )
+            if(splitData.Length != 9 )
             {
-                Debug.Log($"{s} could not be imported.");
+                Debug.LogWarning($"{s} could not be imported.");
                 return;
             }
 
             ItemSO item = ScriptableObject.CreateInstance<ItemSO>();
-            item.Name = splitData[0];
-            item.Description = splitData[1];
-            float.TryParse(splitData[2], out item.Weight);
-            Enum.TryParse<ItemType>(splitData[3], true, out item.Type);
-            int.TryParse(splitData[4], out item.MaxStackSize);
-            int.TryParse(splitData[5], out item.Energy);
+            int.TryParse(splitData[0], out item.ItemId);
+            item.Name = splitData[1];
+            item.Description = splitData[2];
+            float.TryParse(splitData[3], out item.Weight);
+            Enum.TryParse<ItemType>(splitData[4], true, out item.Type);
+            int.TryParse(splitData[5], out item.MaxStackSize);
+            int.TryParse(splitData[6], out item.Energy);
+
+            string spritePath = splitData[7];
+            string prefabPath = splitData[8];
+
+            item.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
+            item.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+
+            if (item.Icon == null)
+                Debug.LogWarning($"Sprite not found at path: {spritePath}");
+            if (item.Prefab == null)
+                Debug.LogWarning($"Prefab not found at path: {prefabPath}");
 
             AssetDatabase.CreateAsset(item, $"Assets/LHW/ItemData/{item.Name}.asset");
         }
