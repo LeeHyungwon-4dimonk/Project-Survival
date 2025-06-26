@@ -24,6 +24,27 @@ public class GameManager : MonoBehaviour
 
 
 
+
+    #region private fields
+
+    private InGameUIManager _inGameUIManager;
+
+    #endregion // private fields
+
+
+
+
+
+    #region properties
+
+    public InGameUIManager InGameUIManager { get; set; }
+
+    #endregion
+
+
+
+
+
     #region public funcs
 
     public void StartGame()
