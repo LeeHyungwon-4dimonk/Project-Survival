@@ -8,6 +8,7 @@ public enum ItemType { Material, Usable, Equip }
 [CreateAssetMenu(fileName = "New Item", menuName = "Assets/New Item")]
 public class ItemSO : ScriptableObject
 {
+    public int ItemId;
     public string Name;
     public string Description;
     public float Weight;
