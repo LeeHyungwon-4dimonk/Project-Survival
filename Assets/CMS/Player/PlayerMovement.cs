@@ -8,6 +8,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
 
+    private bool _canRun = true;
+    private bool _isRunning = false;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -19,36 +22,62 @@ public class PlayerMovement : MonoBehaviour
         _moveInput.x = Input.GetAxisRaw("Horizontal");
         _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput.Normalize();
-
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Debug.Log("Shift");
-        }
-        
     }
 
     private void FixedUpdate()
     {
-        float speed;
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (_moveInput.sqrMagnitude == 0f)
+        {
+            _isRunning = false;
+            RecoverStamina();
+            return;
+        }
+
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseDir = ((Vector2)mouseWorldPos - _rb.position).normalized;
+        float dot = Vector2.Dot(_moveInput, mouseDir);
+        bool isForward = dot > 0.5f;
+
+        float speed = _playerStats.MoveSpeed;
+        bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
+
+        if (_playerStats.CurrentStamina <= 0f)
+        {
+            _canRun = false;
+            _isRunning = false;
+        }
+
+        if (!_isRunning && shiftHeld && _canRun && _playerStats.CurrentStamina >= 10f)
+        {
+            _isRunning = true;
+        }
+  
+        if (_isRunning && shiftHeld)
         {
             speed = _playerStats.RunSpeed;
+            _playerStats.DecreaseStamina(_playerStats.StaminaDecreaseRate * Time.fixedDeltaTime);
         }
         else
         {
-            speed = _playerStats.MoveSpeed;
+            _isRunning = false;
+            RecoverStamina();
         }
-     
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseDir = (mouseWorldPos - transform.position).normalized;
 
-        float angle = Vector2.Angle(_moveInput, mouseDir);
-  
-        if (angle > 90f)
+        if (!isForward)
         {
-            speed *= 0.8f; 
+            speed *= 0.8f;
         }
-  
+
         _rb.MovePosition(_rb.position + _moveInput * speed * Time.fixedDeltaTime);
+    }
+
+    private void RecoverStamina()
+    {
+        _playerStats.RecoverStamina(_playerStats.StaminaRecoveryRate * Time.fixedDeltaTime);
+
+        if (_playerStats.CurrentStamina >= 50f)
+        {
+            _canRun = true;
+        }
     }
 }

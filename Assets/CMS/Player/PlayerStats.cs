@@ -9,22 +9,32 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float _maxHunger = 100f;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _runSpeed = 7f;
+    [SerializeField] private float _maxStamina = 100f;
+    [SerializeField] private float _staminaDecreaseRate = 10f;   
+    [SerializeField] private float _staminaRecoveryRate = 10f;
 
     private float _currentHealth;
     private float _currentHydration;
     private float _currentHunger;
-
+    private float _currentStamina;
+    public bool IsStaminaEmpty => _currentStamina <= 0f;
     public float Health => _currentHealth;
     public float Hydration => _currentHydration;
     public float Hunger => _currentHunger;
     public float MoveSpeed => _moveSpeed;
     public float RunSpeed => _runSpeed;
+    public float MaxStamina => _maxStamina;
+    public float CurrentStamina => _currentStamina;
+    public float StaminaDecreaseRate => _staminaDecreaseRate;
+    public float StaminaRecoveryRate => _staminaRecoveryRate;
+
 
     private void Awake()
     {
         _currentHealth = _maxHealth;
         _currentHydration = _maxHydration;
         _currentHunger = _maxHunger;
+        _currentStamina = _maxStamina;
     }
 
     private void Start()
@@ -39,17 +49,17 @@ public class PlayerStats : MonoBehaviour
             DecreaseSurvivalStats();
             CheckDeath();
 
-            Debug.Log($"Health: {_currentHealth}, Hydration: {_currentHydration}, Hunger: {_currentHunger}");
+            Debug.Log($"Health: {_currentHealth}, Hydration: {_currentHydration}, Hunger: {_currentHunger}, Stamina: {_currentStamina}");
 
-            yield return new WaitForSeconds(1f); // 1초 간격
+            yield return new WaitForSeconds(1f); 
         }
     }
 
     private void DecreaseSurvivalStats()
     {
-        float hydrationDecreaseRate = 0.5f; // 수분 감소
-        float hungerDecreaseRate = 0.3f; // 허기 감소
-        float decreaseRate = 1f; // 건강 감소
+        float hydrationDecreaseRate = 0.5f; 
+        float hungerDecreaseRate = 0.3f;  
+        float decreaseRate = 1f; // Health Decrease Rate
 
         _currentHydration -= hydrationDecreaseRate;
         _currentHunger -= hungerDecreaseRate;
@@ -84,5 +94,17 @@ public class PlayerStats : MonoBehaviour
         {
             CheckDeath();
         }
+    }
+
+    public void DecreaseStamina(float amount)
+    {
+        _currentStamina -= amount;
+        _currentStamina = Mathf.Clamp(_currentStamina, 0, _maxStamina);
+    }
+
+    public void RecoverStamina(float amount)
+    {
+        _currentStamina += amount;
+        _currentStamina = Mathf.Clamp(_currentStamina, 0, _maxStamina);
     }
 }
