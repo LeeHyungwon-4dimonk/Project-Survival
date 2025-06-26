@@ -8,18 +8,7 @@ public class MenuController : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject menuPopup;
     [SerializeField] private GameObject optionPanel;
-
-    [Header("Buttons")]
-    [SerializeField] private Button btnBack;      
-    [SerializeField] private Button btnSettings;  
-    [SerializeField] private Button btnQuit;      
-
-    private void Awake()
-    {
-        btnBack.onClick.AddListener(OnBack);
-        btnSettings.onClick.AddListener(OnSettings);
-        btnQuit.onClick.AddListener(OnQuit);
-    }
+    [SerializeField] private GameObject quitConfirmPanel;
 
     private void Update()
     {
@@ -30,24 +19,41 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    private void OnBack()
+    // BackButton
+    public void OnBack()
     {
         if (menuPopup != null)
             menuPopup.SetActive(false);
     }
 
-    private void OnSettings()
+    // OptionButton
+    public void OnSettings()
     {
         if (optionPanel != null)
             optionPanel.SetActive(true);
     }
 
-    private void OnQuit()
+    // MenuQuit Button
+    public void OnQuit()
+    {
+        if (quitConfirmPanel != null)
+            quitConfirmPanel.SetActive(true);
+    }
+
+    // QuitPanel - OkButton
+    public void OnConfirmQuit()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false; 
 #else
-        Application.Quit();
+        Application.Quit(); 
 #endif
+    }
+
+    // QuitPanel - QuitButton
+    public void OnCancelQuit()
+    {
+        if (quitConfirmPanel != null)
+            quitConfirmPanel.SetActive(false);
     }
 }

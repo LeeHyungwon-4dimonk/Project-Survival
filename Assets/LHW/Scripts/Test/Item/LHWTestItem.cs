@@ -1,7 +1,5 @@
 using UnityEngine;
 
-public enum ItemType { Material, Usable, Equip }
-
 [CreateAssetMenu (fileName = "LHWTestItem", menuName = "Data/LHWTestItem")]
 public abstract class LHWTestItem : ScriptableObject
 {

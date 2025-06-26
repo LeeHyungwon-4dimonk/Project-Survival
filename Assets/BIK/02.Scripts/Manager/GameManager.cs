@@ -20,4 +20,50 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion // Singleton
+
+
+
+
+
+    #region private fields
+
+    private InGameUIManager _inGameUIManager;
+
+    #endregion // private fields
+
+
+
+
+
+    #region properties
+
+    public InGameUIManager InGameUIManager { get; set; }
+
+    #endregion
+
+
+
+
+
+    #region public funcs
+
+    public void StartGame()
+    {
+        SceneManager.Instance.LoadScene("InGameScene");
+    }
+
+    #endregion // public funcs
+}
+
+
+public class GameData
+{
+
+
+
+
+    public GameData()
+    {
+
+    }
 }
