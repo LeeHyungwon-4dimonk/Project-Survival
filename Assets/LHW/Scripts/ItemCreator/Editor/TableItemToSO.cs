@@ -4,11 +4,11 @@ using System.IO;
 using System;
 
 /// <summary>
-/// Create Item base on CSV file.
+/// Create Item base on Table Data.(Will be fixed when table is created)
 /// How to use : check the editor bar - Utilities - Generate Item
 /// Should not be contained in the build file.
 /// </summary>
-public class CSVToSO
+public class TableItemToSO
 {
     private static string _itemCSVPath = "/LHW/Scripts/ItemCreator/Editor/CSV/TestItem.csv";
     [MenuItem("Utilities/Generate Item")]
@@ -38,6 +38,7 @@ public class CSVToSO
             string spritePath = splitData[7];
             string prefabPath = splitData[8];
 
+            // If Item Path is selected, path will be edited.
             item.Icon = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
             item.Prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
 

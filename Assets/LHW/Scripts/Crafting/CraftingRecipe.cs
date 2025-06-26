@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,6 +8,6 @@ using UnityEngine;
 public class CraftingRecipe : ScriptableObject
 {
     [SerializeField] public float craftingTime;
-    [SerializeField] public ItemSO[] reqItem;
+    [SerializeField] public List<ItemSO> reqItem = new();
     [SerializeField] public ItemSO resultItem;
 }
