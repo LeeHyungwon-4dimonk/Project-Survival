@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool _canRun = true;
     private bool _isRunning = false;
+    public Vector2 MoveInput => _moveInput;
+    public bool IsRunning => _isRunning;
 
     private void Awake()
     {
