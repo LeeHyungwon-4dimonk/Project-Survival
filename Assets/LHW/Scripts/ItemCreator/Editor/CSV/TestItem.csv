@@ -1,3 +1,1 @@
-MpPotion,마나를 회복하는 아이템이다,0.5,Usable,10,10
-Shield,몬스터의 공격을 방어할 수 있다,2,Equip,1,0
-Wood,목자재 불에 잘 탈 것 같다,1,Material,10,50
+1001,HpPotion,체력포션이다.,0.5,Usable,10,5,Assets/00.Imports/LHWTest/HpPotion.png,Assets/LHW/Prefabs/Potion.Prefab
