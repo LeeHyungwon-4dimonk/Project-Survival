@@ -135,7 +135,7 @@ public class InventoryManager : MonoBehaviour
     private int InventoryTryAdd(ItemSO item, int index, int amount)
     {
         _inventoryItem[index] = item;
-        if (amount < (item.MaxStackSize - _inventoryStack[index]))
+        if (amount <= (item.MaxStackSize - _inventoryStack[index]))
         {
             _inventoryStack[index] += amount;
             OnSlotChanged?.Invoke(index);

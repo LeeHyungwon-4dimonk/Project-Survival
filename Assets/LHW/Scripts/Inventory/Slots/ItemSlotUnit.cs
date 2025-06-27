@@ -12,7 +12,8 @@ public abstract class ItemSlotUnit : MonoBehaviour
     protected ItemSO _item;
     public ItemSO Item => _item;
 
-    protected int mItemCount;
+    protected int _itemStack;
+    public int ItemStack => _itemStack;
 
     public abstract void Awake();
 
