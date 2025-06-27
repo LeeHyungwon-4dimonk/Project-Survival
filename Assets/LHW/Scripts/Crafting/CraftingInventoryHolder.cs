@@ -1,10 +1,18 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Crafting Inventory.
 /// </summary>
-public class CraftingInventoryHolder : Inventory, IInteractable
+public class CraftingInventoryHolder : MonoBehaviour, IInteractable
 {
+    [SerializeField] public Image CraftingPanel;
+
+    protected void Awake()
+    {
+        CraftingPanel.gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// Activate Interaction UI
     /// </summary>
@@ -21,13 +29,13 @@ public class CraftingInventoryHolder : Inventory, IInteractable
     public KeyCode GetKey()
     {
         return KeyCode.E;
-    }
+    }    
 
     /// <summary>
     /// Activate Crafting Inventory UI.
     /// </summary>
     public void Interact()
     {
-        OnDynamicInventoryDisplayRequested?.Invoke(_inventorySystem);
+        CraftingPanel.gameObject.SetActive(true);
     }
 }

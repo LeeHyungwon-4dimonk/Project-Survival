@@ -23,6 +23,7 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
         _inventorySystem = invToDisplay;
         if(_inventorySystem != null) _inventorySystem.OnInventorySlotChanged += UpdateSlot;
         AssignSlot(invToDisplay);
+
     }
 
     /// <summary>
@@ -51,12 +52,15 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     // It need to be applied Object Pool Patterns?
     private void ClearSlots()
     {
+        if(_inventorySystem != null) 
+            _inventorySystem.OnInventorySlotChanged -= UpdateSlot;
+
         foreach(var item in transform.Cast<Transform>())
         {
             Destroy(item.gameObject);
         }
 
-        if(_slotDictionary != null) _slotDictionary.Clear();
+        _slotDictionary?.Clear();
     }
 
     private void OnDisable()

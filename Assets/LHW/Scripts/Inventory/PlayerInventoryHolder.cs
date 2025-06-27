@@ -12,7 +12,8 @@ public class PlayerInventoryHolder : Inventory
 
     public InventorySystem PlayerInventorySystem => _playerInventorySystem;
 
-    public static Action<InventorySystem> OnPlayerBackpackDisplayRequested;
+    public static event Action<InventorySystem> OnPlayerBackpackDisplayRequested;
+    public static event Action<InventorySystem> OnPlayerCraftingDisplayRequested;
 
     protected override void Awake()
     {
@@ -23,6 +24,8 @@ public class PlayerInventoryHolder : Inventory
 
     private void Update()
     {
+        if(Keyboard.current.eKey.wasPressedThisFrame)
+            OnPlayerCraftingDisplayRequested?.Invoke(_playerInventorySystem);
         if(Keyboard.current.tabKey.wasPressedThisFrame)
             OnPlayerBackpackDisplayRequested?.Invoke(_playerInventorySystem);
     }

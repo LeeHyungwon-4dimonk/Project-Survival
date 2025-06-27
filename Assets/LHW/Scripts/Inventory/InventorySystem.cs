@@ -11,7 +11,7 @@ public class InventorySystem
     public List<InventorySlots> InventorySlots => _inventorySlots;
 
     public int InventorySize => InventorySlots.Count;
-    public Action<InventorySlots> OnInventorySlotChanged;
+    public event Action<InventorySlots> OnInventorySlotChanged;
 
     /// <summary>
     /// Constructor that sets the size of slots.

@@ -30,5 +30,6 @@ public class ChestInventory : Inventory, IInteractable
     public void Interact()
     {
         OnDynamicInventoryDisplayRequested?.Invoke(_inventorySystem);
+        Debug.Log("상호작용");
     }
 }

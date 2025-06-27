@@ -78,7 +78,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2207780490500103746}
   m_HandleRect: {fileID: 0}
@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 6965322543649876521}
   - component: {fileID: 3376579950703814750}
   - component: {fileID: 7759848750974484014}
+  - component: {fileID: 3042525350979517432}
   m_Layer: 5
   m_Name: Panel Crafting Table
   m_TagString: Untagged
@@ -491,6 +492,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3042525350979517432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509914725593448417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea4d946374984f49be09e8cc2f90d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1633074051616815201
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 55.4216}
+  m_AnchoredPosition: {x: 0, y: 55.42159}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2010074411707960312
@@ -1605,7 +1618,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 2316889218725950551}
   m_HandleRect: {fileID: 0}
@@ -1613,7 +1626,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.567
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2217,6 +2230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4373117727724919172}
   - component: {fileID: 7019482103238446941}
+  - component: {fileID: 6435441494071200871}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -2294,6 +2308,20 @@ MonoBehaviour:
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 1
   m_ConstraintCount: 5
+--- !u!114 &6435441494071200871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497901182687807054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218ffb8178e16ca4c91ff38e3264f182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mouseInventoryItem: {fileID: 0}
+  _slotPrefab: {fileID: 69504207415966108, guid: 7d54371faf5269547b2784a8f9bf3797, type: 3}
 --- !u!1 &6599349383160578181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2621,7 +2649,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3723735534181244084}
   m_Direction: 2
   m_Value: 0.00000055064413
-  m_Size: 0.8152613
+  m_Size: 0.8152002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
