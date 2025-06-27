@@ -6,6 +6,7 @@ using UnityEngine;
 public class LHWPlayerController : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
+    [SerializeField] private GameObject panel;
 
     private Rigidbody2D _rigid;
     private Vector2 inputVec;
@@ -20,6 +21,10 @@ public class LHWPlayerController : MonoBehaviour
     void Update()
     {
         PlayerInput();
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            panel.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
