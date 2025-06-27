@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,11 +11,12 @@ public class PlayerInteractionHandler : MonoBehaviour
     [SerializeField] private FarmingUIController _uiController;
 
     private IInteractable _currentInteractable;
-    private Collider2D _currentHit; // 추가
+    private Collider2D[] _currentHits;
     private float _holdTime;
     private float _holdThreshold = 1.0f;
 
     private InteractableObject _lastHighlighted;
+    private Transform _nearestTransform;
 
     private void Update()
     {
@@ -22,8 +24,7 @@ public class PlayerInteractionHandler : MonoBehaviour
 
         if (_currentInteractable != null)
         {
-            _uiController.Show(_currentInteractable.GetDescription(), _currentHit.transform);
-            // UI 띄우기
+            _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
             if (Input.GetKey(KeyCode.E))
             {
@@ -42,21 +43,18 @@ public class PlayerInteractionHandler : MonoBehaviour
         }
         else
         {
-            _uiController.Hide(); // UI 숨기기
+            _uiController.Hide();
         }
     }
 
     private void DetectInteractable()
     {
-        // 감지
-        _currentHit = Physics2D.OverlapCircle(transform.position, _interactRange, _interactableLayer);
+        _currentHits = Physics2D.OverlapCircleAll(transform.position, _interactRange, _interactableLayer);
 
-        // 감지 안 된 경우 처리
-        if (_currentHit == null)
+        if (_currentHits.Length == 0)
         {
             Debug.Log("Hit 없음");
 
-            // 이전 하이라이트 꺼줌
             if (_lastHighlighted != null)
             {
                 _lastHighlighted.SetHighlight(false);
@@ -67,12 +65,23 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
 
-        Debug.Log($"감지됨: {_currentHit.name}");
+        // 거리순 정렬
+        List<Collider2D> sortedHits = new List<Collider2D>(_currentHits);
+        sortedHits.Sort((a, b) =>
+            Vector2.Distance(transform.position, a.transform.position)
+            .CompareTo(Vector2.Distance(transform.position, b.transform.position))
+        );
 
-        _currentInteractable = _currentHit.GetComponent<IInteractable>();
+        // 감지된 이름 출력
+        string names = string.Join(", ", sortedHits.Select(hit => hit.name));
+        Debug.Log($"감지됨: {names}");
 
-        // 새로운 감지된 오브젝트가 이전과 다르면 하이라이트 갱신
-        var currentHighlight = _currentHit.GetComponent<InteractableObject>();
+        // 가장 가까운 오브젝트 선택
+        Collider2D nearest = sortedHits[0];
+        _currentInteractable = nearest.GetComponent<IInteractable>();
+        _nearestTransform = nearest.transform;
+
+        var currentHighlight = nearest.GetComponent<InteractableObject>();
         if (currentHighlight != null && currentHighlight != _lastHighlighted)
         {
             if (_lastHighlighted != null)
@@ -88,5 +97,4 @@ public class PlayerInteractionHandler : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _interactRange);
     }
-
 }
