@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerInteractionHandler : MonoBehaviour
@@ -14,8 +13,6 @@ public class PlayerInteractionHandler : MonoBehaviour
     private Collider2D[] _currentHits;
     private float _holdTime;
     private float _holdThreshold = 1.0f;
-
-    private InteractableObject _lastHighlighted;
     private Transform _nearestTransform;
 
     private void Update()
@@ -37,9 +34,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             }
 
             if (Input.GetKeyUp(KeyCode.E))
-            {
                 _holdTime = 0f;
-            }
         }
         else
         {
@@ -55,41 +50,34 @@ public class PlayerInteractionHandler : MonoBehaviour
         {
             Debug.Log("Hit 없음");
 
-            if (_lastHighlighted != null)
-            {
-                _lastHighlighted.SetHighlight(false);
-                _lastHighlighted = null;
-            }
+            foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
+                obj.SetOutline(false);
 
             _currentInteractable = null;
+            _nearestTransform = null;
             return;
         }
 
-        // 거리순 정렬
-        List<Collider2D> sortedHits = new List<Collider2D>(_currentHits);
-        sortedHits.Sort((a, b) =>
-            Vector2.Distance(transform.position, a.transform.position)
-            .CompareTo(Vector2.Distance(transform.position, b.transform.position))
-        );
+        var sortedHits = _currentHits
+            .OrderBy(hit => Vector2.Distance(transform.position, hit.transform.position))
+            .ToList();
 
-        // 감지된 이름 출력
         string names = string.Join(", ", sortedHits.Select(hit => hit.name));
         Debug.Log($"감지됨: {names}");
 
-        // 가장 가까운 오브젝트 선택
-        Collider2D nearest = sortedHits[0];
+        foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
+            obj.SetOutline(false);
+
+        foreach (var hit in sortedHits)
+        {
+            var adapter = hit.GetComponent<InteractableObjectAdapter>();
+            if (adapter != null)
+                adapter.SetOutline(true);
+        }
+
+        var nearest = sortedHits[0];
         _currentInteractable = nearest.GetComponent<IInteractable>();
         _nearestTransform = nearest.transform;
-
-        var currentHighlight = nearest.GetComponent<InteractableObject>();
-        if (currentHighlight != null && currentHighlight != _lastHighlighted)
-        {
-            if (_lastHighlighted != null)
-                _lastHighlighted.SetHighlight(false);
-
-            currentHighlight.SetHighlight(true);
-            _lastHighlighted = currentHighlight;
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -98,3 +86,4 @@ public class PlayerInteractionHandler : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _interactRange);
     }
 }
+

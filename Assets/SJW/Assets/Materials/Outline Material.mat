@@ -14,9 +14,9 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _OUTLINEMODE_SOLID
-  - _OUTLINEPOSITION_INSIDE_OVER_SPRITE
+  - _OUTLINEPOSITION_INSIDE_UNDER_SPRITE
   - _OUTLINESHAPE_CONTOUR
-  - _TILEMODE_TILE
+  - _TILEMODE_STRETCH
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -55,11 +55,11 @@ Material:
     - _EnableExternalAlpha: 0
     - _OutlineEnabled: 0
     - _OutlineMode: 0
-    - _OutlinePosition: 1
+    - _OutlinePosition: 0
     - _OutlineShape: 0
     - _Thickness: 1
-    - _TileMode: 1
-    - _Weight: 0.483
+    - _TileMode: 0
+    - _Weight: 0.5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
@@ -67,5 +67,5 @@ Material:
     - _GradientOutline2: {r: 1, g: 1, b: 1, a: 1}
     - _ImageOutline: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SolidOutline: {r: 0.17895651, g: 1, b: 0, a: 1}
+    - _SolidOutline: {r: 0.5238683, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []

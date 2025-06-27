@@ -2,28 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(OutlineControllable))]
 public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 {
-    private InteractableObject _interactableObject;
+    private OutlineControllable _outline;
+    private LootableObject _lootable;
 
     private void Awake()
     {
-        _interactableObject = GetComponent<InteractableObject>();
+        _outline = GetComponent<OutlineControllable>();
+        _lootable = GetComponent<LootableObject>();
     }
 
     public void Interact()
     {
-        _interactableObject?.OnInteract();
+        if (_lootable != null)
+            _lootable.OnLoot();
+        else
+            Debug.Log($"{gameObject.name} 은 루팅 불가능한 구조물");
     }
 
-    public string GetDescription()
-    {
-        return "E - 확인하기"; // 나중에 확장
-    }
+    public string GetDescription() => "E - 확인하기";
+    public KeyCode GetKey() => KeyCode.E;
 
-    public KeyCode GetKey()
+    public void SetOutline(bool on)
     {
-        return KeyCode.E;
+        _outline?.SetOutlineEnabled(on);
     }
 }
-
