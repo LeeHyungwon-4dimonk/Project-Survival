@@ -23,7 +23,7 @@ public class PlayerInteractionHandler : MonoBehaviour
         {
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.Space))
             {
                 _holdTime += Time.deltaTime;
                 if (_holdTime >= _holdThreshold)
@@ -33,7 +33,7 @@ public class PlayerInteractionHandler : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyUp(KeyCode.E))
+            if (Input.GetKeyUp(KeyCode.Space))
                 _holdTime = 0f;
         }
         else
