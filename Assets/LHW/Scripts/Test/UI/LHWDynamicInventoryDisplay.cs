@@ -16,7 +16,7 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
 
     private void OnEnable()
     {
-        _inventoryHolder.TestInit();
+        //_inventoryHolder.TestInit();
     }
 
     /// <summary>
@@ -26,9 +26,11 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     public void RefreshDynamicInventory(InventorySystem invToDisplay)
     {
         Debug.Log("Áö¿ò");
+        //Debug.Log(invToDisplay.InventorySlots[0].Data.Name);
         ClearSlots();
         _inventorySystem = invToDisplay;
         if(_inventorySystem != null) _inventorySystem.OnInventorySlotChanged += UpdateSlot;
+        //Debug.Log(_inventorySystem.InventorySlots[0].Data.Name);
         AssignSlot(invToDisplay);
     }
 
@@ -58,7 +60,7 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     // It need to be applied Object Pool Patterns?
     private void ClearSlots()
     {
-        if(_inventorySystem != null) 
+        if(_inventorySystem != null)
             _inventorySystem.OnInventorySlotChanged -= UpdateSlot;
 
         foreach(var item in transform.Cast<Transform>())
