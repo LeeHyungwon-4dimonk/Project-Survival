@@ -54,7 +54,7 @@ public class PlayerInteractionHandler : MonoBehaviour
         // 감지 안 된 경우 처리
         if (_currentHit == null)
         {
-            Debug.Log("Hit 없음");
+            //Debug.Log("Hit 없음");
 
             // 이전 하이라이트 꺼줌
             if (_lastHighlighted != null)
@@ -67,7 +67,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
 
-        Debug.Log($"감지됨: {_currentHit.name}");
+        //Debug.Log($"감지됨: {_currentHit.name}");
 
         _currentInteractable = _currentHit.GetComponent<IInteractable>();
 

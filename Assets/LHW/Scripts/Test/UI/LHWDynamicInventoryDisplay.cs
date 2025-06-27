@@ -8,9 +8,15 @@ using System.Linq;
 public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
 {
     [SerializeField] protected LHWInventorySlot_UI _slotPrefab;
+    [SerializeField] protected PlayerInventoryHolder _inventoryHolder;
     protected override void Start()
     {
         base.Start();
+    }
+
+    private void OnEnable()
+    {
+        _inventoryHolder.TestInit();
     }
 
     /// <summary>
@@ -19,11 +25,11 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     /// <param name="invToDisplay"></param>
     public void RefreshDynamicInventory(InventorySystem invToDisplay)
     {
+        Debug.Log("Áö¿ò");
         ClearSlots();
         _inventorySystem = invToDisplay;
         if(_inventorySystem != null) _inventorySystem.OnInventorySlotChanged += UpdateSlot;
         AssignSlot(invToDisplay);
-
     }
 
     /// <summary>

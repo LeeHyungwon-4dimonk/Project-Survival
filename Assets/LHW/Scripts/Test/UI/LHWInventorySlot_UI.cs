@@ -40,7 +40,7 @@ public class LHWInventorySlot_UI : MonoBehaviour
             _itemSprite.sprite = slot.Data.Icon;
             _itemSprite.color = Color.white;
             if (slot.StackSize > 1) _itemCount.text = slot.StackSize.ToString();
-            else _itemCount.text = "";
+            else _itemCount.text = "";            
         }
         else
         {
