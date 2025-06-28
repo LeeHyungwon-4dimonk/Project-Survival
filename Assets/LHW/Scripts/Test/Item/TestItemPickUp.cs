@@ -9,8 +9,11 @@ public class TestItemPickUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            InventoryManager.Instance.AddItemToInventory(data);
-            gameObject.SetActive(false);
+            bool itemAddSuccess = InventoryManager.Instance.AddItemToInventory(data);
+            if (itemAddSuccess)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -1,7 +1,5 @@
 using System;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -47,7 +45,8 @@ public class InventoryManager : MonoBehaviour
     private ItemSO[] _hotBarItem;
     private int[] _hotBarStack;
 
-    public static event Action<int> OnSlotChanged;
+    public static event Action<int> OnInventorySlotChanged;
+    public static event Action<int> OnHotbarSlotChanged;
 
     public ItemSO ReadFromInventory(int index, out int stack)
     {
@@ -61,29 +60,37 @@ public class InventoryManager : MonoBehaviour
         return _hotBarItem[index];
     }
 
-    public ItemSO GetItemFromInventory(int index)
+    public ItemSO GetItemFromInventory(int index, out int stack)
     {
-        if (_inventoryItem[index] == null) return null;
+        if (_inventoryItem[index] == null)
+        {
+            stack = 0;
+            return null;
+        }
         ItemSO item = _inventoryItem[index];
-        _inventoryStack[index]--;
+        stack = _inventoryStack[index];
+        _inventoryStack[index] = 0;
         if (_inventoryStack[index] == 0)
         {
             _inventoryItem[index] = null;
-            _inventoryStack[index] = -1;
         }
-        OnSlotChanged?.Invoke(index);
+        OnInventorySlotChanged?.Invoke(index);
         return item;
     }
 
-    public ItemSO GetItemFromHotBar(int index)
+    public ItemSO GetItemFromHotBar(int index, out int stack)
     {
-        if (_hotBarItem[index] == null) return null;
+        if (_hotBarItem[index] == null)
+        {
+            stack = 0;
+            return null;
+        }
         ItemSO item = _hotBarItem[index];
-        _hotBarStack[index]--;
+        stack = _hotBarStack[index];
+        _hotBarStack[index] = 0;
         if (_hotBarStack[index] == 0)
         {
             _hotBarItem[index] = null;
-            _hotBarStack[index] = -1;
         }
         return item;
     }
@@ -97,7 +104,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_inventoryItem[i] == item)
                 {
-                    remain = InventoryTryAdd(item, i, amount);
+                    remain = InventoryTryAdd(item, i, amount);                    
                     if (remain <= 0) break;
                 }
             }
@@ -109,12 +116,18 @@ public class InventoryManager : MonoBehaviour
                 if (_inventoryItem[i] == null)
                 {
                     remain = InventoryTryAdd(item, i, amount);
-                    if (remain == 0) break;
+                    if (remain <= 0) break;
                 }
             }
+
+            if (remain <= 0) break;
+
+            else
+            {
+                Debug.Log("inventory full"); return false;
+            }
         }
-        if (remain > 0) return false;
-        else return true;
+        return true;
     }
 
     public void AddItemToHotBar(ItemSO item)
@@ -126,28 +139,38 @@ public class InventoryManager : MonoBehaviour
             if (_hotBarItem[i] == null)
             {
                 _hotBarItem[i] = item;
-                OnSlotChanged?.Invoke(i);
+                OnHotbarSlotChanged?.Invoke(i);
                 break;
             }
         }
     }
 
+    /// <summary>
+    /// Try add item.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="index"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     private int InventoryTryAdd(ItemSO item, int index, int amount)
     {
         _inventoryItem[index] = item;
+        // If the stack is enough.
         if (amount <= (item.MaxStackSize - _inventoryStack[index]))
         {
             _inventoryStack[index] += amount;
-            OnSlotChanged?.Invoke(index);
+            OnInventorySlotChanged?.Invoke(index);
             return 0;
         }
+        // If the stack is not enough and has space.
         else if (item.MaxStackSize > _inventoryStack[index])
         {
             _inventoryStack[index] = item.MaxStackSize;
             amount -= (item.MaxStackSize - _inventoryStack[index]);
-            OnSlotChanged?.Invoke(index);
+            OnInventorySlotChanged?.Invoke(index);
             return amount;
         }
+        // If the stack is full.
         else
         {
             return amount;

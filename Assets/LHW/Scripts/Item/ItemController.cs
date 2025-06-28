@@ -13,11 +13,13 @@ public class ItemController : MonoBehaviour
         else if(_itemSO.Type == ItemType.Usable)
         {
             // TODO : Item Use - expendables
+            Debug.Log("소모품 소모");
         }
 
         else if(_itemSO.Type == ItemType.Equip)
         {
             // TODO : Item Equip
+            Debug.Log("장비 착용");
         }        
     }
 }

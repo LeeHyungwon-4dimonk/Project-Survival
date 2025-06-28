@@ -12,12 +12,12 @@ public class InventorySlotUnit : ItemSlotUnit
 
     private void OnEnable()
     {
-        InventoryManager.OnSlotChanged += UpdateUI;
+        InventoryManager.OnInventorySlotChanged += UpdateUI;
     }
 
     private void OnDisable()
     {
-        InventoryManager.OnSlotChanged -= UpdateUI;
+        InventoryManager.OnInventorySlotChanged -= UpdateUI;
     }
 
     public override void UpdateUI(int index)
@@ -36,10 +36,5 @@ public class InventorySlotUnit : ItemSlotUnit
             _itemStack = stack;
             _text.text = stack > 1 ? stack.ToString() : "";
         }
-    }
-
-    public override void Use(int index)
-    {
-        throw new System.NotImplementedException();
     }
 }

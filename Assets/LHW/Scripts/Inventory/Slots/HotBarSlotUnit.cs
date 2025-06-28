@@ -14,12 +14,12 @@ public class HotBarSlotUnit : ItemSlotUnit
 
     private void OnEnable()
     {
-        InventoryManager.OnSlotChanged += UpdateUI;
+        InventoryManager.OnHotbarSlotChanged += UpdateUI;
     }
 
     private void OnDisable()
     {
-        InventoryManager.OnSlotChanged -= UpdateUI;
+        InventoryManager.OnHotbarSlotChanged -= UpdateUI;
     }
 
     public override void UpdateUI(int index)
@@ -35,10 +35,5 @@ public class HotBarSlotUnit : ItemSlotUnit
             _image.sprite = _item.Icon;
             _text.text = stack > 1 ? stack.ToString() : "";
         }
-    }
-
-    public override void Use(int index)
-    {
-        throw new System.NotImplementedException();
     }
 }

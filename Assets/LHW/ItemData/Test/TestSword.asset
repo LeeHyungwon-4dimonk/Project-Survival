@@ -20,4 +20,4 @@ MonoBehaviour:
   MaxStackSize: 1
   Energy: 5
   Icon: {fileID: 21300000, guid: 33319d18ae756c44f8e6910891fbcf8a, type: 3}
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 3901152055224599566, guid: 02c6234118649ab48b0dcfc5dcf3d92b, type: 3}

@@ -1,8 +1,10 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class ItemSlotUnit : MonoBehaviour
+public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     [SerializeField] protected int _index;
 
@@ -19,5 +21,39 @@ public abstract class ItemSlotUnit : MonoBehaviour
 
     public abstract void UpdateUI(int index);
 
-    public abstract void Use(int index);
+    /// <summary>
+    /// Item Use when click
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_item != null)
+        {
+            _item.Prefab.GetComponent<ItemController>().Use();
+        }        
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(_item != null)
+        {            
+            DragSlot.Instance.DragSetSlot(this);
+            DragSlot.Instance.transform.position = eventData.position;
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (_item != null) DragSlot.Instance.transform.position = eventData.position;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        DragSlot.Instance.ClearDragSlot();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
 }
