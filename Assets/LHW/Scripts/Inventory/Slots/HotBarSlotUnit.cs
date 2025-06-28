@@ -22,7 +22,6 @@ public class HotBarSlotUnit : ItemSlotUnit
         }
         else
         {
-            Debug.Log(_item.Name);
             _image.color = Color.white;
             _image.sprite = _item.Icon;
             _text.text = stack > 1 ? stack.ToString() : "";

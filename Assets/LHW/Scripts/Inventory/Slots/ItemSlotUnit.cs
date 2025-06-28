@@ -1,7 +1,9 @@
+using System;
+using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
@@ -16,6 +18,9 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
 
     protected int _itemStack;
     public int ItemStack => _itemStack;
+
+    protected static int _startDragPoint;
+    protected static int _endDragPoint;
 
     public abstract void Awake();
 
@@ -34,16 +39,23 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
             InventoryManager.Instance.UseItem(_index);
 
             UpdateUI(_index);
-        }        
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(_item != null)
-        {            
+        _startDragPoint = -1;
+        _endDragPoint = -1;
+        if (_item != null)
+        {
             DragSlot.Instance.DragSetSlot(this);
             DragSlot.Instance.transform.position = eventData.position;
+            DragSlot.Instance.CurrentSlot = this;
+            _startDragPoint = this._index;
         }
+
+        Debug.Log($"{_startDragPoint} start");
+        Debug.Log($"{_endDragPoint} end");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -58,6 +70,11 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
 
     public void OnDrop(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+        _endDragPoint = this._index;
+
+        InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
+
+        Debug.Log($"{_startDragPoint} start");
+        Debug.Log($"{_endDragPoint} end");
     }
 }

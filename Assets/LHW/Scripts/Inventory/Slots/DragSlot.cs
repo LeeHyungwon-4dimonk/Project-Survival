@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class DragSlot : MonoBehaviour
 {
     static public DragSlot Instance;
-    public ItemSlotUnit SlotItem;
+    public ItemSlotUnit CurrentSlot;
 
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _text;
@@ -13,6 +13,7 @@ public class DragSlot : MonoBehaviour
     private void Start()
     {
         Instance = this;
+        
         _image.color = Color.clear;
         _text.text = "";
     }

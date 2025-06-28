@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class InventoryManager : MonoBehaviour
         _inventoryStack = new int[_inventoryItem.Length];
 
         _hotBarItem = new ItemSO[8];
-        _hotBarStack = new int[_hotBarItem.Length];
     }
 
     #endregion
@@ -43,10 +43,8 @@ public class InventoryManager : MonoBehaviour
     private int[] _inventoryStack;
 
     private ItemSO[] _hotBarItem;
-    private int[] _hotBarStack;
 
     public static event Action OnInventorySlotChanged;
-    public static event Action OnHotbarSlotChanged;
 
     public ItemSO ReadFromInventory(int index, out int stack)
     {
@@ -54,39 +52,35 @@ public class InventoryManager : MonoBehaviour
         return _inventoryItem[index];
     }
 
-    public ItemSO GetItemFromInventory(int index, out int stack)
+    public void MoveItemInInventory(int startIndex, int endIndex)
     {
-        if (_inventoryItem[index] == null)
+        if (startIndex == -1)
         {
-            stack = 0;
-            return null;
+            Debug.Log("Ω√¿€ƒ≠ø° æ∆¿Ã≈€ æ¯¿Ω");
+            return;
         }
-        ItemSO item = _inventoryItem[index];
-        stack = _inventoryStack[index];
-        _inventoryStack[index] = 0;
-        if (_inventoryStack[index] == 0)
+       
+        if (_inventoryItem[startIndex] != null && endIndex != -1 &&_inventoryItem[endIndex] == null)
         {
-            _inventoryItem[index] = null;
+            InventoryTryAdd(_inventoryItem[startIndex], endIndex, _inventoryStack[startIndex]);
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+            Debug.Log("¿Ãµøµ ");
         }
-        OnInventorySlotChanged?.Invoke();
-        return item;
-    }
+        else if(_inventoryItem[startIndex] != null && _inventoryItem[endIndex] != null)
+        {
+            ItemSO tempItem = _inventoryItem[endIndex];
+            int tempStack = _inventoryStack[endIndex];
 
-    public ItemSO GetItemFromHotBar(int index, out int stack)
-    {
-        if (_hotBarItem[index] == null)
-        {
-            stack = 0;
-            return null;
+            _inventoryItem[endIndex] = _inventoryItem[startIndex];
+            _inventoryStack[endIndex] = _inventoryStack[startIndex];
+
+            _inventoryItem[startIndex] = tempItem;
+            _inventoryStack[startIndex] = tempStack;
+            OnInventorySlotChanged?.Invoke();
+            Debug.Log("¿Ãµøµ ");
         }
-        ItemSO item = _hotBarItem[index];
-        stack = _hotBarStack[index];
-        _hotBarStack[index] = 0;
-        if (_hotBarStack[index] == 0)
-        {
-            _hotBarItem[index] = null;
-        }
-        return item;
     }
 
     /// <summary>
@@ -139,12 +133,15 @@ public class InventoryManager : MonoBehaviour
             if (_hotBarItem[i] == null)
             {
                 _hotBarItem[i] = item;
-                OnHotbarSlotChanged?.Invoke();
                 break;
             }
         }
     }
 
+    /// <summary>
+    /// Use Item.
+    /// </summary>
+    /// <param name="index"></param>
     public void UseItem(int index)
     {
         if (_inventoryItem[index] && _inventoryItem[index].Type != ItemType.Material)
