@@ -2858,6 +2858,7 @@ GameObject:
   - component: {fileID: 1030872419}
   - component: {fileID: 1030872418}
   - component: {fileID: 1030872417}
+  - component: {fileID: 1030872421}
   m_Layer: 2
   m_Name: MouseCanvas
   m_TagString: Untagged
@@ -2948,6 +2949,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &1030872421
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030872416}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1042684184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4277,6 +4290,14 @@ PrefabInstance:
     - target: {fileID: 513990412831352211, guid: facb52eedec1e06468624bf807a6c233, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086812324552812033, guid: facb52eedec1e06468624bf807a6c233, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0717497
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086812324552812033, guid: facb52eedec1e06468624bf807a6c233, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.05840707
       objectReference: {fileID: 0}
     - target: {fileID: 1614787789361408490, guid: facb52eedec1e06468624bf807a6c233, type: 3}
       propertyPath: m_Name

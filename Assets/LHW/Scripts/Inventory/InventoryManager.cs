@@ -59,17 +59,33 @@ public class InventoryManager : MonoBehaviour
             Debug.Log("시작칸에 아이템 없음");
             return;
         }
-       
-        if (_inventoryItem[startIndex] != null && endIndex != -1 &&_inventoryItem[endIndex] == null)
+
+        if (_inventoryItem[startIndex] != null && endIndex == -1)
         {
+            Debug.Log("아이템 버리기");
+            Vector2 position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
+            for(int i = 0; i < _inventoryStack[startIndex]; i++)
+            {
+                // TODO : Where to Instantiate item?
+                Instantiate(_inventoryItem[startIndex].Prefab, position + Vector2.right, Quaternion.identity);                
+            }
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+        }
+
+        else if (_inventoryItem[startIndex] != null && endIndex != -1 && _inventoryItem[endIndex] == null)
+        {
+            Debug.Log("아이템 옮기기");
             InventoryTryAdd(_inventoryItem[startIndex], endIndex, _inventoryStack[startIndex]);
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
             OnInventorySlotChanged?.Invoke();
-            Debug.Log("이동됨");
         }
-        else if(_inventoryItem[startIndex] != null && _inventoryItem[endIndex] != null)
+
+        else if (_inventoryItem[startIndex] != null && _inventoryItem[endIndex] != null)
         {
+            Debug.Log("아이템 위치 바꾸기");
             ItemSO tempItem = _inventoryItem[endIndex];
             int tempStack = _inventoryStack[endIndex];
 
@@ -79,8 +95,8 @@ public class InventoryManager : MonoBehaviour
             _inventoryItem[startIndex] = tempItem;
             _inventoryStack[startIndex] = tempStack;
             OnInventorySlotChanged?.Invoke();
-            Debug.Log("이동됨");
         }
+        Debug.Log("아무것도 안함");
     }
 
     /// <summary>

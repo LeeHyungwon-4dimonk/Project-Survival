@@ -66,15 +66,12 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     public void OnEndDrag(PointerEventData eventData)
     {
         DragSlot.Instance.ClearDragSlot();
+
+        InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
     }
 
     public void OnDrop(PointerEventData eventData)
     {
         _endDragPoint = this._index;
-
-        InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
-
-        Debug.Log($"{_startDragPoint} start");
-        Debug.Log($"{_endDragPoint} end");
     }
 }
