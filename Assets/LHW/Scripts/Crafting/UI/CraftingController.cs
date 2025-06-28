@@ -28,6 +28,9 @@ public class CraftingController : MonoBehaviour
         _currentRecipe = recipe;
     }
 
+    /// <summary>
+    /// Update Recipe Description based on currentRecipe.
+    /// </summary>
     private void UIUpdate()
     {
         if(_currentRecipe != null)

@@ -1,7 +1,8 @@
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// For Inventory Slot Unit.
+/// </summary>
 public class InventorySlotUnit : ItemSlotUnit
 {
     public override void Awake()
@@ -10,6 +11,10 @@ public class InventorySlotUnit : ItemSlotUnit
         _text.text = "";
     }
 
+    /// <summary>
+    /// Update UI.
+    /// </summary>
+    /// <param name="index"></param>
     public override void UpdateUI(int index)
     {
         _item = InventoryManager.Instance.ReadFromInventory(index, out int stack);

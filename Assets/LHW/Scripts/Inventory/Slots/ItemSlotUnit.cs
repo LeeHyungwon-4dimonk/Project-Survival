@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
@@ -19,6 +16,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     protected int _itemStack;
     public int ItemStack => _itemStack;
 
+    // It should be saved as static, because each cells save different data
     protected static int _startDragPoint;
     protected static int _endDragPoint;
 
@@ -27,7 +25,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     public abstract void UpdateUI(int index);
 
     /// <summary>
-    /// Item Use when click
+    /// Item Use when click.(Interface)
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
@@ -42,6 +40,10 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         }
     }
 
+    /// <summary>
+    /// When Drag Start.(Interface)
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnBeginDrag(PointerEventData eventData)
     {
         _startDragPoint = -1;
@@ -50,7 +52,6 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         {
             DragSlot.Instance.DragSetSlot(this);
             DragSlot.Instance.transform.position = eventData.position;
-            DragSlot.Instance.CurrentSlot = this;
             _startDragPoint = this._index;
         }
 
@@ -58,20 +59,32 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         Debug.Log($"{_endDragPoint} end");
     }
 
+    /// <summary>
+    /// While Dragging.(interface)
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnDrag(PointerEventData eventData)
     {
         if (_item != null) DragSlot.Instance.transform.position = eventData.position;
     }
 
+    /// <summary>
+    /// When mouse button Up.(interface)
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnDrop(PointerEventData eventData)
+    {
+        _endDragPoint = this._index;
+    }
+
+    /// <summary>
+    /// End Dragging.(interface)
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData)
     {
         DragSlot.Instance.ClearDragSlot();
 
         InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        _endDragPoint = this._index;
     }
 }

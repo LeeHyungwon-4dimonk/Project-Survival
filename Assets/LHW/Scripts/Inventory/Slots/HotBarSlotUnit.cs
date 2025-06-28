@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// For static Hotbar(quickslot) Slot Unit.
+/// </summary>
 public class HotBarSlotUnit : ItemSlotUnit
 {
     public override void Awake()
@@ -12,6 +11,10 @@ public class HotBarSlotUnit : ItemSlotUnit
         _text.text = "";
     }
 
+    /// <summary>
+    /// Update UI.
+    /// </summary>
+    /// <param name="index"></param>
     public override void UpdateUI(int index)
     {
         _item = InventoryManager.Instance.ReadFromInventory(index, out int stack);

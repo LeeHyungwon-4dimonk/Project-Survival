@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -30,36 +29,44 @@ public class InventoryManager : MonoBehaviour
     {
         _inventoryItem = new ItemSO[25];
         _inventoryStack = new int[_inventoryItem.Length];
-
-        _hotBarItem = new ItemSO[8];
     }
 
     #endregion
 
     public int InventoryCount => _inventoryItem.Length;
-    public int HotBarCount => _hotBarItem.Length;
 
     private ItemSO[] _inventoryItem;
     private int[] _inventoryStack;
 
-    private ItemSO[] _hotBarItem;
-
     public static event Action OnInventorySlotChanged;
 
+    /// <summary>
+    /// Read Data from inventory.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="stack"></param>
+    /// <returns></returns>
     public ItemSO ReadFromInventory(int index, out int stack)
     {
         stack = _inventoryStack[index];
         return _inventoryItem[index];
     }
 
+    /// <summary>
+    /// Item Moving in Inventory
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
     public void MoveItemInInventory(int startIndex, int endIndex)
     {
+        // if there is no item in start cell.
         if (startIndex == -1)
         {
             Debug.Log("시작칸에 아이템 없음");
             return;
         }
 
+        // if there is item in start cell and drag outside the inventory - Drop Method.
         if (_inventoryItem[startIndex] != null && endIndex == -1)
         {
             Debug.Log("아이템 버리기");
@@ -74,6 +81,7 @@ public class InventoryManager : MonoBehaviour
             OnInventorySlotChanged?.Invoke();
         }
 
+        // if there is item in start cell and drag into empty cell.
         else if (_inventoryItem[startIndex] != null && endIndex != -1 && _inventoryItem[endIndex] == null)
         {
             Debug.Log("아이템 옮기기");
@@ -83,8 +91,12 @@ public class InventoryManager : MonoBehaviour
             OnInventorySlotChanged?.Invoke();
         }
 
+        // if there is item both in start
         else if (_inventoryItem[startIndex] != null && _inventoryItem[endIndex] != null)
         {
+            // if item is same and stack is same, return.
+            if (_inventoryItem[startIndex] == _inventoryItem[endIndex] && _inventoryStack[startIndex] == _inventoryStack[endIndex]) return;
+
             Debug.Log("아이템 위치 바꾸기");
             ItemSO tempItem = _inventoryItem[endIndex];
             int tempStack = _inventoryStack[endIndex];
@@ -96,7 +108,6 @@ public class InventoryManager : MonoBehaviour
             _inventoryStack[startIndex] = tempStack;
             OnInventorySlotChanged?.Invoke();
         }
-        Debug.Log("아무것도 안함");
     }
 
     /// <summary>
@@ -140,22 +151,9 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    public void AddItemToHotBar(ItemSO item)
-    {
-        if (item.Type == ItemType.Material) return;
-
-        for (int i = 0; i < _hotBarItem.Length; i++)
-        {
-            if (_hotBarItem[i] == null)
-            {
-                _hotBarItem[i] = item;
-                break;
-            }
-        }
-    }
-
     /// <summary>
     /// Use Item.
+    /// TODO - Item Using Method - Equip/Potions
     /// </summary>
     /// <param name="index"></param>
     public void UseItem(int index)

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +23,9 @@ public class CraftingRecipeButtonUI : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
+    /// <summary>
+    /// OnClick Event. Send Scriptable Object recipe Data to CraftingController/
+    /// </summary>
     public void OnClick()
     {
         GetComponentInParent<CraftingController>().SelectRecipe(_recipe);
