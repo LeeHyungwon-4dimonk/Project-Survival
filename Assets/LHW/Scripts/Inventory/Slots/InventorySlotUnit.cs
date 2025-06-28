@@ -10,16 +10,6 @@ public class InventorySlotUnit : ItemSlotUnit
         _text.text = "";
     }
 
-    private void OnEnable()
-    {
-        InventoryManager.OnInventorySlotChanged += UpdateUI;
-    }
-
-    private void OnDisable()
-    {
-        InventoryManager.OnInventorySlotChanged -= UpdateUI;
-    }
-
     public override void UpdateUI(int index)
     {
         _item = InventoryManager.Instance.ReadFromInventory(index, out int stack);

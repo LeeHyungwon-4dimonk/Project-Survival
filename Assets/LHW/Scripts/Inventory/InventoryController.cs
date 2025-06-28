@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class InventoryController : MonoBehaviour
@@ -9,15 +6,23 @@ public class InventoryController : MonoBehaviour
     [SerializeField] InventorySlotUnit[] slots;
     [SerializeField] TMP_Text _weightText;
 
-    private void Update()
-    {
+    private void OnEnable()
+    {        
+        InventoryManager.OnInventorySlotChanged += UpdateUISlot;
+        InventoryManager.OnInventorySlotChanged += UpdateWeightText;
         UpdateUISlot();
         UpdateWeightText();
     }
 
+    private void OnDisable()
+    {
+        InventoryManager.OnInventorySlotChanged -= UpdateUISlot;
+        InventoryManager.OnInventorySlotChanged -= UpdateWeightText;
+    }
+
     private void UpdateUISlot()
     {
-        for(int i  = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             slots[i].UpdateUI(i);
         }
@@ -26,7 +31,7 @@ public class InventoryController : MonoBehaviour
     private void UpdateWeightText()
     {
         float weight = 0;
-        for(int i = 0; i < slots.Length;i++)
+        for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].Item != null) weight += slots[i].Item.Weight * slots[i].ItemStack;
         }

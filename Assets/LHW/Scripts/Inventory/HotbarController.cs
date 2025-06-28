@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HotbarController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] HotBarSlotUnit[] _hotBarSlot;
+    [SerializeField] int[] _inventoryitemSlot;
+
+    private void OnEnable()
     {
-        
+        InventoryManager.OnInventorySlotChanged += UpdateUISlot;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        InventoryManager.OnInventorySlotChanged -= UpdateUISlot;
+    }
+
+    private void UpdateUISlot()
+    {
+        for(int i = 0; i < _hotBarSlot.Length; i++)
+        {
+            _hotBarSlot[i].UpdateUI(_inventoryitemSlot[i]);
+        }
     }
 }

@@ -30,6 +30,10 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         if (_item != null)
         {
             _item.Prefab.GetComponent<ItemController>().Use();
+
+            InventoryManager.Instance.UseItem(_index);
+
+            UpdateUI(_index);
         }        
     }
 

@@ -12,19 +12,9 @@ public class HotBarSlotUnit : ItemSlotUnit
         _text.text = "";
     }
 
-    private void OnEnable()
-    {
-        InventoryManager.OnHotbarSlotChanged += UpdateUI;
-    }
-
-    private void OnDisable()
-    {
-        InventoryManager.OnHotbarSlotChanged -= UpdateUI;
-    }
-
     public override void UpdateUI(int index)
     {
-        _item = InventoryManager.Instance.ReadFromHotBar(index, out int stack);
+        _item = InventoryManager.Instance.ReadFromInventory(index, out int stack);
         if (_item == null)
         {
             _image.color = Color.clear;
@@ -32,6 +22,8 @@ public class HotBarSlotUnit : ItemSlotUnit
         }
         else
         {
+            Debug.Log(_item.Name);
+            _image.color = Color.white;
             _image.sprite = _item.Icon;
             _text.text = stack > 1 ? stack.ToString() : "";
         }
