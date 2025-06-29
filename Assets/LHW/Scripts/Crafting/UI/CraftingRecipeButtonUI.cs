@@ -28,7 +28,6 @@ public class CraftingRecipeButtonUI : MonoBehaviour
     /// </summary>
     public void OnClick()
     {
-        GetComponentInParent<CraftingController>().SelectRecipe(_recipe);
-        Debug.Log("РќДо");
+        GetComponentInParent<CraftingController>().SelectRecipe(_recipe);        
     }
 }
