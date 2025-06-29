@@ -6,6 +6,14 @@ public class InventoryController : MonoBehaviour
     [SerializeField] InventorySlotUnit[] slots;
     [SerializeField] TMP_Text _weightText;
 
+    private void Start()
+    {
+        InventoryManager.OnInventorySlotChanged += UpdateUISlot;
+        InventoryManager.OnInventorySlotChanged += UpdateWeightText;
+        UpdateUISlot();
+        UpdateWeightText();
+    }
+
     private void OnEnable()
     {        
         InventoryManager.OnInventorySlotChanged += UpdateUISlot;
