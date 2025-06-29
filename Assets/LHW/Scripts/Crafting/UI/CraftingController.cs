@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.VisionOS;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,8 @@ public class CraftingController : MonoBehaviour
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private Button _craftButton;
     [SerializeField] private Image _sliderImage;
+    [SerializeField] private Button _resultButton;
+    [SerializeField] private Image _resultImage;
 
     private CraftingRecipe _currentRecipe;
 
@@ -66,9 +66,9 @@ public class CraftingController : MonoBehaviour
         if (_craftCoroutine == null)
         {
             ConsumeItem();
-            _craftCoroutine = StartCoroutine(CraftingTime());
+            _craftCoroutine = StartCoroutine(CraftingTime());            
         }
-    }   
+    }
 
     /// <summary>
     /// If recipe is craftable, consume material item.
@@ -103,7 +103,23 @@ public class CraftingController : MonoBehaviour
             _sliderImage.fillAmount = Mathf.Lerp(0f, 1f, process);
             yield return null;
         }
+        ResultPrint();
         _craftCoroutine = null;
+    }
+
+    private void ResultPrint()
+    {
+        _resultImage.color = Color.white;
+        _resultImage.sprite = _currentRecipe.resultItem.Icon;
+        _resultButton.interactable = true;
+    }
+
+    public void GetItem()
+    {
+        if (_currentRecipe != null)
+        {
+            InventoryManager.Instance.AddItemToInventory(_currentRecipe.resultItem);             
+        }
     }
 
     /// <summary>
