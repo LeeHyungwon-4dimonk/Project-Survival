@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9512861e3ddfe064dbb281867d5234e8, type: 3}
   m_Name: Recipe2
   m_EditorClassIdentifier: 
-  craftingTime: 0
+  craftingTime: 10
   reqItem:
   - {fileID: 11400000, guid: 3c8012f68b0c2fe4ab8935900faa3f3a, type: 2}
   - {fileID: 11400000, guid: 3c8012f68b0c2fe4ab8935900faa3f3a, type: 2}

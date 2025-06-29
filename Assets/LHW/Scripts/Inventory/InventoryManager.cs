@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -71,10 +72,10 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("아이템 버리기");
             Vector2 position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
-            for(int i = 0; i < _inventoryStack[startIndex]; i++)
+            for (int i = 0; i < _inventoryStack[startIndex]; i++)
             {
                 // TODO : Where to Instantiate item?
-                Instantiate(_inventoryItem[startIndex].Prefab, position + Vector2.right, Quaternion.identity);                
+                Instantiate(_inventoryItem[startIndex].Prefab, position + Vector2.right, Quaternion.identity);
             }
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
@@ -125,7 +126,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_inventoryItem[i] == item)
                 {
-                    remain = InventoryTryAdd(item, i, amount);                    
+                    remain = InventoryTryAdd(item, i, amount);
                     if (remain <= 0) break;
                 }
             }
@@ -161,13 +162,40 @@ public class InventoryManager : MonoBehaviour
         if (_inventoryItem[index] && _inventoryItem[index].Type != ItemType.Material)
         {
             _inventoryStack[index]--;
-            if( _inventoryStack[index] <= 0 )
+            if (_inventoryStack[index] <= 0)
             {
                 _inventoryItem[index] = null;
                 _inventoryStack[index] = 0;
             }
             OnInventorySlotChanged?.Invoke();
         }
+    }
+
+    /// <summary>
+    /// Remove item from inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public bool RemoveItemFromInventory(ItemSO item, int amount = 1)
+    {
+        int remain = amount;
+        while(remain > 0)
+        {
+            for(int i = 0; i < _inventoryItem.Length;i++)
+            {
+                if (_inventoryItem[i] == item)
+                {
+                    remain = InventoryTryRemove(i, amount);
+                    if (remain <= 0) break;
+                }
+            }
+            if(remain <= 0) break;
+
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
@@ -200,5 +228,33 @@ public class InventoryManager : MonoBehaviour
         {
             return amount;
         }
+    }
+
+    /// <summary>
+    /// Try remove item.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    private int InventoryTryRemove(int index, int amount)
+    {
+        if(amount <= _inventoryStack[index])
+        {
+            _inventoryStack[index] -= amount;
+            if (_inventoryStack[index] == 0)
+            {
+                _inventoryItem[index] = null;
+            }
+            OnInventorySlotChanged?.Invoke();
+            return 0;
+        }
+        else if(amount > _inventoryStack[index])
+        {
+            amount -= _inventoryStack[index];
+            _inventoryStack[index] = 0;
+            _inventoryItem[index] = null;
+        }
+        OnInventorySlotChanged?.Invoke();
+        return amount;
     }
 }

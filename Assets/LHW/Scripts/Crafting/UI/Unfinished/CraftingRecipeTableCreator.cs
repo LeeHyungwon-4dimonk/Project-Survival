@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,12 +9,16 @@ using UnityEngine.UI;
 /// </summary>
 struct RecipeAndIndex
 {
+    /*
     public CraftingRecipe _recipe;
     public int _index;
+    */
 }
 
 public class CraftingRecipeTableCreator : MonoBehaviour
 {
+
+    /*
     [SerializeField] private CraftingRecipe[] _recipes;
 
     [SerializeField] private GameObject _recipePanel;
@@ -35,4 +37,5 @@ public class CraftingRecipeTableCreator : MonoBehaviour
             //_recipePanel.GetComponent<CraftingRecipeButtonUI>()._recipe = _recipes[i];
         }
     }
+    */
 }

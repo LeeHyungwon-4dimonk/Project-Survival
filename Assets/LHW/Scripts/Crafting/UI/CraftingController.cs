@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.VisionOS;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.UI;
 
 public class CraftingController : MonoBehaviour
@@ -10,13 +12,16 @@ public class CraftingController : MonoBehaviour
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private Button _craftButton;
+    [SerializeField] private Image _sliderImage;
 
     private CraftingRecipe _currentRecipe;
+
+    private Coroutine _craftCoroutine;
 
     private void Update()
     {
         UIUpdate();
-        CraftingUIUpdate(AbleToMakeItem(RecipeRequireItemDictionary(_currentRecipe), InventoryItemDictionary()));
+        CraftingUIUpdate();
     }
 
     /// <summary>
@@ -33,7 +38,7 @@ public class CraftingController : MonoBehaviour
     /// </summary>
     private void UIUpdate()
     {
-        if(_currentRecipe != null)
+        if (_currentRecipe != null)
         {
             _image.sprite = _currentRecipe.resultItem.Icon;
             _nameText.text = _currentRecipe.resultItem.Name;
@@ -41,10 +46,64 @@ public class CraftingController : MonoBehaviour
         }
     }
 
-    private void CraftingUIUpdate(bool isCraftable)
+    /// <summary>
+    /// Update Create Button.
+    /// If item is Craftable, interaction will be occur.
+    /// </summary>
+    private void CraftingUIUpdate()
     {
-        if(isCraftable) _craftButton.interactable = true;
+        bool isCraftable = AbleToMakeItem(RecipeRequireItemDictionary(_currentRecipe), InventoryItemDictionary());
+
+        if (isCraftable) _craftButton.interactable = true;
         else _craftButton.interactable = false;
+    }
+
+    /// <summary>
+    /// For OnClick button event. Craft Item.
+    /// </summary>
+    public void CraftItem()
+    {
+        if (_craftCoroutine == null)
+        {
+            ConsumeItem();
+            _craftCoroutine = StartCoroutine(CraftingTime());
+        }
+    }   
+
+    /// <summary>
+    /// If recipe is craftable, consume material item.
+    /// </summary>
+    private void ConsumeItem()
+    {
+        bool isCraftable = AbleToMakeItem(RecipeRequireItemDictionary(_currentRecipe), InventoryItemDictionary());
+
+        if (!isCraftable) return;
+
+        int inventorySlot = InventoryManager.Instance.InventoryCount;
+
+        Dictionary<ItemSO, int> reqItemsAndNum = RecipeRequireItemDictionary(_currentRecipe);
+
+        foreach (var key in reqItemsAndNum.Keys)
+        {
+            InventoryManager.Instance.RemoveItemFromInventory(key, reqItemsAndNum[key]);
+        }
+        Debug.Log("Á¦°ÅµÊ");
+    }
+
+    /// <summary>
+    /// Coroutine, UI bar Update for crafting time.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CraftingTime()
+    {
+        float process = 0f;
+        while (process < 1f)
+        {
+            process += (float)Time.deltaTime / _currentRecipe.craftingTime;
+            _sliderImage.fillAmount = Mathf.Lerp(0f, 1f, process);
+            yield return null;
+        }
+        _craftCoroutine = null;
     }
 
     /// <summary>
@@ -54,11 +113,11 @@ public class CraftingController : MonoBehaviour
     /// <param name="reqItemsAndNum"></param>
     /// <param name="possessItemsAndNum"></param>
     /// <returns></returns>
-    private bool AbleToMakeItem(Dictionary<int, int> reqItemsAndNum, Dictionary<int, int> possessItemsAndNum)
+    private bool AbleToMakeItem(Dictionary<ItemSO, int> reqItemsAndNum, Dictionary<ItemSO, int> possessItemsAndNum)
     {
-        if(reqItemsAndNum == null || possessItemsAndNum == null) return false;
+        if (reqItemsAndNum == null || possessItemsAndNum == null) return false;
 
-        foreach(var key in reqItemsAndNum.Keys)
+        foreach (var key in reqItemsAndNum.Keys)
         {
             if (!possessItemsAndNum.ContainsKey(key) || possessItemsAndNum[key] < reqItemsAndNum[key])
                 return false;
@@ -72,19 +131,19 @@ public class CraftingController : MonoBehaviour
     /// </summary>
     /// <param name="recipe"></param>
     /// <returns></returns>
-    private Dictionary<int, int> RecipeRequireItemDictionary(CraftingRecipe recipe)
+    private Dictionary<ItemSO, int> RecipeRequireItemDictionary(CraftingRecipe recipe)
     {
-        if(recipe == null) return null;
+        if (recipe == null) return null;
 
-        Dictionary<int, int> reqItemsAndNum = new Dictionary<int, int>();
+        Dictionary<ItemSO, int> reqItemsAndNum = new Dictionary<ItemSO, int>();
 
         int reqItemListCount = recipe.reqItem.Count;
 
-        for(int i = 0;  i < reqItemListCount; i++)
+        for (int i = 0; i < reqItemListCount; i++)
         {
-            if(recipe.reqItem[i] == null) continue;
+            if (recipe.reqItem[i] == null) continue;
 
-            int itemID = recipe.reqItem[i].ItemId;
+            ItemSO itemID = recipe.reqItem[i];
             if (reqItemsAndNum.ContainsKey(itemID)) reqItemsAndNum[itemID] += 1;
             else reqItemsAndNum[itemID] = 1;
         }
@@ -96,20 +155,20 @@ public class CraftingController : MonoBehaviour
     /// key - item id / value - numbers of item that the player possess.
     /// </summary>
     /// <returns></returns>
-    private Dictionary<int, int> InventoryItemDictionary()
+    private Dictionary<ItemSO, int> InventoryItemDictionary()
     {
-        Dictionary<int, int> possessItemsAndNum = new Dictionary<int, int>();
+        Dictionary<ItemSO, int> possessItemsAndNum = new Dictionary<ItemSO, int>();
 
         int inventorySlot = InventoryManager.Instance.InventoryCount;
 
-        for(int i = 0; i < inventorySlot; i++)
+        for (int i = 0; i < inventorySlot; i++)
         {
             ItemSO item = InventoryManager.Instance.ReadFromInventory(i, out int stack);
 
             if (item == null) continue;
 
-            if(possessItemsAndNum.ContainsKey(item.ItemId)) possessItemsAndNum[item.ItemId] += stack;
-            else possessItemsAndNum[item.ItemId] = stack;
+            if (possessItemsAndNum.ContainsKey(item)) possessItemsAndNum[item] += stack;
+            else possessItemsAndNum[item] = stack;
         }
         return possessItemsAndNum;
     }
