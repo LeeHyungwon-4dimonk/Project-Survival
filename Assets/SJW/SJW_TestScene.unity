@@ -647,7 +647,7 @@ Transform:
   m_GameObject: {fileID: 1609949133}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.88, y: 0.28, z: -0.24}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPanel: {fileID: 207470058}
   interactionText: {fileID: 1054280925}
-  verticalOffset: 100
+  panelAnchoredPosY: 611
 --- !u!1 &2105457092
 GameObject:
   m_ObjectHideFlags: 0
