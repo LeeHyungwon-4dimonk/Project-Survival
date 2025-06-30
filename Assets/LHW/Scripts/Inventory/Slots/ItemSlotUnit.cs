@@ -103,7 +103,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         }
         else if (_startIsInventorySlot == true && _endIsInventorySlot == false)
         {
-            InventoryManager.Instance.SendItemToDecomposition(_startDragPoint, _endDragPoint);
+            InventoryManager.Instance.SendItemToDecomposition(_startDragPoint);
         }
         else if (_startIsInventorySlot == false && _endIsInventorySlot == true)
         {

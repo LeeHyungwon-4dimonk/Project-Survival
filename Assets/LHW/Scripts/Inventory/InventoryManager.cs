@@ -265,9 +265,14 @@ public class InventoryManager : MonoBehaviour
 
     #region Decomposition
 
-    public void SendItemToDecomposition(int startIndex, int endindex)
+    /// <summary>
+    /// Send item to decomposition slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endindex"></param>
+    public void SendItemToDecomposition(int startIndex)
     {
-       if(_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], endindex, _inventoryStack[startIndex]))
+       if(_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
        {
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
@@ -275,12 +280,21 @@ public class InventoryManager : MonoBehaviour
        }
     }
 
+    /// <summary>
+    /// Get Item to InventorySlot from decomposition slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
     public void ReturnItemFromDecomposition(int startIndex)
     {
         _decompositionSlotData.ReturnItemToInventory(startIndex);
         OnInventorySlotChanged?.Invoke();
     }
 
+    /// <summary>
+    /// Move Item in the decomposition slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
     public void MoveItemInDecompositionSlot(int startIndex, int endIndex)
     {
         _decompositionSlotData.MoveItemInDecompositionSlot(startIndex, endIndex);

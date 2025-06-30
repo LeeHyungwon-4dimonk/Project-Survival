@@ -3108,6 +3108,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 488018973276393182, guid: 37549567957b1904e97358269b9651d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5474490505063246985}
+    - target: {fileID: 488018973276393182, guid: 37549567957b1904e97358269b9651d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnAllDecomposibleItemIntoSlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 488018973276393182, guid: 37549567957b1904e97358269b9651d2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DecompositionSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 766653827946298914, guid: 37549567957b1904e97358269b9651d2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
