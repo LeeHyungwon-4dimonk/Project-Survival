@@ -16,7 +16,7 @@ public class CollectionPanelController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             ToggleCollectionPanel();
         }

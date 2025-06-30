@@ -11,7 +11,7 @@ public class ItemCollectionManager : MonoBehaviour
     public static ItemCollectionManager Instance { get; private set; }
 
     [Header("Collection Data")]
-    [SerializeField] private List<ItemSO> allItems;
+    [SerializeField] private List<CollectionSO> allItems;
     private HashSet<int> _collectedItemIds = new(); 
 
     public IReadOnlyCollection<int> CollectedItemIds => _collectedItemIds;
@@ -45,7 +45,7 @@ public class ItemCollectionManager : MonoBehaviour
     /// </summary>
     /// <param name="item">수집할 ItemSO 데이터</param>
     /// <returns>새롭게 수집되었으면 true, 이미 수집된 아이템이면 false를 반환합니다.</returns>
-    public bool TryCollectItem(ItemSO item)
+    public bool TryCollectItem(CollectionSO item)
     {
         if (item == null)
         {
@@ -53,10 +53,10 @@ public class ItemCollectionManager : MonoBehaviour
             return false;
         }
 
-        if (!_collectedItemIds.Contains(item.ItemId))
+        if (!_collectedItemIds.Contains(item.CollectionId))
         {
-            _collectedItemIds.Add(item.ItemId); 
-            Debug.Log($"아이템 '{item.Name}' (ID: {item.ItemId}) 수집 완료!");
+            _collectedItemIds.Add(item.CollectionId); 
+            Debug.Log($"아이템 '{item.CollectionName}' (ID: {item.CollectionId}) 수집 완료!");
             SaveCollectedItems(); 
 
             if (ItemCollectionUI.Instance != null)
@@ -65,7 +65,7 @@ public class ItemCollectionManager : MonoBehaviour
             }
             return true;
         }
-        Debug.Log($"아이템 '{item.Name}' (ID: {item.ItemId})는 이미 수집되었습니다.");
+        Debug.Log($"아이템 '{item.CollectionName}' (ID: {item.CollectionId})는 이미 수집되었습니다.");
         return false;
     }
 
@@ -82,7 +82,7 @@ public class ItemCollectionManager : MonoBehaviour
     /// <summary>
     /// 도감에 등록될 수 있는 모든 아이템 목록을 반환합니다.
     /// </summary>
-    public List<ItemSO> GetAllItems() => allItems;
+    public List<CollectionSO> GetAllItems() => allItems;
 
     /// <summary>
     /// 현재 수집된 아이템 ID 목록을 PlayerPrefs에 저장합니다.

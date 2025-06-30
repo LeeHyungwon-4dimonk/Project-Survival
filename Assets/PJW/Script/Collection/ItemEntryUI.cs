@@ -18,18 +18,18 @@ public class ItemEntryUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// </summary>
     /// <param name="item">데이터가 담긴 ItemSO</param>
     /// <param name="isCollected">획득 여부</param>
-    public void Initialize(ItemSO item, bool isCollected)
+    public void Initialize(CollectionSO item, bool isCollected)
     {
-        string silhouetteName = item.silhouetteSprite != null ? item.silhouetteSprite.name : "<null>";
-        Debug.Log($"[ItemEntryUI] Initialize: {{ Name={item.Name}, Collected={isCollected}, Silhouette={{silhouetteName}} }}");
+        string silhouetteName = item.SilhouetteSprite != null ? item.SilhouetteSprite.name : "<null>";
+        Debug.Log($"[ItemEntryUI] Initialize: {{ Name={item.CollectionName}, Collected={isCollected}, Silhouette={{silhouetteName}} }}");
         // 이름 및 설명 설정
-        nameText.text        = isCollected ? item.Name        : "???";
-        descriptionText.text = isCollected ? item.Description : "???";
+        nameText.text        = isCollected ? item.CollectionName        : "???";
+        descriptionText.text = isCollected ? item.CollectionDescription : "???";
 
         // 아이콘 교체 (획득 전에는 실루엣 사용)
         icon.sprite = isCollected
-            ? item.Icon
-            : item.silhouetteSprite;
+            ? item.CollectionIcon
+            : item.SilhouetteSprite;
 
         // 툴팁 기본 숨김
         if (tooltipPanel != null)

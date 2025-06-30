@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectibleItem : MonoBehaviour
 {
-    [SerializeField] private ItemSO itemData; 
+    [SerializeField] private CollectionSO CollectionData;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,12 +15,12 @@ public class CollectibleItem : MonoBehaviour
                 return;
             }
 
-            if (itemData == null)
+            if (CollectionData == null)
             {
                 return;
             }
 
-            bool collected = ItemCollectionManager.Instance.TryCollectItem(itemData);
+            bool collected = ItemCollectionManager.Instance.TryCollectItem(CollectionData);
             if (collected)
             {
                 Destroy(gameObject); 

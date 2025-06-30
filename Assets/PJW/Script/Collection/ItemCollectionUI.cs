@@ -37,13 +37,13 @@ public class ItemCollectionUI : MonoBehaviour
         var collectedIds = ItemCollectionManager.Instance.CollectedItemIds;
         var allItems = ItemCollectionManager.Instance.GetAllItems();
 
-       foreach (var item in allItems.OrderBy(i => i.ItemId))
+       foreach (var item in allItems.OrderBy(i => i.CollectionId))
         {
             var entry = Instantiate(entryUIPrefab, gridRoot);
             var ui    = entry.GetComponent<ItemEntryUI>();
             if (ui == null) continue;
 
-            bool collected = collectedIds.Contains(item.ItemId);
+            bool collected = collectedIds.Contains(item.CollectionId);
             ui.Initialize(item, collected);
         }
         Debug.Log($"도감 UI 업데이트: 총 {collectedIds.Count}개 아이템 표시");
