@@ -490,18 +490,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8639087033882658530, guid: 60e9a48b83c0f7f45a8ebba7e3df0bb9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 626240118}
-    - target: {fileID: 8639087033882658530, guid: 60e9a48b83c0f7f45a8ebba7e3df0bb9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 8639087033882658530, guid: 60e9a48b83c0f7f45a8ebba7e3df0bb9, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CraftingSlot, Assembly-CSharp
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -954,17 +942,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2625985319856976640, guid: c4510687119a7304db31a597ef64c497, type: 3}
   m_PrefabInstance: {fileID: 2094112754}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &626240118 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6774608153636982199, guid: 60e9a48b83c0f7f45a8ebba7e3df0bb9, type: 3}
-  m_PrefabInstance: {fileID: 390063460}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b636b1725742a44ad2a1ac0a086fb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &669570535
 PrefabInstance:
   m_ObjectHideFlags: 0

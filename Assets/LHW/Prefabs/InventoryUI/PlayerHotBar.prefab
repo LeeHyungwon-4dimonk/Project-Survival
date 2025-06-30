@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2376426192563403792}
   - component: {fileID: 6730865766754501128}
   - component: {fileID: 2641706173652278589}
+  - component: {fileID: 8735644182382670583}
   m_Layer: 5
   m_Name: PlayerHotBar
   m_TagString: Untagged
@@ -125,6 +126,28 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8735644182382670583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8253397828027512448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2072b40463731e4db67c91dea1ce035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hotBarSlot:
+  - {fileID: 5546777326695703904}
+  - {fileID: 866969378765293096}
+  - {fileID: 4757397401105292001}
+  - {fileID: 6632387877299565764}
+  - {fileID: 562554354096929873}
+  - {fileID: 4952656737840792205}
+  - {fileID: 1617687299254369334}
+  - {fileID: 1014880206555996547}
+  _inventoryitemSlot: 0000000001000000020000000300000004000000050000000600000007000000
 --- !u!1001 &1136900248817776251
 PrefabInstance:
   m_ObjectHideFlags: 0

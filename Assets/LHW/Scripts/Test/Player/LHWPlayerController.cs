@@ -5,9 +5,10 @@ using UnityEngine;
 /// </summary>
 public class LHWPlayerController : MonoBehaviour
 {
-    [SerializeField] private float playerSpeed;
-    [SerializeField] private GameObject inventoryPanel;
-    [SerializeField] private GameObject craftingPanel;
+    [SerializeField] private float _playerSpeed;
+    [SerializeField] private GameObject _inventoryPanel;
+    [SerializeField] private GameObject _craftingPanel;
+    [SerializeField] private GameObject _decompositionPanel;
 
     private Rigidbody2D _rigid;
     private Vector2 inputVec;
@@ -24,27 +25,37 @@ public class LHWPlayerController : MonoBehaviour
         PlayerInput();
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (craftingPanel.activeSelf == false)
+            if (_craftingPanel.activeSelf == false)
             {
-                craftingPanel.SetActive(true);
+                _craftingPanel.SetActive(true);
             }
             else
             {
-                craftingPanel.SetActive(false);
+                _craftingPanel.SetActive(false);
             }
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if(inventoryPanel.activeSelf == false)
+            if(_inventoryPanel.activeSelf == false)
             {
-                inventoryPanel.SetActive(true);
+                _inventoryPanel.SetActive(true);
             }
             else
             {
-                inventoryPanel.SetActive(false);
+                _inventoryPanel.SetActive(false);
             }
         }
-
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            if (_decompositionPanel.activeSelf == false)
+            {
+                _decompositionPanel.SetActive(true);
+            }
+            else
+            {
+                _decompositionPanel.SetActive(false);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -62,6 +73,6 @@ public class LHWPlayerController : MonoBehaviour
 
     private void Move()
     {
-        _rigid.velocity = inputVec * playerSpeed;
+        _rigid.velocity = inputVec * _playerSpeed;
     }
 }
