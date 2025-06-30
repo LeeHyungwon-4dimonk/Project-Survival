@@ -67,7 +67,7 @@ public class PlayerInteractionHandler : MonoBehaviour
             return;
         }
 
-        //Debug.Log($"°¨ÁöµÊ: {_currentHit.name}");
+        Debug.Log($"°¨ÁöµÊ: {_currentHit.name}");
 
         _currentInteractable = _currentHit.GetComponent<IInteractable>();
 
