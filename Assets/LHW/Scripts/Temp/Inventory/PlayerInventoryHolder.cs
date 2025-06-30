@@ -12,7 +12,8 @@ public class PlayerInventoryHolder : Inventory
 
     public InventorySystem PlayerInventorySystem => _playerInventorySystem;
 
-    public static Action<InventorySystem> OnPlayerBackpackDisplayRequested;
+    public static event Action<InventorySystem> OnPlayerBackpackDisplayRequested;
+    public static event Action<InventorySystem> OnPlayerCraftingDisplayRequested;
 
     protected override void Awake()
     {
@@ -23,9 +24,15 @@ public class PlayerInventoryHolder : Inventory
 
     private void Update()
     {
-        if(Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            Debug.Log("1");
             OnPlayerBackpackDisplayRequested?.Invoke(_playerInventorySystem);
-    }
+            Debug.Log("2");
+            OnPlayerCraftingDisplayRequested?.Invoke(_playerInventorySystem);
+            Debug.Log("3");
+        }
+    } 
 
     /// <summary>
     /// Add item to inventory.
@@ -46,5 +53,14 @@ public class PlayerInventoryHolder : Inventory
         }
 
         return false;
+    }
+
+    public void TestInit()
+    {
+        Debug.Log("1");
+        OnPlayerBackpackDisplayRequested?.Invoke(_playerInventorySystem);
+        Debug.Log("2");
+        OnPlayerCraftingDisplayRequested?.Invoke(_playerInventorySystem);
+        Debug.Log("3");
     }
 }

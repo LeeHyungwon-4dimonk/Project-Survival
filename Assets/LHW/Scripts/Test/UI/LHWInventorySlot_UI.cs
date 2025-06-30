@@ -35,12 +35,13 @@ public class LHWInventorySlot_UI : MonoBehaviour
     /// <param name="slot"></param>
     public void UpdateUISlot(InventorySlots slot)
     {
+        Debug.Log("111");
         if(slot.Data != null)
         {
             _itemSprite.sprite = slot.Data.Icon;
             _itemSprite.color = Color.white;
             if (slot.StackSize > 1) _itemCount.text = slot.StackSize.ToString();
-            else _itemCount.text = "";
+            else _itemCount.text = "";            
         }
         else
         {

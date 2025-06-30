@@ -1,0 +1,362 @@
+using System;
+using UnityEngine;
+
+public class InventoryManager : MonoBehaviour
+{
+    #region Singleton
+
+    public static InventoryManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        Initialize();
+    }
+
+    #endregion // Singleton
+
+    #region Init
+
+    private void Initialize()
+    {
+        _inventoryItem = new ItemSO[25];
+        _inventoryStack = new int[_inventoryItem.Length];
+        _decompositionItem = new ItemSO[25];
+        _decompositionStack = new int[_inventoryItem.Length];
+    }
+
+    #endregion
+
+    public int InventoryCount => _inventoryItem.Length;
+
+    private ItemSO[] _inventoryItem;
+    private int[] _inventoryStack;
+
+    private ItemSO[] _decompositionItem;
+    private int[] _decompositionStack;
+
+    public static event Action OnInventorySlotChanged;
+    public static event Action OnDecompositionSlotChanged;
+
+    #region Inventory
+
+    /// <summary>
+    /// Read Data from inventory.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="stack"></param>
+    /// <returns></returns>
+    public ItemSO ReadFromInventory(int index, out int stack)
+    {
+        stack = _inventoryStack[index];
+        return _inventoryItem[index];
+    }
+
+    /// <summary>
+    /// Item Moving in Inventory
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
+    public void MoveItemInInventory(int startIndex, int endIndex)
+    {
+        // if there is no item in start cell.
+        if (startIndex == -1)
+        {
+            Debug.Log("시작칸에 아이템 없음");
+            return;
+        }
+
+        // if there is item in start cell and drag outside the inventory - Drop Method.
+        if (_inventoryItem[startIndex] != null && endIndex == -1)
+        {
+            Debug.Log("아이템 버리기");
+            Vector2 position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
+            for (int i = 0; i < _inventoryStack[startIndex]; i++)
+            {
+                // TODO : Where to Instantiate item?
+                Instantiate(_inventoryItem[startIndex].Prefab, position + Vector2.right, Quaternion.identity);
+            }
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+        }
+
+        // if there is item in start cell and drag into empty cell.
+        else if (_inventoryItem[startIndex] != null && endIndex != -1 && _inventoryItem[endIndex] == null)
+        {
+            Debug.Log("아이템 옮기기");
+            InventoryTryAdd(_inventoryItem[startIndex], endIndex, _inventoryStack[startIndex]);
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+        }
+
+        // if there is item both in start and end
+        else if (_inventoryItem[startIndex] != null && _inventoryItem[endIndex] != null)
+        {
+            // if item is same and stack is same, return.
+            if (_inventoryItem[startIndex] == _inventoryItem[endIndex] && _inventoryStack[startIndex] == _inventoryStack[endIndex]) return;
+
+            Debug.Log("아이템 위치 바꾸기");
+            ItemSO tempItem = _inventoryItem[endIndex];
+            int tempStack = _inventoryStack[endIndex];
+
+            _inventoryItem[endIndex] = _inventoryItem[startIndex];
+            _inventoryStack[endIndex] = _inventoryStack[startIndex];
+
+            _inventoryItem[startIndex] = tempItem;
+            _inventoryStack[startIndex] = tempStack;
+            OnInventorySlotChanged?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Add item to Inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public bool AddItemToInventory(ItemSO item, int amount = 1)
+    {
+        int remain = amount;
+        while (remain > 0)
+        {
+            for (int i = 0; i < _inventoryItem.Length; i++)
+            {
+                if (_inventoryItem[i] == item)
+                {
+                    remain = InventoryTryAdd(item, i, amount);
+                    if (remain <= 0) break;
+                }
+            }
+
+            if (remain <= 0) break;
+
+            for (int i = 0; i < _inventoryItem.Length; i++)
+            {
+                if (_inventoryItem[i] == null)
+                {
+                    remain = InventoryTryAdd(item, i, amount);
+                    if (remain <= 0) break;
+                }
+            }
+
+            if (remain <= 0) break;
+
+            else
+            {
+                Debug.Log("inventory full"); return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Use Item.
+    /// TODO - Item Using Method - Equip/Potions
+    /// </summary>
+    /// <param name="index"></param>
+    public void UseItem(int index)
+    {
+        if (_inventoryItem[index] && _inventoryItem[index].Type != ItemType.Material)
+        {
+            _inventoryStack[index]--;
+            if (_inventoryStack[index] <= 0)
+            {
+                _inventoryItem[index] = null;
+                _inventoryStack[index] = 0;
+            }
+            OnInventorySlotChanged?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Remove item from inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public bool RemoveItemFromInventory(ItemSO item, int amount = 1)
+    {
+        int remain = amount;
+        while(remain > 0)
+        {
+            for(int i = 0; i < _inventoryItem.Length;i++)
+            {
+                if (_inventoryItem[i] == item)
+                {
+                    remain = InventoryTryRemove(i, amount);
+                    if (remain <= 0) break;
+                }
+            }
+            if(remain <= 0) break;
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Try add item to Inventory.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="index"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    private int InventoryTryAdd(ItemSO item, int index, int amount)
+    {
+        _inventoryItem[index] = item;
+        // If the stack is enough.
+        if (amount <= (item.MaxStackSize - _inventoryStack[index]))
+        {
+            _inventoryStack[index] += amount;
+            OnInventorySlotChanged?.Invoke();
+            return 0;
+        }
+        // If the stack is not enough and has space.
+        else if (item.MaxStackSize > _inventoryStack[index])
+        {
+            _inventoryStack[index] = item.MaxStackSize;
+            amount -= (item.MaxStackSize - _inventoryStack[index]);
+            OnInventorySlotChanged?.Invoke();
+            return amount;
+        }
+        // If the stack is full.
+        else
+        {
+            return amount;
+        }
+    }
+
+    
+
+    /// <summary>
+    /// Try remove item.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    private int InventoryTryRemove(int index, int amount)
+    {
+        if(amount <= _inventoryStack[index])
+        {
+            _inventoryStack[index] -= amount;
+            if (_inventoryStack[index] == 0)
+            {
+                _inventoryItem[index] = null;
+            }
+            OnInventorySlotChanged?.Invoke();
+            return 0;
+        }
+        else if(amount > _inventoryStack[index])
+        {
+            amount -= _inventoryStack[index];
+            _inventoryStack[index] = 0;
+            _inventoryItem[index] = null;
+        }
+        OnInventorySlotChanged?.Invoke();
+        return amount;
+    }
+
+    #endregion
+
+    #region Decomposition
+
+    /// <summary>
+    /// Read Data from decomposition.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="stack"></param>
+    /// <returns></returns>
+    public ItemSO ReadFromDecomposition(int index, out int stack)
+    {
+        stack = _decompositionStack[index];
+        return _decompositionItem[index];
+    }
+
+    /// <summary>
+    /// Item Moving in Inventory
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
+    public void MoveItemInDecomposition(int startIndex, int endIndex)
+    {
+        // if there is no item in start cell.
+        if (startIndex == -1)
+        {
+            Debug.Log("시작칸에 아이템 없음");
+            return;
+        }
+
+        // if there is item in start cell and drag into empty cell.
+        if (_decompositionItem[startIndex] != null && endIndex != -1 && _decompositionItem[endIndex] == null)
+        {
+            Debug.Log("아이템 옮기기");
+            DecompositionTryAdd(_decompositionItem[startIndex], endIndex, _decompositionStack[startIndex]);
+            _decompositionItem[startIndex] = null;
+            _decompositionStack[startIndex] = 0;
+            OnDecompositionSlotChanged?.Invoke();
+        }
+
+        // if there is item both in start and end
+        else if (_decompositionItem[startIndex] != null && _decompositionItem[endIndex] != null)
+        {
+            // if item is same and stack is same, return.
+            if (_decompositionItem[startIndex] == _decompositionItem[endIndex] && _decompositionStack[startIndex] == _decompositionStack[endIndex]) return;
+
+            Debug.Log("아이템 위치 바꾸기");
+            ItemSO tempItem = _decompositionItem[endIndex];
+            int tempStack = _decompositionStack[endIndex];
+
+            _decompositionItem[endIndex] = _decompositionItem[startIndex];
+            _decompositionStack[endIndex] = _decompositionStack[startIndex];
+
+            _decompositionItem[startIndex] = tempItem;
+            _decompositionStack[startIndex] = tempStack;
+            OnDecompositionSlotChanged?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Try add item to Decomposition.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="index"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    private int DecompositionTryAdd(ItemSO item, int index, int amount)
+    {
+        _decompositionItem[index] = item;
+        // If the stack is enough.
+        if (amount <= (item.MaxStackSize - _decompositionStack[index]))
+        {
+            _decompositionStack[index] += amount;
+            OnDecompositionSlotChanged?.Invoke();
+            return 0;
+        }
+        // If the stack is not enough and has space.
+        else if (item.MaxStackSize > _decompositionStack[index])
+        {
+            _decompositionStack[index] = item.MaxStackSize;
+            amount -= (item.MaxStackSize - _decompositionStack[index]);
+            OnDecompositionSlotChanged?.Invoke();
+            return amount;
+        }
+        // If the stack is full.
+        else
+        {
+            return amount;
+        }
+    }
+
+    #endregion
+}

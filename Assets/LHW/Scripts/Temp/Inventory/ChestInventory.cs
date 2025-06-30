@@ -1,9 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// Crafting Inventory.
+/// Chest Inventory.
+/// Interaction method is not complete, so test not conducted.
 /// </summary>
-public class CraftingInventoryHolder : Inventory, IInteractable
+public class ChestInventory : Inventory, IInteractable
 {
     /// <summary>
     /// Activate Interaction UI
@@ -24,10 +25,11 @@ public class CraftingInventoryHolder : Inventory, IInteractable
     }
 
     /// <summary>
-    /// Activate Crafting Inventory UI.
+    /// Activate Chest Inventory UI.
     /// </summary>
     public void Interact()
     {
         OnDynamicInventoryDisplayRequested?.Invoke(_inventorySystem);
+        Debug.Log("상호작용");
     }
 }
