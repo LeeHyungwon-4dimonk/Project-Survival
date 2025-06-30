@@ -15,12 +15,23 @@ public class PlayerInteractionHandler : MonoBehaviour
     private float _holdThreshold = 1.0f;
     private Transform _nearestTransform;
 
+    private IInteractable _previousInteractable;
+
     private void Update()
     {
         DetectInteractable();
 
         if (_currentInteractable != null)
         {
+            if (_currentInteractable != _previousInteractable)
+            {
+                if (_previousInteractable != null)
+                    (_previousInteractable as InteractableObjectAdapter)?.SetNameLabelVisible(false);
+
+                (_currentInteractable as InteractableObjectAdapter)?.SetNameLabelVisible(true);
+                _previousInteractable = _currentInteractable;
+            }
+
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
             if (Input.GetKey(KeyCode.Space))
@@ -39,7 +50,14 @@ public class PlayerInteractionHandler : MonoBehaviour
         else
         {
             _uiController.Hide();
+
+            if (_previousInteractable != null)
+            {
+                (_previousInteractable as InteractableObjectAdapter)?.SetNameLabelVisible(false);
+                _previousInteractable = null;
+            }
         }
+
     }
 
     private void DetectInteractable()
