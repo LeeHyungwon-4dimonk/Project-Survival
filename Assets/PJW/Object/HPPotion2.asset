@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16df72ffc81be2f4f86baa453a28ce81, type: 3}
   m_Name: HPPotion2
   m_EditorClassIdentifier: 
-  ItemId: 0
-  Name: 
-  Description: 
+  ItemId: 999
+  Name: HPPotion2
+  Description: "HP \uD3EC\uC158\uC774\uB2E4"
   Weight: 0
-  Type: 0
+  Type: 1
   MaxStackSize: 0
   Energy: 0
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: b6b68c8c37d5cf1419267a80c426ac83, type: 3}
   Prefab: {fileID: 0}
