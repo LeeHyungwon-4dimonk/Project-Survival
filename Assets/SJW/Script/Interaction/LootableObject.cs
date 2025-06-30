@@ -6,15 +6,24 @@ public class LootableObject : MonoBehaviour
 {
     public enum ItemDropType
     {
-        Precious,
-        Material
+        FieldDrop,
+        Container
     }
 
     [SerializeField] private ItemDropType _dropType;
+    [SerializeField] private string _itemName = "아이템";
+    [SerializeField] private bool _isLooted = false;
+
+    public bool IsLooted => _isLooted;
+    public ItemDropType DropType => _dropType;
 
     public void OnLoot()
     {
-        Debug.Log($"{gameObject.name} 루팅됨");
-        Debug.Log($"{_dropType} 아이템 드롭됨");
+        if (_isLooted) return;
+
+        Debug.Log($"{_itemName} 획득!");
+        _isLooted = true;
+
+        Destroy(gameObject); // 혹은 비활성화 등으로 대체
     }
 }
