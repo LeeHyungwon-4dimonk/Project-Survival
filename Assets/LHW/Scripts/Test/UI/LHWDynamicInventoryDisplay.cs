@@ -8,9 +8,15 @@ using System.Linq;
 public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
 {
     [SerializeField] protected LHWInventorySlot_UI _slotPrefab;
+    [SerializeField] protected PlayerInventoryHolder _inventoryHolder;
     protected override void Start()
     {
         base.Start();
+    }
+
+    private void OnEnable()
+    {
+        //_inventoryHolder.TestInit();
     }
 
     /// <summary>
@@ -19,9 +25,12 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     /// <param name="invToDisplay"></param>
     public void RefreshDynamicInventory(InventorySystem invToDisplay)
     {
+        Debug.Log("Áö¿ò");
+        //Debug.Log(invToDisplay.InventorySlots[0].Data.Name);
         ClearSlots();
         _inventorySystem = invToDisplay;
         if(_inventorySystem != null) _inventorySystem.OnInventorySlotChanged += UpdateSlot;
+        //Debug.Log(_inventorySystem.InventorySlots[0].Data.Name);
         AssignSlot(invToDisplay);
     }
 
@@ -51,12 +60,15 @@ public class LHWDynamicInventoryDisplay : LHWInventoryDisplay
     // It need to be applied Object Pool Patterns?
     private void ClearSlots()
     {
+        if(_inventorySystem != null)
+            _inventorySystem.OnInventorySlotChanged -= UpdateSlot;
+
         foreach(var item in transform.Cast<Transform>())
         {
             Destroy(item.gameObject);
         }
 
-        if(_slotDictionary != null) _slotDictionary.Clear();
+        _slotDictionary?.Clear();
     }
 
     private void OnDisable()
