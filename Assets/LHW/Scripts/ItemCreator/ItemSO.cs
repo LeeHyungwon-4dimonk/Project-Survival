@@ -19,6 +19,7 @@ public class ItemSO : ScriptableObject
     public int MaxStackSize;
     public int Energy;
     public bool IsDecomposable;
+    public int ItemStats;
     public Sprite Icon;
     public GameObject Prefab;
 }
