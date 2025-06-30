@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(OutlineControllable))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 {
-    private OutlineControllable _outline;
+    private SpriteRenderer _renderer;
     private LootableObject _lootable;
 
     private void Awake()
     {
-        _outline = GetComponent<OutlineControllable>();
+        _renderer = GetComponent<SpriteRenderer>();
         _lootable = GetComponent<LootableObject>();
     }
 
@@ -24,11 +24,8 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 
     public string GetDescription()
     {
-        if (_lootable == null)
-            return "[Space] 상호작용";
-
-        if (_lootable.IsLooted)
-            return "[Space] (비어 있음)"; // or 그냥 null 반환하지 말고 뭐라도 채워
+        if (_lootable == null || _lootable.IsLooted)
+            return "";
 
         return _lootable.DropType switch
         {
@@ -38,9 +35,12 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
         };
     }
 
-
     public void SetOutline(bool on)
     {
-        _outline?.SetOutlineEnabled(on);
+        if (_renderer != null && _renderer.material != null)
+        {
+            _renderer.material.SetFloat("_OutlineEnabled", on ? 1f : 0f);
+        }
     }
 }
+

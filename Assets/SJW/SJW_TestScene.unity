@@ -971,7 +971,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7713058573985761711, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1028,7 +1029,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6963612008446306302, guid: d68f873f57a72b245a4551c5b9159441, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1085,7 +1087,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: circuit board
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9204927428439550019, guid: 64056d69217f0be45928a2c800226e59, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1142,7 +1145,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: wood piece
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4745163527212717914, guid: 2b93693ea1a33b54f8122303efbea8f6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1199,7 +1203,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6665520105211088357, guid: 129505842c358f149b2a5b8c4978d596, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1256,7 +1261,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: scrap
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3786632196194989535, guid: 6ab1bdf65d0ada041a5b2a4cceadbe95, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1309,11 +1315,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3463478645396229654, guid: 0148077c7eb9ccc4aae3ef045c95f1c3, type: 3}
+      propertyPath: _dropType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6716319915085541446, guid: 0148077c7eb9ccc4aae3ef045c95f1c3, type: 3}
       propertyPath: m_Name
       value: bag
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4693584144582808341, guid: 0148077c7eb9ccc4aae3ef045c95f1c3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1370,7 +1381,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3486018561148397054, guid: f3c00fdefaff93848b31b62c52544587, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1427,7 +1439,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: mushroom
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2146545296309864019, guid: 910e102524a99e54e998d042fdbf3c70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1484,7 +1497,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: supplementary battery
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 346026844103643687, guid: 8b2dbed73cd4f8a4fa5ee20ca9846b15, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1541,7 +1555,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: crystal
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5995502936385852468, guid: e8d904cfa8e4c7f4c97508ac2be1a635, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
