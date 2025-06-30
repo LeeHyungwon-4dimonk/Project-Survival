@@ -489,7 +489,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: example
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
   m_sharedMaterial: {fileID: -6638094663087109030, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
@@ -850,6 +850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPanel: {fileID: 207470058}
   interactionText: {fileID: 1054280925}
+  verticalOffset: 100
 --- !u!1 &2105457092
 GameObject:
   m_ObjectHideFlags: 0
