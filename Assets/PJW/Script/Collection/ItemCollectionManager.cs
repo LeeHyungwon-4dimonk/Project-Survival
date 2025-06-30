@@ -34,9 +34,9 @@ public class ItemCollectionManager : MonoBehaviour
 
     private void Start()
     {
-        if (PJWItemCollectionUI.Instance != null)
+        if (ItemCollectionUI.Instance != null)
         {
-            PJWItemCollectionUI.Instance.UpdateUI();
+            ItemCollectionUI.Instance.UpdateUI();
         }
     }
 
@@ -59,9 +59,9 @@ public class ItemCollectionManager : MonoBehaviour
             Debug.Log($"아이템 '{item.Name}' (ID: {item.ItemId}) 수집 완료!");
             SaveCollectedItems(); 
 
-            if (PJWItemCollectionUI.Instance != null)
+            if (ItemCollectionUI.Instance != null)
             {
-                PJWItemCollectionUI.Instance.UpdateUI();
+                ItemCollectionUI.Instance.UpdateUI();
             }
             return true;
         }
@@ -130,9 +130,9 @@ public class ItemCollectionManager : MonoBehaviour
         PlayerPrefs.Save(); 
         Debug.Log("수집 기록이 초기화되었습니다.");
         
-        if (PJWItemCollectionUI.Instance != null)
+        if (ItemCollectionUI.Instance != null)
         {
-            PJWItemCollectionUI.Instance.UpdateUI();
+            ItemCollectionUI.Instance.UpdateUI();
         }
     }
 }

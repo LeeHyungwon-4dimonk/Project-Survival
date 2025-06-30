@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-public class PJWItemCollectionUI : MonoBehaviour
+public class ItemCollectionUI : MonoBehaviour
 {
-    public static PJWItemCollectionUI Instance { get; private set; }
+    public static ItemCollectionUI Instance { get; private set; }
 
     [Header("UI References")]
     [SerializeField] private Transform gridRoot;
     [SerializeField] private GameObject entryUIPrefab;
-    [SerializeField] private Sprite silhouetteSprite;
+
 
     private void Awake()
     {
@@ -37,20 +37,15 @@ public class PJWItemCollectionUI : MonoBehaviour
         var collectedIds = ItemCollectionManager.Instance.CollectedItemIds;
         var allItems = ItemCollectionManager.Instance.GetAllItems();
 
-        foreach (var item in allItems
-            .Where(i => collectedIds.Contains(i.ItemId))
-            .OrderBy(i => i.ItemId))
+       foreach (var item in allItems.OrderBy(i => i.ItemId))
         {
-            var entryObj = Instantiate(entryUIPrefab, gridRoot, false);
-            var entryUI  = entryObj.GetComponent<PJWItemEntryUI>();
-            if (entryUI == null)
-            {
-                continue;
-            }
+            var entry = Instantiate(entryUIPrefab, gridRoot);
+            var ui    = entry.GetComponent<ItemEntryUI>();
+            if (ui == null) continue;
 
-            entryUI.Initialize(item, true, silhouetteSprite);
+            bool collected = collectedIds.Contains(item.ItemId);
+            ui.Initialize(item, collected);
         }
-
         Debug.Log($"도감 UI 업데이트: 총 {collectedIds.Count}개 아이템 표시");
     }
 }

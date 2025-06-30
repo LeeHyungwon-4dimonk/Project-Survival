@@ -20,4 +20,5 @@ public class ItemSO : ScriptableObject
     public int Energy;
     public Sprite Icon;
     public GameObject Prefab;
+    public Sprite silhouetteSprite;
 }
