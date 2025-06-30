@@ -11,8 +11,9 @@ public class LootableObject : MonoBehaviour
     }
 
     [SerializeField] private ItemDropType _dropType;
-    [SerializeField] private string _itemName = "¾ÆÀÌÅÛ";
     [SerializeField] private bool _isLooted = false;
+    [SerializeField] private string _itemName;
+    public string ItemName => _itemName;
 
     public bool IsLooted => _isLooted;
     public ItemDropType DropType => _dropType;

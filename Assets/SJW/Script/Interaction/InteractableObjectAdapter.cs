@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class InteractableObjectAdapter : MonoBehaviour, IInteractable
@@ -8,10 +9,16 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     private SpriteRenderer _renderer;
     private LootableObject _lootable;
 
+    [SerializeField] private GameObject nameLabelUI; // 오브젝트 자식에 있는 UI 프리팹
+    [SerializeField] private TMP_Text nameText;
+
     private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
         _lootable = GetComponent<LootableObject>();
+
+        if (nameLabelUI != null)
+            nameLabelUI.SetActive(false);
     }
 
     public void Interact()
@@ -42,5 +49,23 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
             _renderer.material.SetFloat("_OutlineEnabled", on ? 1f : 0f);
         }
     }
+
+    public void SetNameLabelVisible(bool visible)
+    {
+        if (nameLabelUI != null)
+        {
+            nameLabelUI.SetActive(visible);
+
+            if (visible && nameText != null)
+            {
+                if (_lootable != null && !string.IsNullOrEmpty(_lootable.ItemName))
+                    nameText.text = _lootable.ItemName;
+                else
+                    nameText.text = gameObject.name;
+            }
+        }
+    }
+
+
 }
 
