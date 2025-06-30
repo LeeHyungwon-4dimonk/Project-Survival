@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DecompositionSlotUnit : ItemSlotUnit
 {
-    [SerializeField] DecompositionSystem data;
+    [SerializeField] DecompositionSystem _data;
 
     public override void Awake()
     {
@@ -16,8 +16,7 @@ public class DecompositionSlotUnit : ItemSlotUnit
     /// <param name="index"></param>
     public override void UpdateUI(int index)
     {
-        /*
-        _item = InventoryManager.Instance.ReadFromInventory(index, out int stack);
+        _item = _data.ReadFromDecompositionSlot(index, out int stack);
         if (_item == null)
         {
             _image.color = Color.clear;
@@ -30,7 +29,11 @@ public class DecompositionSlotUnit : ItemSlotUnit
             _image.sprite = _item.Icon;
             _itemStack = stack;
             _text.text = stack > 1 ? stack.ToString() : "";
-        }
-        */
+        }        
+    }
+
+    public void OnClick()
+    {
+        _data.ReturnItemToInventory(_index);
     }
 }

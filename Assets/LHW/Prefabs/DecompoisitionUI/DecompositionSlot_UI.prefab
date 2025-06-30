@@ -84,7 +84,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1567831437423923666}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8706088640373552852}
+        m_TargetAssemblyTypeName: DecompositionSlotUnit, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2413471684329811476
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -138,7 +150,7 @@ MonoBehaviour:
   _index: 0
   _image: {fileID: 238706526640527344}
   _text: {fileID: 8331811733096740327}
-  controller: {fileID: 0}
+  data: {fileID: 0}
 --- !u!1 &2146221875043425497
 GameObject:
   m_ObjectHideFlags: 0

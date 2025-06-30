@@ -19,5 +19,6 @@ MonoBehaviour:
   Type: 1
   MaxStackSize: 10
   Energy: 5
+  IsDecomposable: 1
   Icon: {fileID: 21300000, guid: 885d27a480430404aa279a87d5ca816a, type: 3}
   Prefab: {fileID: 3812060852181235181, guid: c4510687119a7304db31a597ef64c497, type: 3}
