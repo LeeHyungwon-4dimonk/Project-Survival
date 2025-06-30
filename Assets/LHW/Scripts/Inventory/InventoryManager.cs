@@ -129,7 +129,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_inventoryItem[i] == item)
                 {
-                    remain = InventoryTryAdd(item, i, amount);
+                    remain = InventoryTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
             }
@@ -140,7 +140,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_inventoryItem[i] == null)
                 {
-                    remain = InventoryTryAdd(item, i, amount);
+                    remain = InventoryTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
             }
@@ -221,8 +221,8 @@ public class InventoryManager : MonoBehaviour
         // If the stack is not enough and has space.
         else if (item.MaxStackSize > _inventoryStack[index])
         {
-            _inventoryStack[index] = item.MaxStackSize;
             amount -= (item.MaxStackSize - _inventoryStack[index]);
+            _inventoryStack[index] = item.MaxStackSize;            
             OnInventorySlotChanged?.Invoke();
             return amount;
         }

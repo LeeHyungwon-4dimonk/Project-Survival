@@ -97,13 +97,14 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     {
         DragSlot.Instance.ClearDragSlot();
 
-        if (_startIsInventorySlot == true && _endIsInventorySlot == true)
+        if ((_startIsInventorySlot == true && _endIsInventorySlot == true) || (_startIsInventorySlot == true && _startDragPoint != 1 && _endDragPoint == -1))
         {
             InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
         }
         else if (_startIsInventorySlot == true && _endIsInventorySlot == false)
         {
-            InventoryManager.Instance.SendItemToDecomposition(_startDragPoint);
+            if (_endDragPoint == -1) InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
+            else InventoryManager.Instance.SendItemToDecomposition(_startDragPoint);
         }
         else if (_startIsInventorySlot == false && _endIsInventorySlot == true)
         {

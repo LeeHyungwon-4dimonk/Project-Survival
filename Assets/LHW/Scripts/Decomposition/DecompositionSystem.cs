@@ -88,7 +88,7 @@ public class DecompositionSystem : MonoBehaviour
             {
                 if (_decompositionItem[i] == item)
                 {
-                    remain = DecompositionSlotTryAdd(item, i, stack);
+                    remain = DecompositionSlotTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
             }
@@ -99,7 +99,7 @@ public class DecompositionSystem : MonoBehaviour
             {
                 if (_decompositionItem[i] == null)
                 {
-                    remain = DecompositionSlotTryAdd(item, i, stack);
+                    remain = DecompositionSlotTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
             }
@@ -193,8 +193,8 @@ public class DecompositionSystem : MonoBehaviour
         // If the stack is not enough and has space.
         else if (item.MaxStackSize > _decompositionStack[index])
         {
-            _decompositionStack[index] = item.MaxStackSize;
             amount -= (item.MaxStackSize - _decompositionStack[index]);
+            _decompositionStack[index] = item.MaxStackSize;            
             OnDecompositionSlotUpdated?.Invoke();
             return amount;
         }
