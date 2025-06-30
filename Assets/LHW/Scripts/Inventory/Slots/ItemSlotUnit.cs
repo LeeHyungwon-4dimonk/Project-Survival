@@ -20,6 +20,12 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     protected static int _startDragPoint;
     protected static int _endDragPoint;
 
+    // It should be saved as static, because each cells save different data
+    protected static bool _startIsInventorySlot;
+    protected static bool _endIsInventorySlot;
+
+    protected DecompositionSystem _decompositionData;
+
     public abstract void Awake();
 
     public abstract void UpdateUI(int index);
@@ -55,6 +61,9 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
             _startDragPoint = this._index;
         }
 
+        _startIsInventorySlot = GetComponent<InventorySlotUnit>();
+        Debug.Log(_startIsInventorySlot);
+
         Debug.Log($"{_startDragPoint} start");
         Debug.Log($"{_endDragPoint} end");
     }
@@ -75,6 +84,9 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     public void OnDrop(PointerEventData eventData)
     {
         _endDragPoint = this._index;
+
+        _endIsInventorySlot = GetComponent<InventorySlotUnit>();
+        Debug.Log(_endIsInventorySlot);
     }
 
     /// <summary>
@@ -85,6 +97,21 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     {
         DragSlot.Instance.ClearDragSlot();
 
-        InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
+        if (_startIsInventorySlot == true && _endIsInventorySlot == true)
+        {
+            InventoryManager.Instance.MoveItemInInventory(_startDragPoint, _endDragPoint);
+        }
+        else if (_startIsInventorySlot == true && _endIsInventorySlot == false)
+        {
+            InventoryManager.Instance.SendItemToDecomposition(_startDragPoint, _endDragPoint);
+        }
+        else if (_startIsInventorySlot == false && _endIsInventorySlot == true)
+        {
+            InventoryManager.Instance.ReturnItemFromDecomposition(_startDragPoint);
+        }
+        else
+        {
+            InventoryManager.Instance.MoveItemInDecompositionSlot(_startDragPoint, _endDragPoint);
+        }
     }
 }

@@ -29,22 +29,18 @@ public class InventoryManager : MonoBehaviour
     {
         _inventoryItem = new ItemSO[25];
         _inventoryStack = new int[_inventoryItem.Length];
-        _decompositionItem = new ItemSO[25];
-        _decompositionStack = new int[_inventoryItem.Length];
     }
 
     #endregion
+
+    [SerializeField] DecompositionSystem _decompositionSlotData;
 
     public int InventoryCount => _inventoryItem.Length;
 
     private ItemSO[] _inventoryItem;
     private int[] _inventoryStack;
 
-    private ItemSO[] _decompositionItem;
-    private int[] _decompositionStack;
-
     public static event Action OnInventorySlotChanged;
-    public static event Action OnDecompositionSlotChanged;
 
     #region Inventory
 
@@ -235,9 +231,7 @@ public class InventoryManager : MonoBehaviour
         {
             return amount;
         }
-    }
-
-    
+    }    
 
     /// <summary>
     /// Try remove item.
@@ -271,91 +265,25 @@ public class InventoryManager : MonoBehaviour
 
     #region Decomposition
 
-    /// <summary>
-    /// Read Data from decomposition.
-    /// </summary>
-    /// <param name="index"></param>
-    /// <param name="stack"></param>
-    /// <returns></returns>
-    public ItemSO ReadFromDecomposition(int index, out int stack)
+    public void SendItemToDecomposition(int startIndex, int endindex)
     {
-        stack = _decompositionStack[index];
-        return _decompositionItem[index];
+       if(_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], endindex, _inventoryStack[startIndex]))
+       {
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+       }
     }
 
-    /// <summary>
-    /// Item Moving in Inventory
-    /// </summary>
-    /// <param name="startIndex"></param>
-    /// <param name="endIndex"></param>
-    public void MoveItemInDecomposition(int startIndex, int endIndex)
+    public void ReturnItemFromDecomposition(int startIndex)
     {
-        // if there is no item in start cell.
-        if (startIndex == -1)
-        {
-            Debug.Log("시작칸에 아이템 없음");
-            return;
-        }
-
-        // if there is item in start cell and drag into empty cell.
-        if (_decompositionItem[startIndex] != null && endIndex != -1 && _decompositionItem[endIndex] == null)
-        {
-            Debug.Log("아이템 옮기기");
-            DecompositionTryAdd(_decompositionItem[startIndex], endIndex, _decompositionStack[startIndex]);
-            _decompositionItem[startIndex] = null;
-            _decompositionStack[startIndex] = 0;
-            OnDecompositionSlotChanged?.Invoke();
-        }
-
-        // if there is item both in start and end
-        else if (_decompositionItem[startIndex] != null && _decompositionItem[endIndex] != null)
-        {
-            // if item is same and stack is same, return.
-            if (_decompositionItem[startIndex] == _decompositionItem[endIndex] && _decompositionStack[startIndex] == _decompositionStack[endIndex]) return;
-
-            Debug.Log("아이템 위치 바꾸기");
-            ItemSO tempItem = _decompositionItem[endIndex];
-            int tempStack = _decompositionStack[endIndex];
-
-            _decompositionItem[endIndex] = _decompositionItem[startIndex];
-            _decompositionStack[endIndex] = _decompositionStack[startIndex];
-
-            _decompositionItem[startIndex] = tempItem;
-            _decompositionStack[startIndex] = tempStack;
-            OnDecompositionSlotChanged?.Invoke();
-        }
+        _decompositionSlotData.ReturnItemToInventory(startIndex);
+        OnInventorySlotChanged?.Invoke();
     }
 
-    /// <summary>
-    /// Try add item to Decomposition.
-    /// </summary>
-    /// <param name="item"></param>
-    /// <param name="index"></param>
-    /// <param name="amount"></param>
-    /// <returns></returns>
-    private int DecompositionTryAdd(ItemSO item, int index, int amount)
+    public void MoveItemInDecompositionSlot(int startIndex, int endIndex)
     {
-        _decompositionItem[index] = item;
-        // If the stack is enough.
-        if (amount <= (item.MaxStackSize - _decompositionStack[index]))
-        {
-            _decompositionStack[index] += amount;
-            OnDecompositionSlotChanged?.Invoke();
-            return 0;
-        }
-        // If the stack is not enough and has space.
-        else if (item.MaxStackSize > _decompositionStack[index])
-        {
-            _decompositionStack[index] = item.MaxStackSize;
-            amount -= (item.MaxStackSize - _decompositionStack[index]);
-            OnDecompositionSlotChanged?.Invoke();
-            return amount;
-        }
-        // If the stack is full.
-        else
-        {
-            return amount;
-        }
+        _decompositionSlotData.MoveItemInDecompositionSlot(startIndex, endIndex);
     }
 
     #endregion
