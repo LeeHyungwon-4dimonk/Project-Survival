@@ -30,7 +30,7 @@ public class TableRecipeToSO : MonoBehaviour
                 recipe.reqItem.Add(AssetDatabase.LoadAssetAtPath<ItemSO>(itemDataPath));
 
                 if (recipe.reqItem == null)
-                    Debug.LogWarning($"Sprite not found at path: {itemDataPath}");
+                    Debug.LogWarning($"SO not found at path: {itemDataPath}");
 
                 else
                 {
@@ -42,7 +42,7 @@ public class TableRecipeToSO : MonoBehaviour
             recipe.resultItem = AssetDatabase.LoadAssetAtPath<ItemSO>(lastItemDataPath);
                         
             if (recipe.resultItem == null)
-                Debug.LogWarning($"Prefab not found at path: {lastItemDataPath}");
+                Debug.LogWarning($"SO not found at path: {lastItemDataPath}");
 
             AssetDatabase.CreateAsset(recipe, $"Assets/LHW/RecipeData/{recipe.resultItem.Name}.asset");
         }
