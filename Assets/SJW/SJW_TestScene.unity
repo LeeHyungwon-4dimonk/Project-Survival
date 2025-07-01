@@ -859,6 +859,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3126330104149683646, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
+      propertyPath: m_Name
+      value: ProgressBar
+      objectReference: {fileID: 0}
     - target: {fileID: 5362467745394960739, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
       propertyPath: m_Name
       value: chemical substance

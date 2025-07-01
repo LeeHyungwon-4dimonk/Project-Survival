@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 668675589210943142}
   m_Layer: 5
-  m_Name: HoldProgressBar
+  m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
