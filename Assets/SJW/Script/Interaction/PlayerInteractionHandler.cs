@@ -55,6 +55,7 @@ public class PlayerInteractionHandler : MonoBehaviour
         }
         else
         {
+            _uiController.Hide();
             _holdTime = 0f;
             (_previousInteractable as InteractableObjectAdapter)?.HideProgressBar();
         }
