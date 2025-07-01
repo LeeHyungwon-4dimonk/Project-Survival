@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     [SerializeField] DecompositionSystem _decompositionSlotData;
+    [SerializeField] BoxSystem _boxSlotData;
 
     public int InventoryCount => _inventoryItem.Length;
 
@@ -298,6 +299,45 @@ public class InventoryManager : MonoBehaviour
     public void MoveItemInDecompositionSlot(int startIndex, int endIndex)
     {
         _decompositionSlotData.MoveItemInDecompositionSlot(startIndex, endIndex);
+    }
+
+    #endregion
+
+    #region Box
+
+    /// <summary>
+    /// Send item to box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endindex"></param>
+    public void ReturnItemToBox(int startIndex)
+    {
+        if (_boxSlotData.AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
+        {
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// Get Item to InventorySlot from box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    public void GetItemFromBox(int startIndex)
+    {
+        _boxSlotData.SendItemToInventory(startIndex);
+        OnInventorySlotChanged?.Invoke();
+    }
+
+    /// <summary>
+    /// Move Item in the Box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
+    public void MoveItemInBoxSlot(int startIndex, int endIndex)
+    {
+        _boxSlotData.MoveItemInBoxSlot(startIndex, endIndex);
     }
 
     #endregion
