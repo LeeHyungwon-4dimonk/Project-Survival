@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class BoxSystem : MonoBehaviour
 {
-    [SerializeField] ItemSO[] _boxItem;
-    [SerializeField] int[] _boxStack;
+    [SerializeField] private ItemSO[] _boxItem;
+    [SerializeField] private int[] _boxStack;
 
     public event Action OnBoxSlotUpdated;
 
@@ -23,6 +23,15 @@ public class BoxSystem : MonoBehaviour
     {
         stack = _boxStack[index];
         return _boxItem[index];
+    }
+
+    public void RemoveAllItem()
+    {
+        for(int i = 0; i < _boxItem.Length; i++)
+        {
+            _boxItem[i] = null;
+            _boxStack[i] = 0;
+        }
     }
 
     /// <summary>
@@ -44,7 +53,7 @@ public class BoxSystem : MonoBehaviour
     /// <param name="index"></param>
     /// <param name="stack"></param>
     /// <returns></returns>
-    public bool AddItemToBoxSlot(ItemSO item, int stack)
+    public bool AddItemToBoxSlot(ItemSO item, int stack = 1)
     {
         int remain = stack;
         while (remain > 0)

@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 8382355209895293555}
   - component: {fileID: 7280720024626256613}
   - component: {fileID: 8785354343898709256}
+  - component: {fileID: 8844093419025767787}
   m_Layer: 5
   m_Name: Box
   m_TagString: Untagged
@@ -298,6 +299,55 @@ MonoBehaviour:
   - {fileID: 60191924570302237}
   - {fileID: 7057573219231144018}
   _data: {fileID: 7280720024626256613}
+--- !u!114 &8844093419025767787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5520262491281674600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2fa72f28a27c146b471b37131d55a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tier: 0
+  _data: {fileID: 7280720024626256613}
+  _itemA_Items1:
+  - {fileID: 0}
+  - {fileID: 0}
+  _itemA_Items2:
+  - {fileID: 0}
+  - {fileID: 0}
+  _itemA_Items3:
+  - {fileID: 0}
+  - {fileID: 0}
+  _itemA_Items4:
+  - {fileID: 0}
+  _itemB_Journal:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _itemC_Food:
+  - {fileID: 0}
+  _itemD_Collection:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &5583673139979207393
 GameObject:
   m_ObjectHideFlags: 0
