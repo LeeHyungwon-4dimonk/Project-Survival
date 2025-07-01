@@ -165,7 +165,7 @@ public class InventoryManager : MonoBehaviour
     /// <param name="index"></param>
     public void UseItem(int index)
     {
-        if (_inventoryItem[index] && _inventoryItem[index].Type != ItemType.Material)
+        if (_inventoryItem[index].Type == ItemType.Usable)
         {
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)

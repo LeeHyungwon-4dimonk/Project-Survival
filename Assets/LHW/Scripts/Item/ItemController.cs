@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ItemController : MonoBehaviour
@@ -10,14 +11,22 @@ public class ItemController : MonoBehaviour
 
         else if(_itemSO.Type == ItemType.Usable)
         {
-            // TODO : Item Use - expendables
-            Debug.Log("소모품 소모");
+            switch(_itemSO.ItemId)
+            {
+                case 1009: // TODO : Recover hunger
+                    break;
+                case 1010: // TODO : Recover health
+                    break;
+            }
         }
 
         else if(_itemSO.Type == ItemType.Equip)
         {
-            // TODO : Item Equip
-            Debug.Log("장비 착용");
+            switch(_itemSO.ItemId)
+            {
+                case 1011: // TODO : increase player backpack max weight
+                    break;
+            }
         }        
     }
 }
