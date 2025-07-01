@@ -2,95 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
- 
+using PJW.Table;
+
 public class PJWTableManager : MonoBehaviour
 {
-    #region Singleton
     public static PJWTableManager Instance { get; private set; }
+
+    private Dictionary<PJWTableType, PJWTableBase> _tables = new();
+    private Coroutine _loadDataCoroutine;
 
     private void Awake()
     {
-        Debug.Log("PJWTableManager Awake");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
         _loadDataCoroutine = StartCoroutine(LoadData());
     }
-    #endregion
 
-    #region Fields
-    
-    // 테이블 타입별로 로드된 테이블을 저장하는 딕셔너리
-    private Dictionary<TableType, TableBase> _tables = new(); 
-    
-    // CSV 비동기 로딩 코루틴 참조용
-    private Coroutine _loadDataCoroutine;
-    #endregion
+    // 테이블 등록 여부를 확인하는 헬퍼 메서드
+    public bool IsTableLoaded(PJWTableType tableType)
+    {
+        return _tables.ContainsKey(tableType);
+    }
 
-    /// <summary>
-    /// 등록된 테이블을 타입 기반으로 반환
-    /// </summary>
-    /// <typeparam name="T">반환할 테이블 타입</typeparam>
-    /// <param name="tableType">찾고자 하는 테이블 타입</param>
-    /// <returns>테이블 인스턴스 or null</returns>
-    #region Public
-    public T GetTable<T>(TableType tableType) where T : TableBase
+    public T GetTable<T>(PJWTableType tableType) where T : PJWTableBase
     {
         if (_tables.TryGetValue(tableType, out var table))
             return table as T;
 
-        Debug.LogError($"[PJWTableManager] Cannot find table: {tableType}");
+        Debug.LogError($"[PJWTableManager] 테이블 없음: {tableType}");
         return null;
     }
-    #endregion
 
-    #region Core Load Logic
-
-
-    private void LoadAllTables()
+    private void RegisterAndLoadTable(PJWTableType tableType, PJWTableBase table, string csv)
     {
-        // Register and load all tables here
-        // RegisterAndLoadTable(TableType.Example, new TExample());
-    }
-    
-    private void RegisterAndLoadTable(TableType tableType, TableBase table, string csv)
-    {
-        // TableBase 연결 필요
-        // table.Load(csv);   
+        try
+        {
+            table.Load(csv);
+            Debug.Log($"[PJWTableManager] 테이블 로드 완료: {tableType}");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"[PJWTableManager] 테이블 로드 실패 ({tableType}): {ex.Message}");
+        }
+
+        // 예외가 나도 빈 테이블이라도 등록
         _tables[tableType] = table;
+        Debug.Log($"[PJWTableManager] 테이블 등록 완료: {tableType}");
     }
 
-    /// <summary>
-    /// 구글 시트에서 CSV 데이터를 받아오는 코루틴
-    /// </summary>
-    /// <returns></returns>
     private IEnumerator LoadData()
     {
-        // 내보내기 형식으로 CSV를 요청
-        string url = "https://docs.google.com/spreadsheets/d/1m8bLxgbwbyxJfMyBUrq3p4cp4dNxJoEFsbu_cah6SB8/export?format=csv&gid=1916368705";
-        var www = UnityWebRequest.Get(url);
+        string url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBZd8o_NHamDmplP5aclEm8mRG8TCod7bToxwXY8mgILdW4Ht4lf22IJWH0td8EUe8W6ec7jGrOP4g/pub?output=csv";
+        UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
-        
-        // 오류 처리
+
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"[PJWTableManager] CSV Load Failed: {www.error}");
+            Debug.LogError($"[PJWTableManager] CSV 다운로드 실패: {www.error}");
             yield break;
         }
 
         string csv = www.downloadHandler.text;
-        Debug.Log($"[PJWTableManager] CSV Loaded, length = {csv.Length}");
-        
+        Debug.Log($"[PJWTableManager] CSV 로드 완료, 길이: {csv.Length}");
 
-        // Item Table 등록
-        // RegisterAndLoadTable(TableType.Item, new ItemTable(), csv);
+        RegisterAndLoadTable(PJWTableType.Item, new PJWItemTable(), csv);
     }
-
-    #endregion
 }

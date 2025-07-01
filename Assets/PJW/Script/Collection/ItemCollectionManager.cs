@@ -42,7 +42,6 @@ public class ItemCollectionManager : MonoBehaviour
 
     private void Update()
 {
-    // 예: R 키를 누르면 초기화
     if (Input.GetKeyDown(KeyCode.R))
     {
         ResetCollection();
