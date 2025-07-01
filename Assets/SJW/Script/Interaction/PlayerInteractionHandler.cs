@@ -32,6 +32,9 @@ public class PlayerInteractionHandler : MonoBehaviour
                 _previousInteractable = _currentInteractable;
             }
 
+            if (_currentInteractable is InteractableObjectAdapter adapter)
+                adapter.SetNameLabelVisible(true);
+
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
             if (Input.GetKey(KeyCode.Space))
@@ -68,6 +71,9 @@ public class PlayerInteractionHandler : MonoBehaviour
 
         if (_currentHits.Length == 0)
         {
+            if (_currentInteractable is InteractableObjectAdapter oldAdapter)
+                oldAdapter.SetNameLabelVisible(false);
+
             foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
                 obj.SetOutline(false);
 
