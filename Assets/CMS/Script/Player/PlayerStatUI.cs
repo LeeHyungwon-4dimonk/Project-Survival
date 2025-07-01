@@ -6,21 +6,21 @@ using UnityEngine.UI;
 public class PlayerStatusUI : MonoBehaviour
 {
     [SerializeField] private Slider _healthBar;
-    [SerializeField] private Slider _hydrationBar;
-    [SerializeField] private Slider _hungerBar;
+    [SerializeField] private Slider _staminaBar;
+    [SerializeField] private Slider _saturationBar;
     [SerializeField] private PlayerStats _playerStats;
 
     private void Start()
     {
-        _healthBar.maxValue = _playerStats.Health;
-        _hydrationBar.maxValue = _playerStats.Hydration;
-        _hungerBar.maxValue = _playerStats.Hunger;
+        _healthBar.maxValue = _playerStats.MaxHealth;
+        _staminaBar.maxValue = _playerStats.MaxStamina;
+        _saturationBar.maxValue = _playerStats.MaxSaturation;
     }
 
     private void Update()
     {
         _healthBar.value = _playerStats.Health;
-        _hydrationBar.value = _playerStats.Hydration;
-        _hungerBar.value = _playerStats.Hunger;
+        _staminaBar.value = _playerStats.CurrentStamina;
+        _saturationBar.value = _playerStats.Saturation;
     }
 }
