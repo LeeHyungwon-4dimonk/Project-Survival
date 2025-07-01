@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectNameLabelUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4542613948752877449, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5847644518188057508, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -337,6 +341,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -368,6 +376,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3437783204698940780, guid: 129505842c358f149b2a5b8c4978d596, type: 3}
   m_PrefabInstance: {fileID: 5091007715452071713}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &129067280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 2107784205}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &141475548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 1361639497}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &185219518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 238325682612177992, guid: 6ab1bdf65d0ada041a5b2a4cceadbe95, type: 3}
@@ -717,6 +747,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4395356803706022343, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
   m_PrefabInstance: {fileID: 276823335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &361870093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 528490912}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &371709682 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 1809742735}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &463628379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1081,6 +1133,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4395356803706022343, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
   m_PrefabInstance: {fileID: 571469623}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &622721406 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 571469623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &652246412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 1664196408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &667360659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,7 +1481,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _uiController: {fileID: 1889201167}
-  _holdProgressBarImage: {fileID: 0}
 --- !u!1001 &1361639497
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1526,6 +1599,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4395356803706022343, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
   m_PrefabInstance: {fileID: 1361639497}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1364204396 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 28260501}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1459870822 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 276823335}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1625230124 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6866039833357763601, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
@@ -1654,6 +1749,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4395356803706022343, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
   m_PrefabInstance: {fileID: 1664196408}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1737167971 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 1872133261}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1809742735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2051,6 +2157,28 @@ MonoBehaviour:
   interactionText: {fileID: 1054280925}
   holdProgressBarImage: {fileID: 0}
   panelAnchoredPosY: 611
+--- !u!114 &1967044736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 62421667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1977448720 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7665932714943604512, guid: 6207c86639a97484fb3447c7cefceec4, type: 3}
+  m_PrefabInstance: {fileID: 463628379}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2057026518 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5393555837969509152, guid: 64056d69217f0be45928a2c800226e59, type: 3}
@@ -2258,6 +2386,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 571469626}
+    - target: {fileID: 4349339278259281830, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 622721406}
     - target: {fileID: 4604763266000287741, guid: 09bc67e99ebe5b84b8b99e6bbf1d04fb, type: 3}
       propertyPath: _itemName
       value: "\uD654\uD559 \uBB3C\uC9C8"
@@ -2387,6 +2519,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 1664196411}
+    - target: {fileID: 7814269946798541830, guid: d68f873f57a72b245a4551c5b9159441, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 652246412}
     m_RemovedComponents:
     - {fileID: 6963612008446306302, guid: d68f873f57a72b245a4551c5b9159441, type: 3}
     m_RemovedGameObjects: []
@@ -2412,6 +2548,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 1872133264}
+    - target: {fileID: 1014150784128240723, guid: 64056d69217f0be45928a2c800226e59, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 1737167971}
     - target: {fileID: 5393555837969509152, guid: 64056d69217f0be45928a2c800226e59, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.0651574
@@ -2529,6 +2669,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 1361639500}
+    - target: {fileID: 3432927574516696106, guid: 2b93693ea1a33b54f8122303efbea8f6, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 141475548}
     - target: {fileID: 5344777998276931870, guid: 2b93693ea1a33b54f8122303efbea8f6, type: 3}
       propertyPath: m_Name
       value: wood piece
@@ -2614,6 +2758,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 528490915}
+    - target: {fileID: 3769991415073382091, guid: 129505842c358f149b2a5b8c4978d596, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 361870093}
     - target: {fileID: 5858991340412088233, guid: 129505842c358f149b2a5b8c4978d596, type: 3}
       propertyPath: _itemName
       value: "\uC0DD\uC874 \uC77C\uC9C0"
@@ -2687,6 +2835,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 1809742738}
+    - target: {fileID: 9023933112103224816, guid: 6ab1bdf65d0ada041a5b2a4cceadbe95, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 371709682}
     - target: {fileID: 9187214097313049705, guid: 6ab1bdf65d0ada041a5b2a4cceadbe95, type: 3}
       propertyPath: m_Name
       value: scrap
@@ -2768,6 +2920,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 276823338}
+    - target: {fileID: 4860939471111684460, guid: 0148077c7eb9ccc4aae3ef045c95f1c3, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 1459870822}
     - target: {fileID: 6716319915085541446, guid: 0148077c7eb9ccc4aae3ef045c95f1c3, type: 3}
       propertyPath: m_Name
       value: bag
@@ -2814,6 +2970,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 463628382}
+    - target: {fileID: 6383884006698897548, guid: f3c00fdefaff93848b31b62c52544587, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 1977448720}
     - target: {fileID: 7000566852110010347, guid: f3c00fdefaff93848b31b62c52544587, type: 3}
       propertyPath: _itemName
       value: "\uAD6C\uAE09\uC57D"
@@ -2923,6 +3083,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 2107784208}
+    - target: {fileID: 4058694868089449980, guid: 910e102524a99e54e998d042fdbf3c70, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 129067280}
     - target: {fileID: 7514902565694367253, guid: 910e102524a99e54e998d042fdbf3c70, type: 3}
       propertyPath: m_Name
       value: mushroom
@@ -2960,6 +3124,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 28260504}
+    - target: {fileID: 1524025884214597985, guid: 8b2dbed73cd4f8a4fa5ee20ca9846b15, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 1364204396}
     - target: {fileID: 4973789908736163034, guid: 8b2dbed73cd4f8a4fa5ee20ca9846b15, type: 3}
       propertyPath: _itemName
       value: "\uBA40\uCA61\uD55C \uBCF4\uC870\uBC30\uD130\uB9AC"
@@ -3089,6 +3257,10 @@ PrefabInstance:
       propertyPath: nameLabelUI
       value: 
       objectReference: {fileID: 62421670}
+    - target: {fileID: 7390861670678033497, guid: e8d904cfa8e4c7f4c97508ac2be1a635, type: 3}
+      propertyPath: holdProgressBarImage
+      value: 
+      objectReference: {fileID: 1967044736}
     m_RemovedComponents:
     - {fileID: 5995502936385852468, guid: e8d904cfa8e4c7f4c97508ac2be1a635, type: 3}
     m_RemovedGameObjects: []

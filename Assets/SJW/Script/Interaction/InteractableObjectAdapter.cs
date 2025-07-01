@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -68,6 +69,29 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
             }
         }
     }
+
+    [SerializeField] private Image holdProgressBarImage;
+
+    public void ShowProgressBar(float ratio)
+    {
+        if (holdProgressBarImage == null) return;
+
+        if (!holdProgressBarImage.gameObject.activeSelf)
+            holdProgressBarImage.gameObject.SetActive(true);
+
+        holdProgressBarImage.fillAmount = Mathf.Clamp01(ratio);
+    }
+
+    public void HideProgressBar()
+    {
+        if (holdProgressBarImage == null) return;
+
+        if (holdProgressBarImage.gameObject.activeSelf)
+            holdProgressBarImage.gameObject.SetActive(false);
+
+        holdProgressBarImage.fillAmount = 0f;
+    }
+
 
 
 }

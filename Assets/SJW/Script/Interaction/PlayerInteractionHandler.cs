@@ -9,7 +9,6 @@ public class PlayerInteractionHandler : MonoBehaviour
     [SerializeField] private float _interactRange = 1.5f;
     [SerializeField] private LayerMask _interactableLayer;
     [SerializeField] private FarmingUIController _uiController;
-    [SerializeField] private Image _holdProgressBarImage; // Fill 타입 이미지
 
     private IInteractable _currentInteractable;
     private Collider2D[] _currentHits;
@@ -38,41 +37,29 @@ public class PlayerInteractionHandler : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 _holdTime += Time.deltaTime;
-                ShowHoldProgressBar(_holdTime / _holdThreshold);
+                (_currentInteractable as InteractableObjectAdapter)?.ShowProgressBar(_holdTime / _holdThreshold);
 
                 if (_holdTime >= _holdThreshold)
                 {
-                    _currentInteractable.Interact();
+                    _currentInteractable?.Interact();
                     _holdTime = 0f;
-                    HideHoldProgressBar();
+                    (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
                 }
             }
             else
             {
                 _holdTime = 0f;
-                HideHoldProgressBar();
+                (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
             }
 
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                _holdTime = 0f;
-                HideHoldProgressBar();
-            }
         }
         else
         {
-            _uiController.Hide();
-
-            if (_previousInteractable != null)
-            {
-                (_previousInteractable as InteractableObjectAdapter)?.SetNameLabelVisible(false);
-                _previousInteractable = null;
-            }
-
             _holdTime = 0f;
-            HideHoldProgressBar();
+            (_previousInteractable as InteractableObjectAdapter)?.HideProgressBar();
         }
     }
+
 
     private void DetectInteractable()
     {
@@ -105,28 +92,6 @@ public class PlayerInteractionHandler : MonoBehaviour
         var nearest = sortedHits[0];
         _currentInteractable = nearest.GetComponent<IInteractable>();
         _nearestTransform = nearest.transform;
-    }
-
-    private void ShowHoldProgressBar(float fillAmount)
-    {
-        if (_holdProgressBarImage == null)
-            return;
-
-        if (!_holdProgressBarImage.gameObject.activeSelf)
-            _holdProgressBarImage.gameObject.SetActive(true);
-
-        _holdProgressBarImage.fillAmount = Mathf.Clamp01(fillAmount);
-    }
-
-    private void HideHoldProgressBar()
-    {
-        if (_holdProgressBarImage == null)
-            return;
-
-        if (_holdProgressBarImage.gameObject.activeSelf)
-            _holdProgressBarImage.gameObject.SetActive(false);
-
-        _holdProgressBarImage.fillAmount = 0f;
     }
 
     private void OnDrawGizmosSelected()
