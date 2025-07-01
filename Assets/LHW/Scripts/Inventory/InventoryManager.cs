@@ -35,8 +35,10 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] DecompositionSystem _decompositionSlotData;
     [SerializeField] BoxSystem[] _boxSlotData;
+    [SerializeField] HotbarController _hotbarController;
 
     private BoxSystem _currentOpenedBox;
+    
 
     public int InventoryCount => _inventoryItem.Length;
 
@@ -173,8 +175,8 @@ public class InventoryManager : MonoBehaviour
                 _inventoryItem[index] = null;
                 _inventoryStack[index] = 0;
             }
-            OnInventorySlotChanged?.Invoke();
         }
+        OnInventorySlotChanged?.Invoke();
     }
 
     /// <summary>
@@ -262,6 +264,25 @@ public class InventoryManager : MonoBehaviour
         }
         OnInventorySlotChanged?.Invoke();
         return amount;
+    }
+
+    #endregion
+
+    #region QuickSlot
+
+    public void AddQuickSlotItem(int targetIndex, int inventoryIndex)
+    {
+        if (_inventoryItem[inventoryIndex].Type == ItemType.Usable || _inventoryItem[inventoryIndex].Type == ItemType.Equip)
+        {
+            _hotbarController.SetSlot(targetIndex, inventoryIndex);
+            OnInventorySlotChanged?.Invoke();
+        }
+    }
+
+    public void RemoveQuickSlotItem(int index)
+    {
+        _hotbarController.SetSlot(index, -1);
+        OnInventorySlotChanged?.Invoke();
     }
 
     #endregion

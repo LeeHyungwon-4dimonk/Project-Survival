@@ -24,6 +24,9 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
     protected static bool _startIsInventorySlot;
     protected static bool _endIsInventorySlot;
 
+    protected static bool _startIsQuickSlot;
+    protected static bool _endIsQuickSlot;
+
     protected static bool _startIsDecompositionSlot;
     protected static bool _endIsDecompositionSlot;
 
@@ -35,21 +38,8 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
 
     public abstract void UpdateUI(int index);
 
-    /// <summary>
-    /// Item Use when click.(Interface)
-    /// </summary>
-    /// <param name="eventData"></param>
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (_item != null)
-        {
-            _item.Prefab.GetComponent<ItemController>().Use();
+    public virtual void OnPointerClick(PointerEventData eventData) { }
 
-            InventoryManager.Instance.UseItem(_index);
-
-            UpdateUI(_index);
-        }
-    }
 
     /// <summary>
     /// When Drag Start.(Interface)
@@ -67,6 +57,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         }
 
         _startIsInventorySlot = GetComponent<InventorySlotUnit>();
+        _startIsQuickSlot = GetComponent<HotBarSlotUnit>();
         _startIsDecompositionSlot = GetComponent<DecompositionSlotUnit>();
         _startIsBoxSlot = GetComponent<BoxSlotUnit>();
 
@@ -92,6 +83,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         _endDragPoint = this._index;
 
         _endIsInventorySlot = GetComponent<InventorySlotUnit>();
+        _endIsQuickSlot = GetComponent<HotBarSlotUnit>();
         _endIsDecompositionSlot = GetComponent<DecompositionSlotUnit>();
         _endIsBoxSlot = GetComponent<BoxSlotUnit>();
         Debug.Log(_endIsInventorySlot);
@@ -113,6 +105,7 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         else if (_startIsInventorySlot == true && _endIsInventorySlot == false)
         {
             if (_endIsDecompositionSlot) InventoryManager.Instance.SendItemToDecomposition(_startDragPoint);
+            else if (_endIsQuickSlot) InventoryManager.Instance.AddQuickSlotItem(_endDragPoint, _startDragPoint);
             else InventoryManager.Instance.ReturnItemToBox(_startDragPoint);
         }
         else if (_startIsInventorySlot == false && _endIsInventorySlot == true)

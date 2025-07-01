@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class ItemController : MonoBehaviour
@@ -18,6 +17,7 @@ public class ItemController : MonoBehaviour
                 case 1010: // TODO : Recover health
                     break;
             }
+            Debug.Log("소모품 사용함");
         }
 
         else if(_itemSO.Type == ItemType.Equip)
@@ -27,6 +27,7 @@ public class ItemController : MonoBehaviour
                 case 1011: // TODO : increase player backpack max weight
                     break;
             }
+            Debug.Log("아이템 착용");
         }        
     }
 }
