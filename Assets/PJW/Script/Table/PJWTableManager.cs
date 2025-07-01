@@ -10,6 +10,7 @@ public class PJWTableManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("PJWTableManager Awake");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -62,7 +63,7 @@ public class PJWTableManager : MonoBehaviour
     {
         // TableBase 연결 필요
         // table.Load(csv);   
-        // _tables[tableType] = table;
+        _tables[tableType] = table;
     }
 
     /// <summary>
@@ -84,6 +85,8 @@ public class PJWTableManager : MonoBehaviour
         }
 
         string csv = www.downloadHandler.text;
+        Debug.Log($"[PJWTableManager] CSV Loaded, length = {csv.Length}");
+        
 
         // Item Table 등록
         // RegisterAndLoadTable(TableType.Item, new ItemTable(), csv);

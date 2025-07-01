@@ -9,7 +9,8 @@ public class ItemCollectionUI : MonoBehaviour
     public static ItemCollectionUI Instance { get; private set; }
 
     [Header("UI References")]
-    [SerializeField] private Transform gridRoot;
+    [SerializeField] private Transform diaryGridRoot;
+    [SerializeField] private Transform collectionGridRoot;
     [SerializeField] private GameObject entryUIPrefab;
 
 
@@ -25,8 +26,8 @@ public class ItemCollectionUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        foreach (Transform child in gridRoot)
-            Destroy(child.gameObject);
+        foreach (Transform child in diaryGridRoot)       Destroy(child.gameObject);
+        foreach (Transform child in collectionGridRoot)  Destroy(child.gameObject);
 
         if (ItemCollectionManager.Instance == null)
         {
@@ -35,17 +36,23 @@ public class ItemCollectionUI : MonoBehaviour
         }
 
         var collectedIds = ItemCollectionManager.Instance.CollectedItemIds;
-        var allItems = ItemCollectionManager.Instance.GetAllItems();
+        var allItems     = ItemCollectionManager.Instance.GetAllItems();
 
-       foreach (var item in allItems.OrderBy(i => i.CollectionId))
+        foreach (var item in allItems.OrderBy(i => i.CollectionId))
         {
-            var entry = Instantiate(entryUIPrefab, gridRoot);
-            var ui    = entry.GetComponent<ItemEntryUI>();
-            if (ui == null) continue;
+            var parent = item.CollectionType == CollectionType.Diary
+                         ? diaryGridRoot
+                         : collectionGridRoot;
 
-            bool collected = collectedIds.Contains(item.CollectionId);
-            ui.Initialize(item, collected);
+            var entryObj = Instantiate(entryUIPrefab, parent);
+            var ui       = entryObj.GetComponent<ItemEntryUI>();
+            if (ui != null)
+            {
+                bool isCollected = collectedIds.Contains(item.CollectionId);
+                ui.Initialize(item, isCollected);
+            }
         }
-        Debug.Log($"도감 UI 업데이트: 총 {collectedIds.Count}개 아이템 표시");
+
+        Debug.Log($"도감 UI 업데이트: Diary({diaryGridRoot.childCount}) + CollectionItem({collectionGridRoot.childCount})");
     }
 }
