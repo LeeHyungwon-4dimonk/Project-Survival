@@ -12,7 +12,6 @@ public class PlayerStatusUI : MonoBehaviour
 
     private void Start()
     {
-        // MaxValue ¼³Á¤
         _healthBar.maxValue = _playerStats.Health;
         _hydrationBar.maxValue = _playerStats.Hydration;
         _hungerBar.maxValue = _playerStats.Hunger;
