@@ -15,11 +15,13 @@ public class BoxController : MonoBehaviour
     {
         _data.OnBoxSlotUpdated += UpdateUISlot;
         UpdateUISlot();
+        InventoryManager.Instance.OpenBox(this._data);
     }
 
     private void OnDisable()
     {
         _data.OnBoxSlotUpdated -= UpdateUISlot;
+        InventoryManager.Instance.CloseBox();
     }
 
     private void UpdateUISlot()

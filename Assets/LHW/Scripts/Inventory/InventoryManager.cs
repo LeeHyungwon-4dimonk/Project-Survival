@@ -34,7 +34,9 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     [SerializeField] DecompositionSystem _decompositionSlotData;
-    [SerializeField] BoxSystem _boxSlotData;
+    [SerializeField] BoxSystem[] _boxSlotData;
+
+    private BoxSystem _currentOpenedBox;
 
     public int InventoryCount => _inventoryItem.Length;
 
@@ -305,6 +307,16 @@ public class InventoryManager : MonoBehaviour
 
     #region Box
 
+    public void OpenBox(BoxSystem box)
+    {
+        _currentOpenedBox = box;
+    }
+
+    public void CloseBox()
+    {
+        _currentOpenedBox = null;
+    }
+
     /// <summary>
     /// Send item to box slot.
     /// </summary>
@@ -312,11 +324,19 @@ public class InventoryManager : MonoBehaviour
     /// <param name="endindex"></param>
     public void ReturnItemToBox(int startIndex)
     {
-        if (_boxSlotData.AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
+        if (startIndex == -1) return;
+
+        for (int i = 0; i < _boxSlotData.Length; i++)
         {
-            _inventoryItem[startIndex] = null;
-            _inventoryStack[startIndex] = 0;
-            OnInventorySlotChanged?.Invoke();
+            if (_boxSlotData[i] == _currentOpenedBox)
+            {
+                if (_boxSlotData[i].AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
+                {
+                    _inventoryItem[startIndex] = null;
+                    _inventoryStack[startIndex] = 0;
+                    OnInventorySlotChanged?.Invoke();
+                }
+            }
         }
     }
 
@@ -326,8 +346,14 @@ public class InventoryManager : MonoBehaviour
     /// <param name="startIndex"></param>
     public void GetItemFromBox(int startIndex)
     {
-        _boxSlotData.SendItemToInventory(startIndex);
-        OnInventorySlotChanged?.Invoke();
+        for (int i = 0; i < _boxSlotData.Length; i++)
+        {
+            if (_boxSlotData[i] == _currentOpenedBox)
+            {
+                _boxSlotData[i].SendItemToInventory(startIndex);
+                OnInventorySlotChanged?.Invoke();
+            }
+        }
     }
 
     /// <summary>
@@ -337,7 +363,10 @@ public class InventoryManager : MonoBehaviour
     /// <param name="endIndex"></param>
     public void MoveItemInBoxSlot(int startIndex, int endIndex)
     {
-        _boxSlotData.MoveItemInBoxSlot(startIndex, endIndex);
+        for (int i = 0; i < _boxSlotData.Length; i++)
+        {
+            _boxSlotData[i].MoveItemInBoxSlot(startIndex, endIndex);
+        }
     }
 
     #endregion
