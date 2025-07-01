@@ -12,6 +12,9 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     [SerializeField] private GameObject nameLabelUI; // 오브젝트 자식에 있는 UI 프리팹
     [SerializeField] private TMP_Text nameText;
 
+    //public bool Looted => _lootable != null && _lootable.IsLooted;
+
+
     private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
