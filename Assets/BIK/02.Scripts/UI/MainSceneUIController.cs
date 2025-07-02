@@ -18,7 +18,7 @@ public class MainSceneUIController : MonoBehaviour
 
     public void OnClick_Option()
     {
-        MenuController.Instance.ShowOption();
+        //MenuController.Instance.OnSettings();
     }
 
     #endregion // public funcs
