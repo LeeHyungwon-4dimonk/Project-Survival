@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2433567570621729820}
   - component: {fileID: 8070727766291750910}
   m_Layer: 5
-  m_Name: HydrationBar
+  m_Name: StaminaBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 3728659505848334021}
   - component: {fileID: 2129601816372032627}
   m_Layer: 5
-  m_Name: HungerBar
+  m_Name: SaturationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
