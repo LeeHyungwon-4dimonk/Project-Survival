@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 941808469960963490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 101.1, y: -11, z: -0.061334725}
+  m_LocalPosition: {x: 29.8, y: -34.3, z: -0.061334725}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61,8 +61,8 @@ Transform:
   m_GameObject: {fileID: 946816102722647833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.04, y: 2.48, z: 0}
-  m_LocalScale: {x: 0.45375, y: 22.942883, z: 1}
+  m_LocalPosition: {x: -45, y: 2.48, z: 0}
+  m_LocalScale: {x: 0.45375, y: 113.28048, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803298496827253612}
@@ -138,8 +138,8 @@ Transform:
   m_GameObject: {fileID: 1290767295662561275}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.16, y: 13.94, z: 0}
-  m_LocalScale: {x: 49.37625, y: 0.25312498, z: 1}
+  m_LocalPosition: {x: 3.16, y: 52.5, z: 0}
+  m_LocalScale: {x: 116.03419, y: 0.25312498, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803298496827253612}
@@ -215,8 +215,8 @@ Transform:
   m_GameObject: {fileID: 6263590580076945215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.77, y: 2.42, z: 0}
-  m_LocalScale: {x: 0.275, y: 23.408699, z: 1}
+  m_LocalPosition: {x: 51.3, y: 2.42, z: 0}
+  m_LocalScale: {x: 0.275, y: 110.89872, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803298496827253612}
@@ -292,8 +292,8 @@ Transform:
   m_GameObject: {fileID: 6430879748120022305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.16, y: -8.9, z: 0}
-  m_LocalScale: {x: 49.405952, y: 0.60218745, z: 1}
+  m_LocalPosition: {x: 3.16, y: -44, z: 0}
+  m_LocalScale: {x: 120.42701, y: 0.60218745, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 803298496827253612}

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AreaTransition : MonoBehaviour
 {
+    [SerializeField] private Vector2 _secondMaxCameraBoundary;
+    [SerializeField] private Vector2 _secondMinCameraBoundary;
+    [SerializeField] private Vector2 playerPosOffset;
+    [SerializeField] private Transform _exitPos;
+
     private FollowCamera _followCamera;
-    [SerializeField] Vector2 _secondMaxCameraBoundary;
-    [SerializeField] Vector2 _secondMinCameraBoundary;
-    [SerializeField] Vector2 playerPosOffset;
-    [SerializeField] Transform _exitPos;
 
     private void Awake()
     {
@@ -17,12 +18,20 @@ public class AreaTransition : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
-        {
-            _followCamera.MinCameraBoundary = _secondMinCameraBoundary;
-            _followCamera.MaxCameraBoundary = _secondMaxCameraBoundary;
-            collision.transform.position = _exitPos.position + (Vector3)playerPosOffset;
-        }
+        if (!collision.CompareTag("Player")) return;
+
+        Debug.Log("Transition Triggered!");
+
+        _followCamera.MinCameraBoundary = _secondMinCameraBoundary;
+        _followCamera.MaxCameraBoundary = _secondMaxCameraBoundary;
+
+        // 위치 강제 이동 (지연 처리)
+        StartCoroutine(DelayedTeleport(collision.transform));
     }
 
+    private IEnumerator DelayedTeleport(Transform player)
+    {
+        yield return new WaitForFixedUpdate();
+        player.position = _exitPos.position + (Vector3)playerPosOffset;
+    }
 }
