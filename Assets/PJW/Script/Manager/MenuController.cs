@@ -21,6 +21,8 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button confirmQuitButton;
     [SerializeField] private Button cancelQuitButton;
 
+    private Stack<GameObject> _panelStack = new Stack<GameObject>();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,68 +30,72 @@ public class MenuController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        // 버튼 클릭 이벤트 연결
-        if (backButton != null) backButton.onClick.AddListener(OnBack);
-        if (settingsButton != null) settingsButton.onClick.AddListener(OnSettings);
-        if (quitButton != null) quitButton.onClick.AddListener(OnQuit);
+        if (backButton != null)       backButton.onClick.AddListener(OnBack);
+        if (settingsButton != null)   settingsButton.onClick.AddListener(OnSettings);
+        if (quitButton != null)       quitButton.onClick.AddListener(OnQuit);
         if (confirmQuitButton != null) confirmQuitButton.onClick.AddListener(OnConfirmQuit);
-        if (cancelQuitButton != null) cancelQuitButton.onClick.AddListener(OnCancelQuit);
+        if (cancelQuitButton != null)  cancelQuitButton.onClick.AddListener(OnCancelQuit);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleMenuPopup();
-        }
+            HandleEscape();
     }
 
-    // ESC키 또는 외부 호출로 메뉴 팝업 토글
-    public void ToggleMenuPopup()
+    private void HandleEscape()
     {
-        if (menuPopup != null)
+        if (_panelStack.Count > 0)
         {
-            menuPopup.SetActive(!menuPopup.activeSelf);
+            // 이미 열린 창이 있으면 가장 마지막에 열린 창부터 닫는다
+            HideTopPanel();
+        }
+        else
+        {
+            // 아무 창도 열려 있지 않으면 메인 메뉴를 연다
+            ShowPanel(menuPopup);
         }
     }
 
-    // 외부에서 옵션 패널 보여주기
-    public void ShowOption()
+    private void ShowPanel(GameObject panel)
     {
-        if (optionPanel != null)
-        {
-            optionPanel.SetActive(true);
-        }
+        if (panel == null) return;
+        panel.SetActive(true);
+        _panelStack.Push(panel);
     }
 
-    // BackButton
+    private void HideTopPanel()
+    {
+        if (_panelStack.Count == 0) return;
+        var top = _panelStack.Pop();
+        top.SetActive(false);
+    }
+
+    // 메뉴팝업의 Back 버튼 (또는 외부에서 호출)
     public void OnBack()
     {
-        if (menuPopup != null)
-            menuPopup.SetActive(false);
+        HideTopPanel();
     }
 
-    // OptionButton
+    // Settings 버튼
     public void OnSettings()
     {
-        ShowOption();
+        ShowPanel(optionPanel);
     }
 
-    // MenuQuit Button
+    // Quit 버튼
     public void OnQuit()
     {
-        if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(true);
+        ShowPanel(quitConfirmPanel);
     }
 
-    // QuitPanel - OkButton
+    // Quit 확인
     public void OnConfirmQuit()
     {
 #if UNITY_EDITOR
@@ -99,10 +105,9 @@ public class MenuController : MonoBehaviour
 #endif
     }
 
-    // QuitPanel - CancelButton
+    // Quit 취소
     public void OnCancelQuit()
     {
-        if (quitConfirmPanel != null)
-            quitConfirmPanel.SetActive(false);
+        HideTopPanel();
     }
 }
