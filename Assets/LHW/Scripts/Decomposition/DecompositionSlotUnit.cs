@@ -32,6 +32,9 @@ public class DecompositionSlotUnit : ItemSlotUnit
         }        
     }
 
+    /// <summary>
+    /// OnClick event. If Click button, return item to the inventory.
+    /// </summary>
     public void OnClick()
     {
         _data.ReturnItemToInventory(_index);

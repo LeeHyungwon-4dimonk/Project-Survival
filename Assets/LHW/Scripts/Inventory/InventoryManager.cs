@@ -34,6 +34,11 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     [SerializeField] DecompositionSystem _decompositionSlotData;
+    [SerializeField] BoxSystem[] _boxSlotData;
+    [SerializeField] HotbarController _hotbarController;
+
+    private BoxSystem _currentOpenedBox;
+    
 
     public int InventoryCount => _inventoryItem.Length;
 
@@ -162,7 +167,7 @@ public class InventoryManager : MonoBehaviour
     /// <param name="index"></param>
     public void UseItem(int index)
     {
-        if (_inventoryItem[index] && _inventoryItem[index].Type != ItemType.Material)
+        if (_inventoryItem[index].Type == ItemType.Usable)
         {
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
@@ -170,8 +175,8 @@ public class InventoryManager : MonoBehaviour
                 _inventoryItem[index] = null;
                 _inventoryStack[index] = 0;
             }
-            OnInventorySlotChanged?.Invoke();
         }
+        OnInventorySlotChanged?.Invoke();
     }
 
     /// <summary>
@@ -263,6 +268,25 @@ public class InventoryManager : MonoBehaviour
 
     #endregion
 
+    #region QuickSlot
+
+    public void AddQuickSlotItem(int targetIndex, int inventoryIndex)
+    {
+        if (_inventoryItem[inventoryIndex].Type == ItemType.Usable || _inventoryItem[inventoryIndex].Type == ItemType.Equip)
+        {
+            _hotbarController.SetSlot(targetIndex, inventoryIndex);
+            OnInventorySlotChanged?.Invoke();
+        }
+    }
+
+    public void RemoveQuickSlotItem(int index)
+    {
+        _hotbarController.SetSlot(index, -1);
+        OnInventorySlotChanged?.Invoke();
+    }
+
+    #endregion
+
     #region Decomposition
 
     /// <summary>
@@ -298,6 +322,72 @@ public class InventoryManager : MonoBehaviour
     public void MoveItemInDecompositionSlot(int startIndex, int endIndex)
     {
         _decompositionSlotData.MoveItemInDecompositionSlot(startIndex, endIndex);
+    }
+
+    #endregion
+
+    #region Box
+
+    public void OpenBox(BoxSystem box)
+    {
+        _currentOpenedBox = box;
+    }
+
+    public void CloseBox()
+    {
+        _currentOpenedBox = null;
+    }
+
+    /// <summary>
+    /// Send item to box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endindex"></param>
+    public void ReturnItemToBox(int startIndex)
+    {
+        if (startIndex == -1) return;
+
+        for (int i = 0; i < _boxSlotData.Length; i++)
+        {
+            if (_boxSlotData[i] == _currentOpenedBox)
+            {
+                if (_boxSlotData[i].AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
+                {
+                    _inventoryItem[startIndex] = null;
+                    _inventoryStack[startIndex] = 0;
+                    OnInventorySlotChanged?.Invoke();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Get Item to InventorySlot from box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    public void GetItemFromBox(int startIndex)
+    {
+        for (int i = 0; i < _boxSlotData.Length; i++)
+        {
+            if (_boxSlotData[i] == _currentOpenedBox)
+            {
+                _boxSlotData[i].SendItemToInventory(startIndex);
+                OnInventorySlotChanged?.Invoke();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Move Item in the Box slot.
+    /// </summary>
+    /// <param name="startIndex"></param>
+    /// <param name="endIndex"></param>
+    public void MoveItemInBoxSlot(int startIndex, int endIndex)
+    {
+        for (int i = 0; i < _boxSlotData.Length; i++)
+        {
+            _boxSlotData[i].MoveItemInBoxSlot(startIndex, endIndex);
+        }
     }
 
     #endregion
