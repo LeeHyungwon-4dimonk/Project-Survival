@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2565879536774958382}
   - component: {fileID: 2648825039878489168}
   - component: {fileID: 852933356110906679}
+  - component: {fileID: 9221554994531276265}
   m_Layer: 7
   m_Name: dynamite
   m_TagString: Untagged
@@ -163,6 +164,19 @@ MonoBehaviour:
   _dropType: 0
   _isLooted: 0
   _itemName: "\uC218\uC81C \uD3ED\uD0C4"
+--- !u!114 &9221554994531276265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7819347214549289551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36881ee8d3d79c14ebf594c57efb5455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemSO: {fileID: 0}
 --- !u!1001 &4852779513069097820
 PrefabInstance:
   m_ObjectHideFlags: 0
