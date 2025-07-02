@@ -18,7 +18,7 @@ public class MainSceneUIController : MonoBehaviour
 
     public void OnClick_Option()
     {
-        // TODO
+        MenuController.Instance.ShowOption();
     }
 
     #endregion // public funcs
