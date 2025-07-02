@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -11,6 +12,9 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 
     [SerializeField] private GameObject nameLabelUI; // 오브젝트 자식에 있는 UI 프리팹
     [SerializeField] private TMP_Text nameText;
+
+    //public bool Looted => _lootable != null && _lootable.IsLooted;
+
 
     private void Awake()
     {
@@ -65,6 +69,29 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
             }
         }
     }
+
+    [SerializeField] private Image holdProgressBarImage;
+
+    public void ShowProgressBar(float ratio)
+    {
+        if (holdProgressBarImage == null) return;
+
+        if (!holdProgressBarImage.gameObject.activeSelf)
+            holdProgressBarImage.gameObject.SetActive(true);
+
+        holdProgressBarImage.fillAmount = Mathf.Clamp01(ratio);
+    }
+
+    public void HideProgressBar()
+    {
+        if (holdProgressBarImage == null) return;
+
+        if (holdProgressBarImage.gameObject.activeSelf)
+            holdProgressBarImage.gameObject.SetActive(false);
+
+        holdProgressBarImage.fillAmount = 0f;
+    }
+
 
 
 }
