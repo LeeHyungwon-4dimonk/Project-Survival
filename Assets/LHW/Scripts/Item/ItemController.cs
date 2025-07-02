@@ -12,9 +12,11 @@ public class ItemController : MonoBehaviour
         {
             switch(_itemSO.ItemId)
             {
-                case 1009: // TODO : Recover hunger
+                case 1009: GameObject.FindWithTag("Player").GetComponent<PlayerStats>().RecoverSaturation(_itemSO.ItemStats);
                     break;
-                case 1010: // TODO : Recover health
+                case 1010: GameObject.FindWithTag("Player").GetComponent<PlayerStats>().RecoverHealth(_itemSO.ItemStats);
+                    break;
+                default:
                     break;
             }
             Debug.Log("소모품 사용함");
@@ -25,6 +27,8 @@ public class ItemController : MonoBehaviour
             switch(_itemSO.ItemId)
             {
                 case 1011: // TODO : increase player backpack max weight
+                    break;
+                default:
                     break;
             }
             Debug.Log("아이템 착용");
