@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// For Inventory Slot Unit.
@@ -30,6 +31,22 @@ public class InventorySlotUnit : ItemSlotUnit
             _image.sprite = _item.Icon;
             _itemStack = stack;
             _text.text = stack > 1 ? stack.ToString() : "";
+        }
+    }
+
+    /// <summary>
+    /// Item Use when click.(Interface)
+    /// </summary>
+    /// <param name="eventData"></param>
+    public override void OnPointerClick(PointerEventData eventData)
+    {
+        if (_item != null)
+        {
+            _item.Prefab.GetComponent<ItemController>().Use();
+
+            InventoryManager.Instance.UseItem(_index);
+
+            UpdateUI(_index);
         }
     }
 }

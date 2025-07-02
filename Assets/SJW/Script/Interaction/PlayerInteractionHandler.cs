@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInteractionHandler : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class PlayerInteractionHandler : MonoBehaviour
     private float _holdTime;
     private float _holdThreshold = 1.0f;
     private Transform _nearestTransform;
-
     private IInteractable _previousInteractable;
 
     private void Update()
@@ -32,33 +32,38 @@ public class PlayerInteractionHandler : MonoBehaviour
                 _previousInteractable = _currentInteractable;
             }
 
+            if (_currentInteractable is InteractableObjectAdapter adapter)
+                adapter.SetNameLabelVisible(true);
+
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
             if (Input.GetKey(KeyCode.Space))
             {
                 _holdTime += Time.deltaTime;
+                (_currentInteractable as InteractableObjectAdapter)?.ShowProgressBar(_holdTime / _holdThreshold);
+
                 if (_holdTime >= _holdThreshold)
                 {
-                    _currentInteractable.Interact();
+                    _currentInteractable?.Interact();
                     _holdTime = 0f;
+                    (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
                 }
             }
-
-            if (Input.GetKeyUp(KeyCode.Space))
+            else
+            {
                 _holdTime = 0f;
+                (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
+            }
+
         }
         else
         {
             _uiController.Hide();
-
-            if (_previousInteractable != null)
-            {
-                (_previousInteractable as InteractableObjectAdapter)?.SetNameLabelVisible(false);
-                _previousInteractable = null;
-            }
+            _holdTime = 0f;
+            (_previousInteractable as InteractableObjectAdapter)?.HideProgressBar();
         }
-
     }
+
 
     private void DetectInteractable()
     {
@@ -66,7 +71,8 @@ public class PlayerInteractionHandler : MonoBehaviour
 
         if (_currentHits.Length == 0)
         {
-            Debug.Log("Hit ¾øÀ½");
+            if (_currentInteractable is InteractableObjectAdapter oldAdapter)
+                oldAdapter.SetNameLabelVisible(false);
 
             foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
                 obj.SetOutline(false);
@@ -79,9 +85,6 @@ public class PlayerInteractionHandler : MonoBehaviour
         var sortedHits = _currentHits
             .OrderBy(hit => Vector2.Distance(transform.position, hit.transform.position))
             .ToList();
-
-        string names = string.Join(", ", sortedHits.Select(hit => hit.name));
-        Debug.Log($"°¨ÁöµÊ: {names}");
 
         foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
             obj.SetOutline(false);
@@ -104,4 +107,3 @@ public class PlayerInteractionHandler : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _interactRange);
     }
 }
-

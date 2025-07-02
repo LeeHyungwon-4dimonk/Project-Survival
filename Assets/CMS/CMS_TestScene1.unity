@@ -3225,17 +3225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1322193720 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8070727766291750910, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
-  m_PrefabInstance: {fileID: 832336051811239358}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1643120371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6510858786333333916, guid: 39a948792fb5ae148bcc2186517eb9cd, type: 3}
@@ -3356,8 +3345,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 1025193617}
-  _hydrationBar: {fileID: 1322193720}
-  _hungerBar: {fileID: 2131283663}
+  _staminaBar: {fileID: 0}
+  _saturationBar: {fileID: 0}
   _playerStats: {fileID: 1643120384}
 --- !u!4 &1863050457
 Transform:
@@ -14825,17 +14814,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4663996251748685191, guid: 39a948792fb5ae148bcc2186517eb9cd, type: 3}
   m_PrefabInstance: {fileID: 1752357584}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2131283663 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2129601816372032627, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
-  m_PrefabInstance: {fileID: 832336051811239358}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &832336051811239358
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14844,6 +14822,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 330007824853903984, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
+      propertyPath: m_Name
+      value: StaminaBar
+      objectReference: {fileID: 0}
     - target: {fileID: 640317601825026620, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14951,6 +14933,10 @@ PrefabInstance:
     - target: {fileID: 8271078878709205473, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974243288370635385, guid: 9260ef4584d815b4abe770813f3c26eb, type: 3}
+      propertyPath: m_Name
+      value: SaturationBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
