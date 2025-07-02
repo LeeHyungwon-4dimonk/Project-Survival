@@ -10,14 +10,14 @@ public class ItemSO : ScriptableObject
 {
     public int ItemId;
     public string Name;
-    public string Description;
-    public float Weight;
     public ItemType Type;
+    public string Description;
+    public int Energy;
+    public float Weight;
 
     // if is stackable, input number larger than 1.
     // if is unStackable, input 1.
     public int MaxStackSize;
-    public int Energy;
     public bool IsDecomposable;
     public int ItemStats;
     public Sprite Icon;
