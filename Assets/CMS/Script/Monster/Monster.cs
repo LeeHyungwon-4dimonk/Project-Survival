@@ -15,6 +15,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private float _attackRadius = 1.5f;
     [SerializeField] private LayerMask _playerLayer;
 
+    public float AttackRadius => _attackRadius;
+
     private MonsterStateContext _fsm;
 
     private void Awake()
