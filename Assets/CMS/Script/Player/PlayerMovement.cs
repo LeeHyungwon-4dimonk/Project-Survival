@@ -7,9 +7,13 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStats _playerStats;
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
+    private Animator _anim;
 
     private bool _canRun = true;
     private bool _isRunning = false;
+
+    private float _lastMoveX = 0f;
+    private float _lastMoveY = -1f;
     public Vector2 MoveInput => _moveInput;
     public bool IsRunning => _isRunning;
 
@@ -17,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _playerStats = GetComponent<PlayerStats>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -24,6 +29,16 @@ public class PlayerMovement : MonoBehaviour
         _moveInput.x = Input.GetAxisRaw("Horizontal");
         _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput.Normalize();
+
+        if(_moveInput.sqrMagnitude > 0f)
+        {
+            _lastMoveX = _moveInput.x;
+            _lastMoveY = _moveInput.y;
+        }
+
+        _anim.SetFloat("Horizontal", _moveInput.x);
+        _anim.SetFloat("Vertical", _moveInput.y);
+        _anim.SetFloat("Speed", _moveInput.sqrMagnitude);
     }
 
     private void FixedUpdate()
@@ -82,4 +97,5 @@ public class PlayerMovement : MonoBehaviour
             _canRun = true;
         }
     }
+
 }

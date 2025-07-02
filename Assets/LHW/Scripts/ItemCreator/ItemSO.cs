@@ -18,6 +18,8 @@ public class ItemSO : ScriptableObject
     // if is unStackable, input 1.
     public int MaxStackSize;
     public int Energy;
+    public bool IsDecomposable;
+    public int ItemStats;
     public Sprite Icon;
     public GameObject Prefab;
 }
