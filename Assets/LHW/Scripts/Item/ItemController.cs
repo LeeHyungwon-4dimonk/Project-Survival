@@ -4,6 +4,8 @@ public class ItemController : MonoBehaviour
 {
     [SerializeField] private ItemSO _itemSO;
 
+    public ItemSO ItemSO => _itemSO;
+
     public void Use()
     {
         if (_itemSO.Type == ItemType.Material) return;
