@@ -7,7 +7,8 @@ public class LootableObject : MonoBehaviour
     public enum ItemDropType
     {
         FieldDrop,
-        Container
+        Container,
+        Terminal
     }
 
     [SerializeField] private ItemDropType _dropType;
@@ -25,6 +26,6 @@ public class LootableObject : MonoBehaviour
         Debug.Log($"{_itemName} 획득!");
         _isLooted = true;
 
-        Destroy(gameObject); // 혹은 비활성화 등으로 대체
+        gameObject.SetActive(false); // 혹은 비활성화 등으로 대체
     }
 }
