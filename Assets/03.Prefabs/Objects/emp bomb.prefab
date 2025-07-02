@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d837baf4cbd25e94db90327858fba036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemcon: {fileID: 4941721580504358025}
   _dropType: 0
   _isLooted: 0
   _itemName: "\uC218\uC81C EMP \uD3ED\uD0C4"
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36881ee8d3d79c14ebf594c57efb5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSO: {fileID: 0}
+  _itemSO: {fileID: 11400000, guid: 769b05273f148b747853f9c77885073c, type: 2}
 --- !u!1001 &413713592502709199
 PrefabInstance:
   m_ObjectHideFlags: 0

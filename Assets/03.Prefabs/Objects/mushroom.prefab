@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d837baf4cbd25e94db90327858fba036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _itemcon: {fileID: 1045064956795986528}
   _dropType: 0
   _isLooted: 0
   _itemName: "\uBC84\uC12F"
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36881ee8d3d79c14ebf594c57efb5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSO: {fileID: 0}
+  _itemSO: {fileID: 11400000, guid: 94de68158ea728b4191010412f2c8e94, type: 2}
 --- !u!1001 &6248209316665539868
 PrefabInstance:
   m_ObjectHideFlags: 0
