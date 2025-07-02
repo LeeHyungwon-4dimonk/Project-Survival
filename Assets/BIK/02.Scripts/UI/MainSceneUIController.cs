@@ -13,12 +13,12 @@ public class MainSceneUIController : MonoBehaviour
 
     public void OnClick_Exit()
     {
-        // TODO
+        MenuController.Instance.OnQuit();
     }
 
     public void OnClick_Option()
     {
-        // TODO
+        MenuController.Instance.OnSettings();
     }
 
     #endregion // public funcs
