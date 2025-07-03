@@ -28,7 +28,8 @@ public class ItemController : MonoBehaviour
         {
             switch(_itemSO.ItemId)
             {
-                case 1011: // TODO : increase player backpack max weight
+                case 1011:
+                    GameObject.FindWithTag("Player").GetComponent<PlayerStats>().IncreaseMaxInventoryWeight(_itemSO.ItemStats);
                     break;
                 default:
                     break;

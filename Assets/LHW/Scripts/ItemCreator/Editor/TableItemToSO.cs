@@ -29,9 +29,9 @@ public class TableItemToSO
             ItemSO item = ScriptableObject.CreateInstance<ItemSO>();
             int.TryParse(splitData[0], out item.ItemId);
             item.Name = splitData[1];
-            item.Description = splitData[2];
-            float.TryParse(splitData[3], out item.Weight);
-            Enum.TryParse<ItemType>(splitData[4], true, out item.Type);
+            Enum.TryParse<ItemType>(splitData[2], true, out item.Type);
+            item.Description = splitData[3];
+            float.TryParse(splitData[4], out item.Weight);
             int.TryParse(splitData[5], out item.MaxStackSize);
             int.TryParse(splitData[6], out item.Energy);
 

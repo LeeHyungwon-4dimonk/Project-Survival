@@ -36,6 +36,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] DecompositionSystem _decompositionSlotData;
     [SerializeField] BoxSystem[] _boxSlotData;
     [SerializeField] HotbarController _hotbarController;
+    [SerializeField] PlayerStats _playerStats;
 
     private BoxSystem _currentOpenedBox;
 
@@ -147,15 +148,18 @@ public class InventoryManager : MonoBehaviour
                     remain = InventoryTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
-            }
+            }            
 
             if (remain <= 0) break;
 
             else
             {
+                _playerStats.AddInventoryWeight(item.Weight * (amount - remain));
                 Debug.Log("inventory full"); return false;
             }
         }
+
+        _playerStats.AddInventoryWeight(item.Weight * amount);
         return true;
     }
 
@@ -166,8 +170,9 @@ public class InventoryManager : MonoBehaviour
     /// <param name="index"></param>
     public void UseItem(int index)
     {
-        if (_inventoryItem[index].Type == ItemType.Usable)
+        if (_inventoryItem[index].Type == ItemType.Usable || _inventoryItem[index].Type == ItemType.Equip)
         {
+            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
             {
@@ -175,6 +180,8 @@ public class InventoryManager : MonoBehaviour
                 _inventoryStack[index] = 0;
             }
         }
+
+
         OnInventorySlotChanged?.Invoke();
     }
 
@@ -199,9 +206,11 @@ public class InventoryManager : MonoBehaviour
             }
             if(remain <= 0) break;
 
+            _playerStats.RemoveInventoryWeight(item.Weight * (amount - remain));
             return false;
         }
 
+        _playerStats.RemoveInventoryWeight(item.Weight * amount);
         return true;
     }
 
@@ -299,6 +308,7 @@ public class InventoryManager : MonoBehaviour
        {
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
+            _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
             OnInventorySlotChanged?.Invoke();
        }
     }
@@ -310,6 +320,7 @@ public class InventoryManager : MonoBehaviour
     public void ReturnItemFromDecomposition(int startIndex)
     {
         _decompositionSlotData.ReturnItemToInventory(startIndex);
+        _playerStats.AddInventoryWeight(_decompositionSlotData.DecompositionItem[startIndex].Weight * _decompositionSlotData.DecompositionStack[startIndex]);
         OnInventorySlotChanged?.Invoke();
     }
 
@@ -354,6 +365,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     _inventoryItem[startIndex] = null;
                     _inventoryStack[startIndex] = 0;
+                    _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
                     OnInventorySlotChanged?.Invoke();
                 }
             }
@@ -371,6 +383,7 @@ public class InventoryManager : MonoBehaviour
             if (_boxSlotData[i] == _currentOpenedBox)
             {
                 _boxSlotData[i].SendItemToInventory(startIndex);
+                _playerStats.AddInventoryWeight(_boxSlotData[i].BoxItem[startIndex].Weight * _boxSlotData[i].BoxStack[startIndex]);
                 OnInventorySlotChanged?.Invoke();
             }
         }
