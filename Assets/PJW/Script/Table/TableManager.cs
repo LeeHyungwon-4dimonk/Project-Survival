@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
+using System;
 
+public class TItem
+{
+    public ItemData Item;
+    public BoxProbData BoxProb;
+    // TODO : 나중에 추가할 테이블도 추가해야 함
+}
 public class TableManager : MonoBehaviour
 {
     #region Singleton
@@ -19,18 +26,36 @@ public class TableManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        LoadAllTables();
+        StartCoroutine(LoadAllTablesAndWrap());
     }
     #endregion
 
-    private Dictionary<TableType, TableBase> _tables
-        = new Dictionary<TableType, TableBase>();
+    private Dictionary<TableType, TableBase> _tables = new Dictionary<TableType, TableBase>();
 
-    private void LoadAllTables()
+    /// <summary>
+    /// 첫 번째 리스트(TItem, TBoxProb, ...)들을 담는 래퍼 리스트
+    /// </summary>
+    public List<System.Collections.IList> TItems { get; private set; }
+
+    private IEnumerator LoadAllTablesAndWrap()
     {
-        RegisterAndLoadTable(TableType.Item, new ItemTable());
+        RegisterAndLoadTable(TableType.Item,    new ItemTable());
         RegisterAndLoadTable(TableType.BoxProb, new BoxProbTable());
-        // TODO: 다른 테이블이 생기면 추가
+        // TODO : 테이블이 생기면 계속 추가
+
+        yield return new WaitUntil(() =>
+        {
+            var it = GetTable<ItemTable>(TableType.Item)?.TItem;
+            var bp = GetTable<BoxProbTable>(TableType.BoxProb)?.TBoxProb;
+            return it != null && bp != null;
+        });
+
+        TItems = new List<System.Collections.IList>()
+        {
+            GetTable<ItemTable>(TableType.Item).TItem,
+            GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb
+            // TODO : 테이블이 생기면 계속 추가
+        };
     }
 
     private void RegisterAndLoadTable(TableType type, TableBase table)
@@ -40,7 +65,7 @@ public class TableManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 로드된 테이블을 가져올 때 사용.
+    /// 로드된 테이블 인스턴스를 꺼낼 때 사용
     /// </summary>
     public T GetTable<T>(TableType tableType) where T : TableBase
     {
@@ -52,13 +77,19 @@ public class TableManager : MonoBehaviour
     }
 }
 
-// 해당 테이블 꺼내는 법
+// ItemData 리스트
 //var itemTable = TableManager.Instance.GetTable<ItemTable>(TableType.Item);
+//List<ItemData> tItem = itemTable.TItem;
 
-// 전체 리스트 꺼내기
-// List<ItemData> allItems = itemTable.Items;
+// BoxProbData 리스트 (첫 번째 리스트)
+// var boxProbTable = TableManager.Instance.GetTable<BoxProbTable>(TableType.BoxProb);
+// List<BoxProbData> boxProbs = boxProbTable.BoxProbs;
 
-// 특정 아이템 꺼내기
-//int targetID = 1001;
-//ItemData single = allItems
-//   .FirstOrDefault(x => x.ItemID == targetID);
+// 전체 꺼내기
+// List<System.Collections.IList> allLists = TableManager.Instance.TItems;
+
+//ItemData 리스트만 꺼내기
+//List<ItemData> onlyItems = allLists.OfType<List<ItemData>>().FirstOrDefault();
+
+// 3) 그중 BoxProbData 리스트만 꺼내기
+//List<BoxProbData> onlyProbs = allLists.OfType<List<BoxProbData>>().FirstOrDefault();

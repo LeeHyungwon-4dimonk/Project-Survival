@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
-public class BoxProbData
+public class BoxasdProbData
 {
     public int   DayNum;
     public float BoxType1Prob;

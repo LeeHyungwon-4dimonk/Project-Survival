@@ -5,32 +5,40 @@ using System.Text;
 using System;
 using UnityEngine.Networking;
 
+public class BoxProbData
+{
+    public string   DayNum;
+    public string BoxType1Prob;
+    public string BoxType2Prob;
+    public string BoxType3Prob;
+}
 public class BoxProbTable : TableBase
 {
     private const string _csvUrl =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0S5NJiTAdAIQgyLnWWUgkU51n7gGnJ6VpVFgySXltxBH2e2s8Icq9kM3gxA9Wsm0xeVWjOOAq2t9H/pub?gid=1543144615&single=true&output=csv";
-        
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRV9et_Ahp7R443Ghr-ZIq1Z57pcoQASDfGF3EZL1m09eMur6X1V9HkM0FcWRbqaEGRCbuQQUnB9QHM/pub?gid=1136769341&single=true&output=csv";
 
-    public List<BoxProbData> Rows { get; private set; }
+    public List<BoxProbData> TBoxProb { get; private set; }
+        = new List<BoxProbData>();
 
     public override IEnumerator Load()
     {
-        using (var www = UnityWebRequest.Get(_csvUrl))
+        using (UnityWebRequest www = UnityWebRequest.Get(_csvUrl))
         {
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"BoxProbTable Load Error: {www.error}");
+                Debug.LogError($"[BoxProbTable] Load Error: {www.error}");
                 yield break;
             }
 
-            Rows = Parse(www.downloadHandler.text);
-            Debug.Log($"[BoxProbTable] Loaded {Rows.Count} rows.");
+            string csvText = www.downloadHandler.text;
+            TBoxProb = ParseCsv(csvText);
+            Debug.Log($"[BoxProbTable] Loaded {TBoxProb.Count} entries.");
         }
     }
 
-    // CSV 텍스트 전체를 파싱해 객체 리스트로 반환
-    private List<BoxProbData> Parse(string csvText)
+    // CSV 텍스트 전체를 파싱해 객체 리스트로 반환 (문자열 그대로 할당)
+    private List<BoxProbData> ParseCsv(string csvText)
     {
         var lines = csvText
             .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -39,27 +47,26 @@ public class BoxProbTable : TableBase
         for (int i = 1; i < lines.Length; i++)
         {
             var fields = ParseCsvLine(lines[i]);
-            try
+            if (fields.Count < 4)
             {
-                var data = new BoxProbData
-                {
-                    DayNum        = int.Parse(fields[0]),
-                    BoxType1Prob  = float.Parse(fields[1]),
-                    BoxType2Prob  = float.Parse(fields[2]),
-                    BoxType3Prob  = float.Parse(fields[3])
-                };
-                list.Add(data);
+                Debug.LogWarning($"[BoxProbTable] line {i+1} 필드 개수 부족: {lines[i]}");
+                continue;
             }
-            catch (Exception e)
+
+            var data = new BoxProbData
             {
-                Debug.LogError($"BoxProbTable parse error on line {i+1}: {e.Message}");
-            }
+                DayNum        = fields[0],
+                BoxType1Prob  = fields[1],
+                BoxType2Prob  = fields[2],
+                BoxType3Prob  = fields[3]
+            };
+            list.Add(data);
         }
 
         return list;
     }
 
-    // CSV 한 줄을 안전하게 파싱하는 헬퍼
+    // CSV 한 줄을 안전하게 파싱하는 헬퍼 (변경 없음)
     private List<string> ParseCsvLine(string line)
     {
         var result = new List<string>();
