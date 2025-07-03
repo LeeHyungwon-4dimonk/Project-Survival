@@ -15,6 +15,7 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     }
 
     [SerializeField] private InteractionType _interactionType;
+    public InteractionType InteractionTypeValue => _interactionType;
 
     private SpriteRenderer _renderer;
     private LootableObject _lootable;
@@ -22,6 +23,9 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     [SerializeField] private GameObject nameLabelUI;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Image holdProgressBarImage;
+
+
+
 
     private void Awake()
     {

@@ -86,20 +86,35 @@ public class PlayerInteractionHandler : MonoBehaviour
             .OrderBy(hit => Vector2.Distance(transform.position, hit.transform.position))
             .ToList();
 
+        // 전부 끄기
         foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
             obj.SetOutline(false);
 
+        // FieldDrop이면 범위 내 전부 켬
         foreach (var hit in sortedHits)
         {
             var adapter = hit.GetComponent<InteractableObjectAdapter>();
-            if (adapter != null)
+            if (adapter != null && adapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.FieldDrop)
                 adapter.SetOutline(true);
+        }
+
+        // Container나 Terminal이면 가장 가까운 하나만 켬
+        foreach (var hit in sortedHits)
+        {
+            var adapter = hit.GetComponent<InteractableObjectAdapter>();
+            if (adapter != null &&
+                adapter.InteractionTypeValue != InteractableObjectAdapter.InteractionType.FieldDrop)
+            {
+                adapter.SetOutline(true);
+                break; // 하나만
+            }
         }
 
         var nearest = sortedHits[0];
         _currentInteractable = nearest.GetComponent<IInteractable>();
         _nearestTransform = nearest.transform;
     }
+
 
     private void OnDrawGizmosSelected()
     {
