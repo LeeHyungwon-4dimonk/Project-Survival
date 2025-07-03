@@ -24,6 +24,7 @@ public class TableRecipeToSO : MonoBehaviour
 
             Debug.Log("Sucess1");
             
+            /*
             for(int i = 1; i < splitData.Length - 1; i++)
             {
                 string itemDataPath = splitData[i];
@@ -36,7 +37,8 @@ public class TableRecipeToSO : MonoBehaviour
                 {
                     Debug.Log("Success2");
                 }
-            }            
+            } 
+            */
 
             string lastItemDataPath = splitData[splitData.Length - 1];
             recipe.resultItem = AssetDatabase.LoadAssetAtPath<ItemSO>(lastItemDataPath);

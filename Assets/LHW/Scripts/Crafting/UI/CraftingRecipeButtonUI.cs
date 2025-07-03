@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,17 +6,14 @@ public class CraftingRecipeButtonUI : MonoBehaviour
 {
     [SerializeField] CraftingRecipe _recipe;
     [SerializeField] Image _resultImage;
-    [SerializeField] Image[] _requireImage;
+    [SerializeField] TMP_Text _itemNameText;
 
     private void Awake() => Init();
 
     private void Init()
     {
         _resultImage.sprite = _recipe.resultItem.Icon;
-        for(int i = 0; i < _recipe.reqItem.Count; i++)
-        {
-            _requireImage[i].sprite = _recipe.reqItem[i].Icon;
-        }
+        _itemNameText.text = _recipe.resultItem.Name;
     }
 
     private void Start()

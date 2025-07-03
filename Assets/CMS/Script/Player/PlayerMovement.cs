@@ -14,8 +14,11 @@ public class PlayerMovement : MonoBehaviour
 
     private float _lastMoveX = 0f;
     private float _lastMoveY = -1f;
+
     public Vector2 MoveInput => _moveInput;
     public bool IsRunning => _isRunning;
+
+    public Vector2 LastMoveDirection => new Vector2(_lastMoveX, _lastMoveY);
 
     private void Awake()
     {
@@ -30,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput.Normalize();
 
-        if(_moveInput.sqrMagnitude > 0f)
+        if (_moveInput.sqrMagnitude > 0f)
         {
             _lastMoveX = _moveInput.x;
             _lastMoveY = _moveInput.y;
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _isRunning = true;
         }
-  
+
         if (_isRunning && shiftHeld)
         {
             speed = _playerStats.RunSpeed;
@@ -97,5 +100,4 @@ public class PlayerMovement : MonoBehaviour
             _canRun = true;
         }
     }
-
 }

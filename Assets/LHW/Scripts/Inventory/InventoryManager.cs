@@ -38,7 +38,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] HotbarController _hotbarController;
 
     private BoxSystem _currentOpenedBox;
-    
 
     public int InventoryCount => _inventoryItem.Length;
 
