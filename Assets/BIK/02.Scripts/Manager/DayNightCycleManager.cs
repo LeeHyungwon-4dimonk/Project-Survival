@@ -23,6 +23,9 @@ public class DayNightCycleManager : MonoBehaviour
     private float _timePassed = 0f;
     private int _currentDay = 1;
     private bool _isDay = true;
+    private bool _isNightOvertime = false;
+    private bool _isPaused = false;
+    private bool _isInBase = false;
 
     #endregion
 
@@ -34,6 +37,7 @@ public class DayNightCycleManager : MonoBehaviour
 
     public int CurrentDay => _currentDay;
     public bool IsDayTime => _isDay;
+    public bool IsNightOvertime => _isNightOvertime;
 
     #endregion
 
@@ -46,42 +50,56 @@ public class DayNightCycleManager : MonoBehaviour
     [SerializeField] private Image _darkOverlay;
     [SerializeField] private float _fadeDuration = 2f;
 
-    #endregion // Serialized Fields
+    #endregion
 
 
 
 
 
-    #region mono funcs
+    #region MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.DayNightManager = this;
         StartCoroutine(DayNightCycleRoutine());
     }
 
-    #endregion // mono funcs
+    #endregion
 
 
 
 
 
-    #region coroutines
+    #region Coroutines
 
     private IEnumerator DayNightCycleRoutine()
     {
         while (true) {
             yield return new WaitForSeconds(1f);
+
+            if (_isPaused)
+                continue;
+
             _timePassed += 1f;
 
             if (_timePassed >= TotalDayDuration) {
                 _timePassed -= TotalDayDuration;
                 _currentDay++;
+                _isNightOvertime = false;
             }
 
             bool isNowDay = _timePassed < DayDuration;
             if (_isDay != isNowDay) {
                 _isDay = isNowDay;
                 StartCoroutine(SwitchDayNight(_isDay));
+            }
+
+            if (!_isDay && _timePassed >= DayDuration + NightDuration) {
+                _isNightOvertime = true;
+
+                if (!_isInBase) {
+                    // TODO : Player Damage
+                }
             }
         }
     }
@@ -103,5 +121,34 @@ public class DayNightCycleManager : MonoBehaviour
         _darkOverlay.color = new Color(0f, 0f, 0f, targetAlpha);
     }
 
-    #endregion // coroutines
+    #endregion
+
+
+
+
+
+    #region Public funcs
+
+    public void EnterBase()
+    {
+        _isPaused = true;
+        _isInBase = true;
+    }
+
+    public void ExitBase()
+    {
+        _isPaused = false;
+        _isInBase = false;
+    }
+
+    public void SkipToNextDay()
+    {
+        _currentDay++;
+        _timePassed = 0f;
+        _isDay = true;
+        _isNightOvertime = false;
+        StartCoroutine(SwitchDayNight(true));
+    }
+
+    #endregion // public funcs
 }
