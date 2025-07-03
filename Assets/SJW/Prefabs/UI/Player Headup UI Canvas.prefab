@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 3797891221388327691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6257053649315732626}
@@ -49,7 +49,7 @@ Canvas:
   m_GameObject: {fileID: 3797891221388327691}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -61,7 +61,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &2161075761183283740
 MonoBehaviour:
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &4901932799109714725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionPanel: {fileID: 8245961298217181967}
   interactionText: {fileID: 6456898468900543665}
-  holdProgressBarImage: {fileID: 0}
   panelAnchoredPosY: 611
 --- !u!1 &8245961298217181967
 GameObject:
@@ -275,8 +274,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: example
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
-  m_sharedMaterial: {fileID: -6638094663087109030, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
+  m_sharedMaterial: {fileID: 170552620760400497, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
