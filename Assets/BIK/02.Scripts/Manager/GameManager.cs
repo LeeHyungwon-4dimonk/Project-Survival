@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     public InGameUIManager InGameUIManager { get; set; }
     public DayNightCycleManager DayNightManager { get; set; }
     public PlayerStats PlayerStats { get; set; } = new PlayerStats();
+    public bool IsUIOpen { get; set; }
+    public GameData GameData { get; set; } = new GameData();
 
     #endregion
 
@@ -71,12 +73,5 @@ public class GameManager : MonoBehaviour
 
 public class GameData
 {
-
-
-
-
-    public GameData()
-    {
-
-    }
+    public int _energy;
 }
