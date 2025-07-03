@@ -9,7 +9,6 @@ public class ItemData
     public int    ItemID;
     public string ItemName;
     public string ItemType;
-    public string ItemSprite;
     public string ItemTooltip;
     public int    ItemEnergy;
     public float  ItemWeight;

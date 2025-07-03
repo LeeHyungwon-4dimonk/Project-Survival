@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemExample : MonoBehaviour
 {
     private ItemTable _itemTable;
+    private BoxProbTable  _boxProbTable;
 
     IEnumerator Start()
     {
@@ -21,6 +22,24 @@ public class ItemExample : MonoBehaviour
         foreach (var item in _itemTable.Items)
         {
             Debug.Log($"ID:{item.ItemID}, Name:{item.ItemName} ItemType:{item.ItemType}");
+        }
+        _boxProbTable = TableManager.Instance.GetTable<BoxProbTable>(TableType.BoxProb);
+
+        // BoxProbTable 로드될 때까지 대기
+        yield return new WaitUntil(() =>
+            _boxProbTable != null &&
+            _boxProbTable.Rows != null
+        );
+
+        Debug.Log($"[ItemExample] Loaded {_boxProbTable.Rows.Count} box-prob rows.");
+        foreach (var row in _boxProbTable.Rows)
+        {
+            Debug.Log(
+                $"Day {row.DayNum} → " +
+                $"Type1:{row.BoxType1Prob}  " +
+                $"Type2:{row.BoxType2Prob}  " +
+                $"Type3:{row.BoxType3Prob}"
+            );
         }
     }
 }

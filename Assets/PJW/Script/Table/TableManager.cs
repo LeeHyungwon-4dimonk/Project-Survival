@@ -29,6 +29,7 @@ public class TableManager : MonoBehaviour
     private void LoadAllTables()
     {
         RegisterAndLoadTable(TableType.Item, new ItemTable());
+        RegisterAndLoadTable(TableType.BoxProb, new BoxProbTable());
         // TODO: 다른 테이블이 생기면 추가
     }
 

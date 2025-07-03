@@ -4,5 +4,6 @@ using UnityEngine;
 
 public enum TableType
 {
-    Item
+    Item,
+    BoxProb
 }

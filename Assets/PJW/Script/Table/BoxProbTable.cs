@@ -1,17 +1,17 @@
-// ItemTable.cs
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
+using System.Text;
+using System;
 using UnityEngine.Networking;
 
-public class ItemTable : TableBase
+public class BoxProbTable : TableBase
 {
     private const string _csvUrl =
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0S5NJiTAdAIQgyLnWWUgkU51n7gGnJ6VpVFgySXltxBH2e2s8Icq9kM3gxA9Wsm0xeVWjOOAq2t9H/pub?output=csv";
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0S5NJiTAdAIQgyLnWWUgkU51n7gGnJ6VpVFgySXltxBH2e2s8Icq9kM3gxA9Wsm0xeVWjOOAq2t9H/pub?gid=1543144615&single=true&output=csv";
+        
 
-    public List<ItemData> Items { get; private set; }
+    public List<BoxProbData> Rows { get; private set; }
 
     public override IEnumerator Load()
     {
@@ -20,43 +20,42 @@ public class ItemTable : TableBase
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"ItemTable Load Error: {www.error}");
+                Debug.LogError($"BoxProbTable Load Error: {www.error}");
                 yield break;
             }
 
-            Items = Parse(www.downloadHandler.text);
-            Debug.Log($"[ItemTable] Loaded {Items.Count} items.");
+            Rows = Parse(www.downloadHandler.text);
+            Debug.Log($"[BoxProbTable] Loaded {Rows.Count} rows.");
         }
     }
 
     // CSV 텍스트 전체를 파싱해 객체 리스트로 반환
-    private List<ItemData> Parse(string csvText)
+    private List<BoxProbData> Parse(string csvText)
     {
         var lines = csvText
-            .Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        var list = new List<ItemData>();
+            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        var list = new List<BoxProbData>();
 
-        // 첫 줄(header) 건너뛰기
         for (int i = 1; i < lines.Length; i++)
         {
             var fields = ParseCsvLine(lines[i]);
-            var data = new ItemData
+            try
             {
-                ItemID               = int.Parse(fields[0]),
-                ItemName             = fields[1],
-                ItemType             = fields[2],
-                ItemSprite           = fields[3],
-                ItemTooltip          = fields[4],
-                ItemEnergy           = int.Parse(fields[5]),
-                ItemWeight           = float.Parse(fields[6]),
-                MaxPayloadPerPanel   = int.Parse(fields[7]),
-                IsDecomposable       = bool.Parse(fields[8]),
-                ItemStats            = int.Parse(fields[9]),
-                SpritePath           = fields[10],
-                PrefabPath           = fields[11]
-            };
-            list.Add(data);
+                var data = new BoxProbData
+                {
+                    DayNum        = int.Parse(fields[0]),
+                    BoxType1Prob  = float.Parse(fields[1]),
+                    BoxType2Prob  = float.Parse(fields[2]),
+                    BoxType3Prob  = float.Parse(fields[3])
+                };
+                list.Add(data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"BoxProbTable parse error on line {i+1}: {e.Message}");
+            }
         }
+
         return list;
     }
 
