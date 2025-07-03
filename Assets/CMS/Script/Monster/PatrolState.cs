@@ -7,15 +7,20 @@ public class PatrolState : MonoBehaviour, IState
 {
     private Monster _monster;
     private Rigidbody2D _rb;
-    
-    [SerializeField]private SpriteRenderer _spriteRenderer;
-    [SerializeField] private float _patrolSpeed = 2f;
-    [SerializeField] private Transform[] _patrolPoints;
 
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private float _patrolSpeed = 2f;
+
+    private Transform[] _patrolPoints;
 
     private int _currentPointIndex = 0;
     private Vector2 _lastPosition;
     private Vector2 _patrolTarget;
+
+    public void SetPatrolPoints(Transform[] points)
+    {
+        _patrolPoints = points;
+    }
 
     public void EnterState()
     {
@@ -25,15 +30,19 @@ public class PatrolState : MonoBehaviour, IState
 
         _lastPosition = _rb.position;
 
-        if (_patrolPoints.Length > 0)
+        if (_patrolPoints != null && _patrolPoints.Length > 0)
         {
             _patrolTarget = _patrolPoints[_currentPointIndex].position;
+        }
+        else
+        {
+            Debug.LogWarning("[PatrolState] PatrolPoints가 설정되지 않았습니다!");
         }
     }
 
     public void UpdateState()
     {
-        if (_patrolPoints.Length == 0) return;
+        if (_patrolPoints == null || _patrolPoints.Length == 0) return;
 
         Vector2 direction = (_patrolTarget - _rb.position).normalized;
         _rb.MovePosition(_rb.position + direction * _patrolSpeed * Time.fixedDeltaTime);
@@ -49,7 +58,6 @@ public class PatrolState : MonoBehaviour, IState
 
     public void ExitState()
     {
-
     }
 
     private void SetNextPatrolPoint()
