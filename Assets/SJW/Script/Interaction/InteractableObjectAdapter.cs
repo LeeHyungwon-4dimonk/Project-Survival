@@ -34,21 +34,36 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (_lootable != null && !_lootable.IsLooted)
+        switch (_interactionType)
         {
-            _lootable.OnLoot();
-        }
-        else
-        {
-            Debug.Log($"{gameObject.name}은(는) 상호작용 대상이지만 루팅 불가");
+            case InteractionType.FieldDrop:
+                if (_lootable != null)
+                {
+                    _lootable.OnLoot();
+                }
+                else
+                {
+                    Debug.LogWarning($"{gameObject.name}은 FieldDrop인데 LootableObject가 없음");
+                }
+                break;
+
+            case InteractionType.Container:
+                Debug.Log($"{gameObject.name} Container 상호작용 실행 (추후 구현)");
+                break;
+
+            case InteractionType.Terminal:
+                Debug.Log($"{gameObject.name} Terminal 상호작용 실행 (추후 구현)");
+                break;
+
+            default:
+                Debug.LogWarning($"{gameObject.name} 알 수 없는 InteractionType");
+                break;
         }
     }
 
+
     public string GetDescription()
     {
-        if (_lootable != null && _lootable.IsLooted)
-            return "";
-
         return _interactionType switch
         {
             InteractionType.Container => "[Space] 열기",
@@ -56,14 +71,6 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
             InteractionType.Terminal => "[Space] 작동",
             _ => "[Space] 상호작용"
         };
-    }
-
-    public void SetOutline(bool on)
-    {
-        if (_renderer != null && _renderer.material != null)
-        {
-            _renderer.material.SetFloat("_OutlineEnabled", on ? 1f : 0f);
-        }
     }
 
     public void SetNameLabelVisible(bool visible)
@@ -79,6 +86,15 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
                 else
                     nameText.text = gameObject.name;
             }
+        }
+    }
+
+
+    public void SetOutline(bool on)
+    {
+        if (_renderer != null && _renderer.material != null)
+        {
+            _renderer.material.SetFloat("_OutlineEnabled", on ? 1f : 0f);
         }
     }
 
