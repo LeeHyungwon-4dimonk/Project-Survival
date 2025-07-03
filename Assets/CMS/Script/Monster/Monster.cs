@@ -18,6 +18,7 @@ public class Monster : MonoBehaviour
     public float AttackRadius => _attackRadius;
 
     private MonsterStateContext _fsm;
+    private IState _lastState;
 
     private void Awake()
     {
@@ -35,18 +36,14 @@ public class Monster : MonoBehaviour
     {
         bool playerInVision = Player != null && Vector2.Distance(transform.position, Player.position) <= _visionRadius;
         bool playerInAttack = Player != null && Vector2.Distance(transform.position, Player.position) <= _attackRadius;
-        
-        if (playerInAttack)
+
+        IState nextState = _patrolState;
+        if (playerInAttack) nextState = _attackState;
+        else if (playerInVision) nextState = _chaseState;
+
+        if (_fsm.CurrentState != nextState)
         {
-            _fsm.Transition(_attackState);
-        }
-        else if (playerInVision)
-        {
-            _fsm.Transition(_chaseState);
-        }
-        else
-        {
-            _fsm.Transition(_patrolState);
+            _fsm.Transition(nextState);
         }
 
         _fsm.CurrentState?.UpdateState();
