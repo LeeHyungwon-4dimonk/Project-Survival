@@ -4,22 +4,12 @@ using UnityEngine;
 
 public class LootableObject : MonoBehaviour
 {
-    [SerializeField] ItemController _itemcon;
-
-    public enum ItemDropType
-    {
-        FieldDrop,
-        Container,
-        Terminal
-    }
-
-    [SerializeField] private ItemDropType _dropType;
+    [SerializeField] private ItemController _itemcon;
     [SerializeField] private bool _isLooted = false;
     [SerializeField] private string _itemName;
     public string ItemName => _itemName;
 
     public bool IsLooted => _isLooted;
-    public ItemDropType DropType => _dropType;
 
     public void OnLoot()
     {

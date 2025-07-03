@@ -7,14 +7,21 @@ using TMPro;
 [RequireComponent(typeof(SpriteRenderer))]
 public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 {
+    public enum InteractionType
+    {
+        FieldDrop,
+        Container,
+        Terminal
+    }
+
+    [SerializeField] private InteractionType _interactionType;
+
     private SpriteRenderer _renderer;
     private LootableObject _lootable;
 
-    [SerializeField] private GameObject nameLabelUI; // 오브젝트 자식에 있는 UI 프리팹
+    [SerializeField] private GameObject nameLabelUI;
     [SerializeField] private TMP_Text nameText;
-
-    //public bool Looted => _lootable != null && _lootable.IsLooted;
-
+    [SerializeField] private Image holdProgressBarImage;
 
     private void Awake()
     {
@@ -28,20 +35,25 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (_lootable != null && !_lootable.IsLooted)
+        {
             _lootable.OnLoot();
+        }
         else
+        {
             Debug.Log($"{gameObject.name}은(는) 상호작용 대상이지만 루팅 불가");
+        }
     }
 
     public string GetDescription()
     {
-        if (_lootable == null || _lootable.IsLooted)
+        if (_lootable != null && _lootable.IsLooted)
             return "";
 
-        return _lootable.DropType switch
+        return _interactionType switch
         {
-            LootableObject.ItemDropType.Container => "[Space] 열기",
-            LootableObject.ItemDropType.FieldDrop => "[Space] 줍기",
+            InteractionType.Container => "[Space] 열기",
+            InteractionType.FieldDrop => "[Space] 줍기",
+            InteractionType.Terminal => "[Space] 작동",
             _ => "[Space] 상호작용"
         };
     }
@@ -70,8 +82,6 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
         }
     }
 
-    [SerializeField] private Image holdProgressBarImage;
-
     public void ShowProgressBar(float ratio)
     {
         if (holdProgressBarImage == null) return;
@@ -91,8 +101,4 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
 
         holdProgressBarImage.fillAmount = 0f;
     }
-
-
-
 }
-
