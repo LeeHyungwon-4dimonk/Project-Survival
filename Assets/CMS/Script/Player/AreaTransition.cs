@@ -8,6 +8,7 @@ public class AreaTransition : MonoBehaviour
     [SerializeField] private Vector2 _secondMinCameraBoundary;
     [SerializeField] private Vector2 playerPosOffset;
     [SerializeField] private Transform _exitPos;
+    [SerializeField] private bool _isEnteringBase;
 
     private FollowCamera _followCamera;
 
@@ -18,14 +19,21 @@ public class AreaTransition : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Player")) return;
+        if (!collision.CompareTag("Player"))
+            return;
 
         Debug.Log("Transition Triggered!");
 
         _followCamera.MinCameraBoundary = _secondMinCameraBoundary;
         _followCamera.MaxCameraBoundary = _secondMaxCameraBoundary;
 
-        // 위치 강제 이동 (지연 처리)
+        if (_isEnteringBase) {
+            GameManager.Instance.DayNightManager.EnterBase();
+        }
+        else {
+            GameManager.Instance.DayNightManager.ExitBase();
+        }
+
         StartCoroutine(DelayedTeleport(collision.transform));
     }
 

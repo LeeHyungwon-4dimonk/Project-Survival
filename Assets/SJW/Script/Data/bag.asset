@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemId: 1011
   Name: "\uAC00\uBC29"
-  Description: "\uAC00\uBC29\uC774\uB2E4"
+  Description: "\uBB3C\uAC74\uC744 \uB354 \uB9CE\uC774 \uB4E4\uC218 \uC788\uAC8C
+    \uD574\uC8FC\uB294 \uAC00\uBC29\uC785\uB2C8\uB2E4."
   Weight: 1
   Type: 2
   MaxStackSize: 1
-  Energy: 1
+  Energy: 0
   IsDecomposable: 0
   ItemStats: 10
   Icon: {fileID: 21300000, guid: 495c8b32a63551b4fb46b97a1906882e, type: 3}
