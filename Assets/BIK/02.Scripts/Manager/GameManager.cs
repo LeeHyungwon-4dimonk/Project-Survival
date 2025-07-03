@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.LoadScene("MainScene");
     }
 
+    public void SkipDay()
+    {
+        DayNightManager.SkipToNextDay();
+    }
+
     #endregion // public funcs
 }
 
