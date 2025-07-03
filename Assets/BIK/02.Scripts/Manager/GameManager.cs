@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
 public class GameData
 {
-    public GameData() { _energy = 20; }
+    public GameData() { _energy = 50; }
 
     private int _energy;
     public int Energy => _energy;

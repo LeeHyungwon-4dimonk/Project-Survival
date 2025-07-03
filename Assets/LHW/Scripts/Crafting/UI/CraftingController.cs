@@ -81,7 +81,8 @@ public class CraftingController : UIBase
 
     private bool HasEnoughEnergy()
     {
-        if(GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
+        if(_currentRecipe == null) return false;
+        else if(GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
         else return false;
     }
 
