@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6911527143701249833}
   - component: {fileID: 8761123979299807965}
   - component: {fileID: 5582957320210477610}
+  - component: {fileID: 3802862920112584438}
   m_Layer: 7
   m_Name: Kopang Delivary Terminal
   m_TagString: Untagged
@@ -143,7 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f345ec717e84641b3bfcaa0c9db9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionType: 0
+  _interactionType: 2
   nameLabelUI: {fileID: 0}
   nameText: {fileID: 0}
   holdProgressBarImage: {fileID: 0}
+--- !u!114 &3802862920112584438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680320309713714126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f091becc2748364e9bb424469ee072c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _terminalName: 

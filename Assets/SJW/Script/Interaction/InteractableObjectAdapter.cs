@@ -18,7 +18,6 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     public InteractionType InteractionTypeValue => _interactionType;
 
     private SpriteRenderer _renderer;
-    private LootableObject _lootable;
 
     [SerializeField] private GameObject nameLabelUI;
     [SerializeField] private TMP_Text nameText;
@@ -30,8 +29,6 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
     private void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
-        _lootable = GetComponent<LootableObject>();
-
         if (nameLabelUI != null)
             nameLabelUI.SetActive(false);
     }
@@ -41,13 +38,14 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
         switch (_interactionType)
         {
             case InteractionType.FieldDrop:
-                if (_lootable != null)
+                var lootable = GetComponent<LootableObject>();
+                if (lootable != null)
                 {
-                    _lootable.OnLoot();
+                    lootable.OnLoot();
                 }
                 else
                 {
-                    Debug.LogWarning($"{gameObject.name}은 FieldDrop인데 LootableObject가 없음");
+                    Debug.LogWarning($"{gameObject.name}: FieldDrop 타입이지만 LootableObject 컴포넌트 없음");
                 }
                 break;
 
@@ -56,7 +54,15 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
                 break;
 
             case InteractionType.Terminal:
-                Debug.Log($"{gameObject.name} Terminal 상호작용 실행 (추후 구현)");
+                var terminal = GetComponent<TerminalObjects>();
+                if (terminal != null)
+                {
+                    terminal.OnPower();
+                }
+                else
+                {
+                    Debug.LogWarning($"{gameObject.name}: Terminal 타입이지만 TerminalObject 컴포넌트 없음");
+                }
                 break;
 
             default:
@@ -65,34 +71,44 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
         }
     }
 
-
     public string GetDescription()
     {
-        return _interactionType switch
+        switch (_interactionType)
         {
-            InteractionType.Container => "[Space] 열기",
-            InteractionType.FieldDrop => "[Space] 줍기",
-            InteractionType.Terminal => "[Space] 작동",
-            _ => "[Space] 상호작용"
-        };
-    }
+            case InteractionType.Container:
+                return "[Space] 열기";
 
-    public void SetNameLabelVisible(bool visible)
-    {
-        if (nameLabelUI != null)
-        {
-            nameLabelUI.SetActive(visible);
+            case InteractionType.FieldDrop:
+                return "[Space] 줍기";
 
-            if (visible && nameText != null)
-            {
-                if (_lootable != null && !string.IsNullOrEmpty(_lootable.ItemName))
-                    nameText.text = _lootable.ItemName;
-                else
-                    nameText.text = gameObject.name;
-            }
+            case InteractionType.Terminal:
+                var terminal = GetComponent<TerminalObjects>();
+                return $"{TerminalObjects.GetDisplayName(terminal.Terminal)} 조작";
+
+            default:
+                return "[Space] 상호작용";
         }
     }
 
+
+    public void SetNameLabelVisible(bool visible)
+    {
+        if (nameLabelUI == null) return;
+
+        nameLabelUI.SetActive(visible);
+
+        if (!visible || nameText == null) return;
+
+        var lootable = GetComponent<LootableObject>();
+        if (lootable != null && !string.IsNullOrEmpty(lootable.ItemName))
+        {
+            nameText.text = lootable.ItemName;
+        }
+        else
+        {
+            nameText.text = gameObject.name;
+        }
+    }
 
     public void SetOutline(bool on)
     {

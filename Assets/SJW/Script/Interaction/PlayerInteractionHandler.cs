@@ -37,24 +37,32 @@ public class PlayerInteractionHandler : MonoBehaviour
 
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
+            InteractableObjectAdapter currentAdapter = _currentInteractable as InteractableObjectAdapter;
+
             if (Input.GetKey(KeyCode.Space))
             {
+                if (currentAdapter != null &&
+                    currentAdapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.Terminal)
+                {
+                    _currentInteractable.Interact();
+                    return;
+                }
+
                 _holdTime += Time.deltaTime;
-                (_currentInteractable as InteractableObjectAdapter)?.ShowProgressBar(_holdTime / _holdThreshold);
+                currentAdapter?.ShowProgressBar(_holdTime / _holdThreshold);
 
                 if (_holdTime >= _holdThreshold)
                 {
                     _currentInteractable?.Interact();
                     _holdTime = 0f;
-                    (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
+                    currentAdapter?.HideProgressBar();
                 }
             }
             else
             {
                 _holdTime = 0f;
-                (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
+                currentAdapter?.HideProgressBar();
             }
-
         }
         else
         {
@@ -63,7 +71,6 @@ public class PlayerInteractionHandler : MonoBehaviour
             (_previousInteractable as InteractableObjectAdapter)?.HideProgressBar();
         }
     }
-
 
     private void DetectInteractable()
     {
@@ -86,11 +93,9 @@ public class PlayerInteractionHandler : MonoBehaviour
             .OrderBy(hit => Vector2.Distance(transform.position, hit.transform.position))
             .ToList();
 
-        // 전부 끄기
         foreach (var obj in FindObjectsOfType<InteractableObjectAdapter>())
             obj.SetOutline(false);
 
-        // FieldDrop이면 범위 내 전부 켬
         foreach (var hit in sortedHits)
         {
             var adapter = hit.GetComponent<InteractableObjectAdapter>();
@@ -98,7 +103,6 @@ public class PlayerInteractionHandler : MonoBehaviour
                 adapter.SetOutline(true);
         }
 
-        // Container나 Terminal이면 가장 가까운 하나만 켬
         foreach (var hit in sortedHits)
         {
             var adapter = hit.GetComponent<InteractableObjectAdapter>();
@@ -106,7 +110,7 @@ public class PlayerInteractionHandler : MonoBehaviour
                 adapter.InteractionTypeValue != InteractableObjectAdapter.InteractionType.FieldDrop)
             {
                 adapter.SetOutline(true);
-                break; // 하나만
+                break;
             }
         }
 
@@ -114,7 +118,6 @@ public class PlayerInteractionHandler : MonoBehaviour
         _currentInteractable = nearest.GetComponent<IInteractable>();
         _nearestTransform = nearest.transform;
     }
-
 
     private void OnDrawGizmosSelected()
     {
