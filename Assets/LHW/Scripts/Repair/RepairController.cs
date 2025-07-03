@@ -83,4 +83,9 @@ public class RepairController : UIBase
 
         return false;
     }
+
+    public void GoBackToCraftUI()
+    {
+        GameManager.Instance.InGameUIManager.HideUI();
+    }
 }

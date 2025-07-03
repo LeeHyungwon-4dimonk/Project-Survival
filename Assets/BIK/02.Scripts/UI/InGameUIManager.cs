@@ -10,6 +10,7 @@ public enum UIType
     Orderform,
     TodayReward,
     Crafting,
+    Repair,
     Box,
 }
 

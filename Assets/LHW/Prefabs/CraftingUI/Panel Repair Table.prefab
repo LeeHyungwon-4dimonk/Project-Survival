@@ -2693,7 +2693,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3826096896618994146}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4236161662081133344}
+        m_TargetAssemblyTypeName: RepairController, Assembly-CSharp
+        m_MethodName: GoBackToCraftUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8971279680544356220
 GameObject:
   m_ObjectHideFlags: 0
