@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6354549961876427828}
   - component: {fileID: 2348525594040538708}
   - component: {fileID: 4096339409127742819}
+  - component: {fileID: 563149447691786974}
   m_Layer: 5
   m_Name: Repair Recipe List
   m_TagString: Untagged
@@ -122,8 +123,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CraftingRecipeButtonUI, Assembly-CSharp
+      - m_Target: {fileID: 563149447691786974}
+        m_TargetAssemblyTypeName: RepairRecipeButtonUI, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -134,6 +135,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &563149447691786974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139201995124659935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ebc1f2d194a0847be06544c45c1ab9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipe: {fileID: 0}
+  _image: {fileID: 9171527737289080115}
+  _text: {fileID: 3030977203443206964}
 --- !u!1 &8117251543414677622
 GameObject:
   m_ObjectHideFlags: 0
