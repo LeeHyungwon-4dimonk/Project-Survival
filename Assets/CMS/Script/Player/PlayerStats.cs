@@ -54,6 +54,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.PlayerStats = this;
         StartCoroutine(SurvivalStatRoutine());
     }
 
@@ -107,6 +108,8 @@ public class PlayerStats : MonoBehaviour
         _animator.SetBool(_isDeadParam, true);
 
         Debug.Log($"Animator 파라미터 설정 완료 - DeathDirection: {direction}, IsDead: true");
+
+        GameManager.Instance?.GameOver();
 
         yield return new WaitForSeconds(2f);
 
@@ -198,12 +201,6 @@ public class PlayerStats : MonoBehaviour
     public void IncreaseMaxInventoryWeight(float amount)
     {
         _maxInventoryWeight += amount;
-        _maxInventoryWeight = Mathf.Max(0f, _maxInventoryWeight);
-    }
-
-    public void DecreaseMaxInventoryWeight(float amount)
-    {
-        _maxInventoryWeight -= amount;
         _maxInventoryWeight = Mathf.Max(0f, _maxInventoryWeight);
     }
 }
