@@ -2,23 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterStateContext
+public class MonsterStateContext : MonoBehaviour
 {
-    public IState CurrentState { get; private set; }
-    private readonly Monster _controller;
+    [SerializeField] private PatrolState _patrolState;
 
-    public MonsterStateContext(Monster controller)
+    private IState _currentState;
+    public IState CurrentState => _currentState;
+
+    private void Start()
     {
-        _controller = controller;
+    }
+
+    public void Initialize(Transform[] patrolPoints)
+    {
+        if (_patrolState != null)
+        {
+            _patrolState.SetPatrolPoints(patrolPoints);
+        }
+
+        Transition(_patrolState);
     }
 
     public void Transition(IState newState)
     {
-        if (CurrentState != null)
+        if (_currentState != null)
         {
-            CurrentState.ExitState();
+            _currentState.ExitState();
         }
-        CurrentState = newState;
-        CurrentState.EnterState();
+
+        _currentState = newState;
+        _currentState.EnterState();
     }
 }
