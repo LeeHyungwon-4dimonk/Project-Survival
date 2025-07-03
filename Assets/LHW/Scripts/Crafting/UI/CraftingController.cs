@@ -114,6 +114,11 @@ public class CraftingController : UIBase
         }
     }
 
+    public void GoToRepairMenu()
+    {
+        GameManager.Instance.InGameUIManager.ShowUI(UIType.Repair);
+    }
+
     #region unused code
 
     // Due to the crafting system update, crafting only consume energy
