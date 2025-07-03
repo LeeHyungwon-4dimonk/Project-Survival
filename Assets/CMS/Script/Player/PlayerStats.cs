@@ -54,7 +54,6 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.PlayerStats = this;
         StartCoroutine(SurvivalStatRoutine());
     }
 
@@ -109,7 +108,6 @@ public class PlayerStats : MonoBehaviour
 
         Debug.Log($"Animator 파라미터 설정 완료 - DeathDirection: {direction}, IsDead: true");
 
-        GameManager.Instance?.GameOver();
 
         yield return new WaitForSeconds(2f);
 
