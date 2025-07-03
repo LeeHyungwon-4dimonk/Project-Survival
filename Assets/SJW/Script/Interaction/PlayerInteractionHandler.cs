@@ -39,7 +39,8 @@ public class PlayerInteractionHandler : MonoBehaviour
 
             InteractableObjectAdapter currentAdapter = _currentInteractable as InteractableObjectAdapter;
 
-            if (Input.GetKey(KeyCode.Space))
+            // Terminal은 키 누른 순간에만 실행 (중복 방지)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (currentAdapter != null &&
                     currentAdapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.Terminal)
@@ -47,7 +48,11 @@ public class PlayerInteractionHandler : MonoBehaviour
                     _currentInteractable.Interact();
                     return;
                 }
+            }
 
+            // 나머지는 Hold로 진행
+            if (Input.GetKey(KeyCode.Space))
+            {
                 _holdTime += Time.deltaTime;
                 currentAdapter?.ShowProgressBar(_holdTime / _holdThreshold);
 
