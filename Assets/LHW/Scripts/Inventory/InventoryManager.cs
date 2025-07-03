@@ -79,11 +79,11 @@ public class InventoryManager : MonoBehaviour
         if (_inventoryItem[startIndex] != null && endIndex == -1)
         {
             Debug.Log("아이템 버리기");
-            Vector2 position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
+            Vector3 position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
             for (int i = 0; i < _inventoryStack[startIndex]; i++)
             {
                 // TODO : Where to Instantiate item?
-                Instantiate(_inventoryItem[startIndex].Prefab, position + Vector2.right, Quaternion.identity);
+                Instantiate(_inventoryItem[startIndex].Prefab, position + new Vector3(1, 0 , -5), Quaternion.identity);
             }
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
@@ -180,7 +180,6 @@ public class InventoryManager : MonoBehaviour
                 _inventoryStack[index] = 0;
             }
         }
-
 
         OnInventorySlotChanged?.Invoke();
     }
