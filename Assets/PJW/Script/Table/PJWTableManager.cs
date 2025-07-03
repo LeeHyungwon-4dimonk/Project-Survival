@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 
-public class PJWTableManager : MonoBehaviour
+public class TableManager : MonoBehaviour
 {
     #region Singleton
-    public static PJWTableManager Instance { get; private set; }
+    public static TableManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -23,18 +23,16 @@ public class PJWTableManager : MonoBehaviour
     }
     #endregion
 
-    private Dictionary<PJWTableType, PJWTableBase> _tables
-        = new Dictionary<PJWTableType, PJWTableBase>();
+    private Dictionary<TableType, TableBase> _tables
+        = new Dictionary<TableType, TableBase>();
 
     private void LoadAllTables()
     {
-        // Item 테이블 등록 & 로드
-        RegisterAndLoadTable(PJWTableType.Item, new PJWItemTable());
-
-        // TODO: 다른 테이블이 생기면 여기에 계속 추가
+        RegisterAndLoadTable(TableType.Item, new ItemTable());
+        // TODO: 다른 테이블이 생기면 추가
     }
 
-    private void RegisterAndLoadTable(PJWTableType type, PJWTableBase table)
+    private void RegisterAndLoadTable(TableType type, TableBase table)
     {
         _tables[type] = table;
         StartCoroutine(table.Load());
@@ -42,9 +40,8 @@ public class PJWTableManager : MonoBehaviour
 
     /// <summary>
     /// 로드된 테이블을 가져올 때 사용.
-    /// 예) var items = PJWTableManager.Instance.GetTable<PJWItemTable>(PJWTableType.Item).Items;
     /// </summary>
-    public T GetTable<T>(PJWTableType tableType) where T : PJWTableBase
+    public T GetTable<T>(TableType tableType) where T : TableBase
     {
         if (_tables.TryGetValue(tableType, out var table))
             return table as T;
@@ -55,8 +52,12 @@ public class PJWTableManager : MonoBehaviour
 }
 
 // 해당 테이블 꺼내는 법
-//var itemTable = PJWTableManager.Instance
-//                 .GetTable<PJWItemTable>(PJWTableType.Item);
+//var itemTable = TableManager.Instance.GetTable<ItemTable>(TableType.Item);
 
 // 전체 리스트 꺼내기
-// List<PJWItemData> allItems = itemTable.Items;
+// List<ItemData> allItems = itemTable.Items;
+
+// 특정 아이템 꺼내기
+//int targetID = 1001;
+//ItemData single = allItems
+//   .FirstOrDefault(x => x.ItemID == targetID);

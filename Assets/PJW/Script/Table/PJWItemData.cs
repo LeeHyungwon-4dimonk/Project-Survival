@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class PJWItemData
+public class ItemData
 {
     public int    ItemID;
     public string ItemName;

@@ -6,12 +6,12 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class PJWItemTable : PJWTableBase
+public class ItemTable : TableBase
 {
     private const string _csvUrl =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0S5NJiTAdAIQgyLnWWUgkU51n7gGnJ6VpVFgySXltxBH2e2s8Icq9kM3gxA9Wsm0xeVWjOOAq2t9H/pub?output=csv";
 
-    public List<PJWItemData> Items { get; private set; }
+    public List<ItemData> Items { get; private set; }
 
     public override IEnumerator Load()
     {
@@ -20,27 +20,27 @@ public class PJWItemTable : PJWTableBase
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"PJWItemTable Load Error: {www.error}");
+                Debug.LogError($"ItemTable Load Error: {www.error}");
                 yield break;
             }
 
             Items = Parse(www.downloadHandler.text);
-            Debug.Log($"[PJWItemTable] Loaded {Items.Count} items.");
+            Debug.Log($"[ItemTable] Loaded {Items.Count} items.");
         }
     }
 
     // CSV 텍스트 전체를 파싱해 객체 리스트로 반환
-    private List<PJWItemData> Parse(string csvText)
+    private List<ItemData> Parse(string csvText)
     {
         var lines = csvText
             .Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-        var list = new List<PJWItemData>();
+        var list = new List<ItemData>();
 
         // 첫 줄(header) 건너뛰기
         for (int i = 1; i < lines.Length; i++)
         {
             var fields = ParseCsvLine(lines[i]);
-            var data = new PJWItemData
+            var data = new ItemData
             {
                 ItemID               = int.Parse(fields[0]),
                 ItemName             = fields[1],

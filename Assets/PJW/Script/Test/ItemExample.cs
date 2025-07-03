@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class ItemExample : MonoBehaviour
 {
-    private PJWItemTable _itemTable;
+    private ItemTable _itemTable;
 
-    // IEnumerator를 리턴하면 Unity가 자동으로 코루틴으로 실행해 줍니다.
     IEnumerator Start()
     {
-        // 1) 테이블 인스턴스 가져오기
-        _itemTable = PJWTableManager.Instance
-                        .GetTable<PJWItemTable>(PJWTableType.Item);
+        _itemTable = TableManager.Instance.GetTable<ItemTable>(TableType.Item);
 
-        // 2) 테이블 또는 Items 프로퍼티가 null인 동안 대기
+        // CSV 파싱이 비동기로 이루어지기 때문에 데이터가 모두 로드되기 전에 Items에 접근하면 null 참조 에러가 발생해서 코루틴을 넣어야 함
         yield return new WaitUntil(() =>
             _itemTable != null &&
             _itemTable.Items != null
         );
 
-        // 3) 이제 안전하게 접근 가능
         Debug.Log($"Loaded {_itemTable.Items.Count} items.");
 
         foreach (var item in _itemTable.Items)
