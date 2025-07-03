@@ -81,7 +81,6 @@ public class CraftingController : UIBase
     /// </summary>
     private void ConsumeEnergy()
     {
-        // TODO : consume Energy
         if(HasEnoughEnergy())
         {
             GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
