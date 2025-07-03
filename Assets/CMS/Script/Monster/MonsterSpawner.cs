@@ -30,6 +30,7 @@ public class MonsterSpawner : MonoBehaviour
         if (monsterScript != null)
         {
             monsterScript.SetPatrolPoints(_patrolPoints);
+            monsterScript.StartPatrol();
         }
     }
 

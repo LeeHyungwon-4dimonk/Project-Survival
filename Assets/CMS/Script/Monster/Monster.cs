@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -35,6 +36,14 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
+    }
+
+    public void StartPatrol() 
+    {
+        if (_fsm == null || _patrolState == null)
+        {
+            return;
+        }
         _fsm.Transition(_patrolState);
     }
 
