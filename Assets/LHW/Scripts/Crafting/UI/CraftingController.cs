@@ -12,6 +12,8 @@ public class CraftingController : UIBase
     [SerializeField] private Image _sliderImage;
     [SerializeField] private Button _resultButton;
     [SerializeField] private Image _resultImage;
+    [SerializeField] private Image _energyBarImage;
+    [SerializeField] private TMP_Text _energyBarText;
 
     private CraftingRecipe _currentRecipe;
 
@@ -21,6 +23,7 @@ public class CraftingController : UIBase
     {
         UIUpdate();
         CraftingUIUpdate();
+        UpdateEnergyBarUI();
     }
 
     /// <summary>
@@ -54,6 +57,12 @@ public class CraftingController : UIBase
             _craftButton.interactable = true;
         else
             _craftButton.interactable = false;
+    }
+
+    private void UpdateEnergyBarUI()
+    {
+        _energyBarImage.fillAmount = (float)GameManager.Instance.GameData.Energy / GameManager.Instance.GameData.MaxEnergy;
+        _energyBarText.text = $"¿¡³ÊÁö : {GameManager.Instance.GameData.Energy}";
     }
 
     /// <summary>

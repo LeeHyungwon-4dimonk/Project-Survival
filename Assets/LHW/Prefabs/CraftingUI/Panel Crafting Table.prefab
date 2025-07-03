@@ -1734,10 +1734,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -2225,6 +2225,8 @@ MonoBehaviour:
   _sliderImage: {fileID: 7641268781673701830}
   _resultButton: {fileID: 253868813962145663}
   _resultImage: {fileID: 108165921308519234}
+  _energyBarImage: {fileID: 2563498272760200002}
+  _energyBarText: {fileID: 3113630631843940436}
 --- !u!1 &6976798068735144501
 GameObject:
   m_ObjectHideFlags: 0

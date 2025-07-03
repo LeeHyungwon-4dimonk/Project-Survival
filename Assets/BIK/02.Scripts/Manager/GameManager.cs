@@ -73,10 +73,12 @@ public class GameManager : MonoBehaviour
 
 public class GameData
 {
-    public GameData() { _energy = 50; }
+    public GameData() { _energy = 50; _maxEnergy = 200; }
 
     private int _energy;
+    private int _maxEnergy;
     public int Energy => _energy;
+    public int MaxEnergy => _maxEnergy;
 
     public void IncraseEnergy(int amount)
     {

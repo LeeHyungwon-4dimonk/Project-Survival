@@ -8,6 +8,8 @@ public class RepairController : UIBase
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private TMP_Text _energyText;
     [SerializeField] private Button _repairButton;
+    [SerializeField] private Image _energyBarImage;
+    [SerializeField] private TMP_Text _energyBarText;
 
     [SerializeField] private Button[] _recipeButton;
 
@@ -32,6 +34,7 @@ public class RepairController : UIBase
     {
         UIUpdate();
         RepairUIUpdate();
+        UpdateEnergyBarUI();
     }
 
     public void SelectRecipe(RepairRecipeSO recipe)
@@ -55,6 +58,12 @@ public class RepairController : UIBase
         else _repairButton.interactable = false;
     }
 
+    private void UpdateEnergyBarUI()
+    {
+        _energyBarImage.fillAmount = (float)GameManager.Instance.GameData.Energy / GameManager.Instance.GameData.MaxEnergy;
+        _energyBarText.text = $"¿¡³ÊÁö : {GameManager.Instance.GameData.Energy}";
+    }
+
     public void RepairShip()
     {
         ConsumeEnergy();
@@ -64,16 +73,17 @@ public class RepairController : UIBase
 
     private void ConsumeEnergy()
     {
-        // TODO : consume Energy
-        Debug.Log("Repair Success");
+        if (HasEnoughEnergy())
+        {
+            GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
+        }
     }
 
     private bool HasEnoughEnergy()
     {
-        // TODO : if energy is enough
-        return true;
-        // TODO : if energy is not enough
-        return false;
+        if (_currentRecipe == null) return false;
+        else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
+        else return false;
     }
 
     private bool IsSolved()
