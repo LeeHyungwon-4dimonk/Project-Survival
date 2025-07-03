@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CraftingController : MonoBehaviour
+public class CraftingController : UIBase
 {
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _nameText;
@@ -37,8 +37,7 @@ public class CraftingController : MonoBehaviour
     /// </summary>
     private void UIUpdate()
     {
-        if (_currentRecipe != null)
-        {
+        if (_currentRecipe != null) {
             _image.sprite = _currentRecipe.resultItem.Icon;
             _nameText.text = _currentRecipe.resultItem.Name;
             _descriptionText.text = _currentRecipe.resultItem.Description;
@@ -51,8 +50,10 @@ public class CraftingController : MonoBehaviour
     /// </summary>
     private void CraftingUIUpdate()
     {
-        if (HasEnoughEnergy()) _craftButton.interactable = true;
-        else _craftButton.interactable = false;
+        if (HasEnoughEnergy())
+            _craftButton.interactable = true;
+        else
+            _craftButton.interactable = false;
     }
 
     /// <summary>
@@ -60,10 +61,9 @@ public class CraftingController : MonoBehaviour
     /// </summary>
     public void CraftItem()
     {
-        if (_craftCoroutine == null)
-        {
+        if (_craftCoroutine == null) {
             ConsumeEnergy();
-            _craftCoroutine = StartCoroutine(CraftingTime());            
+            _craftCoroutine = StartCoroutine(CraftingTime());
         }
     }
 
@@ -90,8 +90,7 @@ public class CraftingController : MonoBehaviour
     private IEnumerator CraftingTime()
     {
         float process = 0f;
-        while (process < 1f)
-        {
+        while (process < 1f) {
             process += (float)Time.deltaTime / _currentRecipe.craftingTime;
             _sliderImage.fillAmount = Mathf.Lerp(0f, 1f, process);
             yield return null;
@@ -100,19 +99,18 @@ public class CraftingController : MonoBehaviour
         _craftCoroutine = null;
     }
 
-   
+
     private void ResultPrint()
     {
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.resultItem.Icon;
         _resultButton.interactable = true;
     }
-   
+
     public void GetItem()
     {
-        if (_currentRecipe != null)
-        {
-            InventoryManager.Instance.AddItemToInventory(_currentRecipe.resultItem);             
+        if (_currentRecipe != null) {
+            InventoryManager.Instance.AddItemToInventory(_currentRecipe.resultItem);
         }
     }
 

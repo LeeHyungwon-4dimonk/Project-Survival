@@ -9,6 +9,8 @@ public enum UIType
     Decompose,
     Orderform,
     TodayReward,
+    Crafting,
+    Box,
 }
 
 public class InGameUIManager : MonoBehaviour
