@@ -10,6 +10,7 @@ public enum UIType
     Orderform,
     TodayReward,
     Crafting,
+    Repair,
     Box,
 }
 
@@ -68,6 +69,8 @@ public class InGameUIManager : MonoBehaviour
     /// <param name="uiType">PLZ Check enum UIType</param>
     public void ShowUI(UIType uiType)
     {
+        GameManager.Instance.IsUIOpen = true;
+
         if (_uiStack.Count > 0) {
             _uiStack.Peek().SetHide();
         }
@@ -79,14 +82,19 @@ public class InGameUIManager : MonoBehaviour
 
     public void HideUI()
     {
-        if (_uiStack.Count == 0)
+        if (_uiStack.Count == 0) {
             return;
+        }
 
         var topUI = _uiStack.Pop();
         topUI.SetHide();
 
         if (_uiStack.Count > 0) {
             _uiStack.Peek().SetShow();
+        }
+
+        if (_uiStack.Count == 0) {
+            GameManager.Instance.IsUIOpen = false;
         }
     }
 

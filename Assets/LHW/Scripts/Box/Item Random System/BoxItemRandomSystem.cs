@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 enum BoxTier { Tier1, Tier2, Tier3 }
@@ -20,19 +21,18 @@ public class BoxItemRandomSystem : MonoBehaviour
     [SerializeField] ItemSO[] _itemA_Items4;
 
     [Header("Journal - List")]
-    [SerializeField] ItemSO[] _itemB_Journal;
+    [SerializeField] CollectionSO[] _itemB_Journal;
 
     [Header("Food")]
     [SerializeField] ItemSO[] _itemC_Food;
 
     [Header("Collectible - List")]
-    [SerializeField] ItemSO[] _itemD_Collection;
+    [SerializeField] CollectionSO[] _itemD_Collection;
 
     private WeightedRandom<ItemSO> _weightedRandomA = new WeightedRandom<ItemSO>();
-    // private WeightedRandom<ItemSO> _weightedRandomB = new WeightedRandom<ItemSO>();
-    // private WeightedRandom<ItemSO> _weightedRandomC = new WeightedRandom<ItemSO>();
-    private WeightedRandom<ItemSO> _weightedRandomD = new WeightedRandom<ItemSO>();
+    private WeightedRandom<CollectionSO> _weightedRandomD = new WeightedRandom<CollectionSO>();
     
+    private Stack<CollectionSO> _journalStack = new Stack<CollectionSO>();
 
     private void Awake()
     {
@@ -47,8 +47,10 @@ public class BoxItemRandomSystem : MonoBehaviour
                 break;
         }
         // Item B init
+        ItemBInit();
 
         // Item C init
+        ItemCInit();
 
         // Item D init
         ItemDInit();
@@ -67,8 +69,8 @@ public class BoxItemRandomSystem : MonoBehaviour
     private void ItemAddToBox()
     {
         ItemASelect();
-        // TODO : Add Item B in probability
-        // TODO : Add Item C in probability
+        ItemBSelect();
+        ItemCSelect();
         ItemDSelect();
     }
 
@@ -78,6 +80,8 @@ public class BoxItemRandomSystem : MonoBehaviour
     /// </summary>
     private void ItemASelect()
     {
+        if (_weightedRandomA.GetList() == null) return;
+
         for (int i = 0; i < 4; i++)
         {
             _data.AddItemToBoxSlot(_weightedRandomA.GetRandomItem());
@@ -85,7 +89,7 @@ public class BoxItemRandomSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Set Item A weightRandom.
+    /// Set Item A weightRandom. (Materials)
     /// </summary>
     /// <param name="normal"></param>
     /// <param name="rare"></param>
@@ -111,36 +115,84 @@ public class BoxItemRandomSystem : MonoBehaviour
         }
     }
 
-    private void ItemBInit()
+    private void ItemBSelect()
     {
+        if(_journalStack.Count == 0) return;
 
-    }
-
-    private void ItemCInit()
-    {
-
+        // if(GameManager.Instance.DayNightManager.CurrentDay == key)
+        //{
+            // float randomNum = Random.Range(0.0f, value);
+            // if randonNum > value return;
+            // 콜렉션을 추가하는 함수(_journalStack.Pop());
+        //}
     }
 
     /// <summary>
-    /// Select Item D.
+    /// Set Item B weightRandom. (Diary)
+    /// </summary>
+    private void ItemBInit()
+    {
+        for(int i = 0; i < _itemB_Journal.Length; i++)
+        {
+            _journalStack.Push(_itemB_Journal[i]);
+        }
+
+        // 현재 일지 아이템이 없고 확률 테이블을 만들 방법에 대해 고민하고 있어
+        // 의사 코드로 먼저 적습니다.
+
+        // 일차 = key, 확률 = value로 된 dictionary를 생성하고, 데이터 테이블의 정보를 SO로 만들어놓는다.
+        Dictionary<int, float> keyValuePairs = new Dictionary<int, float>();
+
+        // 딕셔너리 정보를 전부 저장
+    }
+
+    private void ItemCSelect()
+    {
+        // if(GameManager.Instance.DayNightManager.CurrentDay == key)
+        //{
+        // float randomNum = Random.Range(0.0f, value);
+        // if randonNum > value return;
+        // _data.AddItemToBoxSlot(_itemC_Food);
+        //}
+    }
+
+    /// <summary>
+    /// Set Item C weightRandom. (Food)
+    /// </summary>
+    private void ItemCInit()
+    {
+        // 현재 일지 아이템이 없고 확률 테이블을 만들 방법에 대해 고민하고 있어
+        // 의사 코드로 먼저 적습니다.
+
+        // 일차 = key, 확률 = value로 된 dictionary를 생성하고, 데이터 테이블의 정보를 SO로 만들어놓는다.
+        Dictionary<int, float> keyValuePairs = new Dictionary<int, float>();
+
+        // 딕셔너리 정보를 전부 저장
+    }
+
+    /// <summary>
+    /// Select Item D. (Collective)
     /// </summary>
     private void ItemDSelect()
     {
+        if (_weightedRandomD.GetList() == null) return;
+
         float randomNum = Random.Range(0.0f, 1.0f);
 
         if (randomNum > 0.7f) return;
 
-        _data.AddItemToBoxSlot(_weightedRandomD.GetRandomItem());
+        // need to make collection item slot in box inventory.
+        //_data.AddItemToBoxSlot(_weightedRandomD.GetRandomItem());
     }
 
     /// <summary>
-    /// Set Item D weightRandom.
+    /// Set Item D weightRandom. (Collective)
     /// </summary>
     private void ItemDInit()
     {
         for(int i = 0; i < _itemD_Collection.Length; i++)
         {
-            _weightedRandomD.Add(_itemD_Collection[i], 10);
+            _weightedRandomD.Add(_itemD_Collection[i], 1);
         }
     }
 }
