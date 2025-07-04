@@ -5,13 +5,6 @@ using UnityEngine.Networking;
 using System.Text;
 using System;
 
-public class TItem
-{
-    public ItemData Item;
-    public BoxProbData BoxProb;
-    public AssemblyContentData AssemblyConta;
-    // TODO : 나중에 추가할 테이블도 추가해야 함
-}
 public class TableManager : MonoBehaviour
 {
     #region Singleton
@@ -40,6 +33,7 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.Item,            new ItemTable());
         RegisterAndLoadTable(TableType.BoxProb,         new BoxProbTable());
         RegisterAndLoadTable(TableType.AssemblyContent, new AssemblyContentTable());
+        RegisterAndLoadTable(TableType.Monster,         new MonsterTable());
         // TODO : 테이블이 생기면 계속 추가
 
         yield return new WaitUntil(() =>
@@ -47,6 +41,7 @@ public class TableManager : MonoBehaviour
             var it = GetTable<ItemTable>(TableType.Item)?.TItem;
             var bp = GetTable<BoxProbTable>(TableType.BoxProb)?.TBoxProb;
             var ac = GetTable<AssemblyContentTable>(TableType.AssemblyContent)?.Contents;
+            var mt = GetTable<MonsterTable>(TableType.Monster)?.TMonster;
             return it != null && bp != null && ac != null;
         });
 
@@ -54,7 +49,8 @@ public class TableManager : MonoBehaviour
         {
             GetTable<ItemTable>(TableType.Item).TItem,
             GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb,
-            GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents
+            GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents,
+            GetTable<MonsterTable>(TableType.Monster).TMonster
             // TODO : 테이블이 생기면 계속 추가
         };
     }
