@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 
@@ -47,8 +48,10 @@ public class DayNightCycleManager : MonoBehaviour
 
     #region Serialized Fields
 
-    [SerializeField] private Image _darkOverlay;
+    [SerializeField] private Light2D _globalLight;
     [SerializeField] private float _fadeDuration = 2f;
+    [SerializeField] private float _dayIntensity = 1f;
+    [SerializeField] private float _nightIntensity = 0.3f;
 
     #endregion
 
@@ -104,21 +107,21 @@ public class DayNightCycleManager : MonoBehaviour
         }
     }
 
+
     private IEnumerator SwitchDayNight(bool isDay)
     {
-        float targetAlpha = isDay ? 0f : 0.6f;
-        float startAlpha = _darkOverlay.color.a;
+        float startIntensity = _globalLight.intensity;
+        float targetIntensity = isDay ? _dayIntensity : _nightIntensity;
         float timer = 0f;
 
         while (timer < _fadeDuration) {
             timer += Time.deltaTime;
             float t = timer / _fadeDuration;
-            float alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
-            _darkOverlay.color = new Color(0f, 0f, 0f, alpha);
+            _globalLight.intensity = Mathf.Lerp(startIntensity, targetIntensity, t);
             yield return null;
         }
 
-        _darkOverlay.color = new Color(0f, 0f, 0f, targetAlpha);
+        _globalLight.intensity = targetIntensity;
     }
 
     #endregion
