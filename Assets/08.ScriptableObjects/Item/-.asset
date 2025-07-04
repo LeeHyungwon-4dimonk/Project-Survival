@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16df72ffc81be2f4f86baa453a28ce81, type: 3}
-  m_Name: "\uC0DD\uC874 \uC77C\uC9C0"
+  m_Name: '-'
   m_EditorClassIdentifier: 
   ItemId: 1008
-  Name: "\uC0DD\uC874 \uC77C\uC9C0"
+  Name: '-'
   Type: 0
-  Description: "\uB204\uAD70\uAC00 \uC791\uC131\uD55C \uC0DD\uC874\uC77C\uC9C0 \uC785\uB2C8\uB2E4."
+  Description: '-'
   Energy: 0
   Weight: 0
-  MaxStackSize: 1
+  MaxStackSize: 0
   IsDecomposable: 0
   ItemStats: 0
   Icon: {fileID: 21300000, guid: e47a689d94d0a0046829cac1280cbc14, type: 3}
