@@ -73,5 +73,28 @@ public class GameManager : MonoBehaviour
 
 public class GameData
 {
-    public int _energy;
+    public GameData() { _energy = 50; _maxEnergy = 200; _repairedTask = new bool[6]; }
+
+    private int _energy;
+    private int _maxEnergy;
+    public int Energy => _energy;
+    public int MaxEnergy => _maxEnergy;
+
+    private bool[] _repairedTask;
+    public bool[] RepairedTask => _repairedTask;
+
+    public void IncraseEnergy(int amount)
+    {
+        _energy += amount;
+    }
+
+    public void DecreaseEnergy(int amount)
+    {
+        _energy -= amount;
+    }
+
+    public void RepairComplete(int index)
+    {
+        _repairedTask[index] = true;
+    }
 }

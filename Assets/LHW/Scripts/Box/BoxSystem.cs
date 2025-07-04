@@ -6,15 +6,12 @@ public class BoxSystem : MonoBehaviour
     [SerializeField] private ItemSO[] _boxItem;
     [SerializeField] private int[] _boxStack;
 
+    // TODO - Collection Icon
+
     public ItemSO[] BoxItem => _boxItem;
     public int[] BoxStack => _boxStack;
 
     public event Action OnBoxSlotUpdated;
-
-    private void Awake()
-    {
-        // TODO : Item Random input System
-    }
 
     /// <summary>
     /// Read Data of box slot.

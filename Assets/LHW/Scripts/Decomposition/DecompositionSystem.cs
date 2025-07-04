@@ -69,7 +69,7 @@ public class DecompositionSystem : MonoBehaviour
         OnDecompositionSlotUpdated?.Invoke();
 
         Debug.Log(energy);
-        // TODO : energy gain.
+        GameManager.Instance.GameData.IncraseEnergy(energy);
     }
 
     /// <summary>
