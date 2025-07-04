@@ -38,6 +38,8 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.SurvivalJournal, new SurvivalJournalTable());
         RegisterAndLoadTable(TableType.CollectibleContent, new CollectibleContentTable());
         RegisterAndLoadTable(TableType.FoodProb,        new FoodProbTable());
+        RegisterAndLoadTable(TableType.FixContent,      new FixContentTable());
+        
         // TODO : 테이블이 생기면 계속 추가
 
         yield return new WaitUntil(() =>
@@ -50,6 +52,7 @@ public class TableManager : MonoBehaviour
             var sj = GetTable<SurvivalJournalTable>(TableType.SurvivalJournal)?.TSurvivalJournal; 
             var cc = GetTable<CollectibleContentTable>(TableType.CollectibleContent)?.TCollectibleContents;
             var fp = GetTable<FoodProbTable>(TableType.FoodProb)?.TFoodProb;
+            var fc = GetTable<FixContentTable>(TableType.FixContent)?.FixContents;
 
             return it != null
                 && bp != null
@@ -58,7 +61,8 @@ public class TableManager : MonoBehaviour
                 && bs != null
                 && sj != null
                 && cc != null
-                && fp != null;
+                && fp != null
+                && fc != null;
         });
 
         TItems = new List<System.Collections.IList>()
@@ -69,8 +73,9 @@ public class TableManager : MonoBehaviour
             GetTable<MonsterTable>(TableType.Monster).TMonster,
             GetTable<BoxSetupTable>(TableType.BoxSetup).TBoxSetup,
             GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal,
-            GetTable<CollectibleContentTable>(TableType.CollectibleContent).TCollectibleContents
-            GetTable<FoodProbTable>(TableType.FoodProb).TFoodProb
+            GetTable<CollectibleContentTable>(TableType.CollectibleContent).TCollectibleContents,
+            GetTable<FoodProbTable>(TableType.FoodProb).TFoodProb,
+            GetTable<FixContentTable>(TableType.FixContent).FixContents
             // TODO : 테이블이 생기면 계속 추가
         };
     }

@@ -11,6 +11,7 @@ public enum TableType
     Monster,
     SurvivalJournal,
     CollectibleContent,
-    FoodProb
+    FoodProb,
+    FixContent
     // TODO: 새로운 테이블이 생기면 여기 추가
 }
