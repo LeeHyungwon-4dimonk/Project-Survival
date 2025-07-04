@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f345ec717e84641b3bfcaa0c9db9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactionType: 0
   nameLabelUI: {fileID: 4081814329378441545}
   nameText: {fileID: 5386097315038749700}
   holdProgressBarImage: {fileID: 7942141958197053358}
@@ -162,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemcon: {fileID: 7762389015690518022}
-  _dropType: 0
   _isLooted: 0
   _itemName: "\uBA40\uCA61\uD55C \uBCF4\uC870\uBC30\uD130\uB9AC"
 --- !u!114 &7762389015690518022

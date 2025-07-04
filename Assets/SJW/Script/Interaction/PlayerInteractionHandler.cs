@@ -37,24 +37,37 @@ public class PlayerInteractionHandler : MonoBehaviour
 
             _uiController.Show(_currentInteractable.GetDescription(), _nearestTransform);
 
+            InteractableObjectAdapter currentAdapter = _currentInteractable as InteractableObjectAdapter;
+
+            // Terminal은 키 누른 순간에만 실행 (중복 방지)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (currentAdapter != null &&
+                    currentAdapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.Terminal)
+                {
+                    _currentInteractable.Interact();
+                    return;
+                }
+            }
+
+            // 나머지는 Hold로 진행
             if (Input.GetKey(KeyCode.Space))
             {
                 _holdTime += Time.deltaTime;
-                (_currentInteractable as InteractableObjectAdapter)?.ShowProgressBar(_holdTime / _holdThreshold);
+                currentAdapter?.ShowProgressBar(_holdTime / _holdThreshold);
 
                 if (_holdTime >= _holdThreshold)
                 {
                     _currentInteractable?.Interact();
                     _holdTime = 0f;
-                    (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
+                    currentAdapter?.HideProgressBar();
                 }
             }
             else
             {
                 _holdTime = 0f;
-                (_currentInteractable as InteractableObjectAdapter)?.HideProgressBar();
+                currentAdapter?.HideProgressBar();
             }
-
         }
         else
         {
@@ -63,7 +76,6 @@ public class PlayerInteractionHandler : MonoBehaviour
             (_previousInteractable as InteractableObjectAdapter)?.HideProgressBar();
         }
     }
-
 
     private void DetectInteractable()
     {
@@ -92,8 +104,19 @@ public class PlayerInteractionHandler : MonoBehaviour
         foreach (var hit in sortedHits)
         {
             var adapter = hit.GetComponent<InteractableObjectAdapter>();
-            if (adapter != null)
+            if (adapter != null && adapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.FieldDrop)
                 adapter.SetOutline(true);
+        }
+
+        foreach (var hit in sortedHits)
+        {
+            var adapter = hit.GetComponent<InteractableObjectAdapter>();
+            if (adapter != null &&
+                adapter.InteractionTypeValue != InteractableObjectAdapter.InteractionType.FieldDrop)
+            {
+                adapter.SetOutline(true);
+                break;
+            }
         }
 
         var nearest = sortedHits[0];
