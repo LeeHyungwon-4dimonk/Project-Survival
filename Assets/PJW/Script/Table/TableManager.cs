@@ -34,7 +34,7 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.BoxProb,         new BoxProbTable());
         RegisterAndLoadTable(TableType.AssemblyContent, new AssemblyContentTable());
         RegisterAndLoadTable(TableType.Monster,         new MonsterTable());
-        RegisterAndLoadTable(TableType.BoxSetup,        new BoxSetupTable());
+        RegisterAndLoadTable(TableType.BoxSetup,        new BoxSetUpTable());
         RegisterAndLoadTable(TableType.SurvivalJournal, new SurvivalJournalTable());
         RegisterAndLoadTable(TableType.CollectibleContent, new CollectibleContentTable());
         RegisterAndLoadTable(TableType.FoodProb,        new FoodProbTable());
@@ -50,7 +50,7 @@ public class TableManager : MonoBehaviour
             var bp = GetTable<BoxProbTable>(TableType.BoxProb)?.TBoxProb;
             var ac = GetTable<AssemblyContentTable>(TableType.AssemblyContent)?.Contents;
             var mt = GetTable<MonsterTable>(TableType.Monster)?.TMonster;
-            var bs = GetTable<BoxSetupTable>(TableType.BoxSetup)?.TBoxSetup;
+            var bs = GetTable<BoxSetUpTable>(TableType.BoxSetup)?.TBoxSetup;
             var sj = GetTable<SurvivalJournalTable>(TableType.SurvivalJournal)?.TSurvivalJournal; 
             var cc = GetTable<CollectibleContentTable>(TableType.CollectibleContent)?.TCollectibleContents;
             var fp = GetTable<FoodProbTable>(TableType.FoodProb)?.TFoodProb;
@@ -77,7 +77,7 @@ public class TableManager : MonoBehaviour
             GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb,
             GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents,
             GetTable<MonsterTable>(TableType.Monster).TMonster,
-            GetTable<BoxSetupTable>(TableType.BoxSetup).TBoxSetup,
+            GetTable<BoxSetUpTable>(TableType.BoxSetup).TBoxSetup,
             GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal,
             GetTable<CollectibleContentTable>(TableType.CollectibleContent).TCollectibleContents,
             GetTable<FoodProbTable>(TableType.FoodProb).TFoodProb,

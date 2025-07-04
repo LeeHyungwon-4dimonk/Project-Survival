@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BoxSetupData
+public class BoxSetUpData
 {
     public string ItemID;
     public string ProbType1;
@@ -13,13 +13,13 @@ public class BoxSetupData
     public string ItemCount;
 }
 
-public class BoxSetupTable : TableBase
+public class BoxSetUpTable : TableBase
 {
     private const string _csvUrl =
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vRV9et_Ahp7R443Ghr-ZIq1Z57pcoQASDfGF3EZL1m09eMur6X1V9HkM0FcWRbqaEGRCbuQQUnB9QHM/pub?gid=554406526&single=true&output=csv";
 
-    public List<BoxSetupData> TBoxSetup { get; private set; }
-        = new List<BoxSetupData>();
+    public List<BoxSetUpData> TBoxSetup { get; private set; }
+        = new List<BoxSetUpData>();
 
     public override IEnumerator Load()
     {
@@ -39,7 +39,7 @@ public class BoxSetupTable : TableBase
                 if (fields.Count < 5)
                     continue;
 
-                TBoxSetup.Add(new BoxSetupData
+                TBoxSetup.Add(new BoxSetUpData
                 {
                     ItemID     = fields[0],
                     ProbType1  = fields[1],
