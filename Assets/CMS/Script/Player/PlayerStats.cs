@@ -12,11 +12,17 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float _staminaDecreaseRate = 10f;
     [SerializeField] private float _staminaRecoveryRate = 10f;
     [SerializeField] private float _maxInventoryWeight = 50f;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private string _dieDirectionParam = "DeathDirection";
+    [SerializeField] private string _isDeadParam = "IsDead";
+    [SerializeField] private int _dieDirection = 0;
 
+    private PlayerMovement _playerMovement;
     private float _currentHealth;
     private float _currentSaturation;
     private float _currentStamina;
     private float _currentInventoryWeight = 0f;
+    private bool _isDead = false;
 
     public bool IsStaminaEmpty => _currentStamina <= 0f;
     public float MaxHealth => _maxHealth;
@@ -32,8 +38,15 @@ public class PlayerStats : MonoBehaviour
     public float MaxInventoryWeight => _maxInventoryWeight;
     public float CurrentInventoryWeight => _currentInventoryWeight;
 
+
     private void Awake()
     {
+        if (_animator == null)
+        {
+            _animator = GetComponent<Animator>();
+        }
+        _playerMovement = GetComponent<PlayerMovement>();
+
         _currentHealth = _maxHealth;
         _currentSaturation = _maxSaturation;
         _currentStamina = _maxStamina;
@@ -41,12 +54,13 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.PlayerStats = this;
         StartCoroutine(SurvivalStatRoutine());
     }
 
     private IEnumerator SurvivalStatRoutine()
     {
-        while (_currentHealth > 0)
+        while (!_isDead)
         {
             DecreaseSurvivalStats();
             CheckDeath();
@@ -74,25 +88,74 @@ public class PlayerStats : MonoBehaviour
 
     private void CheckDeath()
     {
-        if (_currentHealth <= 0f)
+        if (_currentHealth <= 0f && !_isDead)
         {
-            Debug.Log("플레이어 사망");
-            Destroy(gameObject);
+            Debug.Log("플레이어 사망 감지됨");
+            StartCoroutine(DieRoutine());
         }
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        if (_isDead) yield break;
+        _isDead = true;
+
+        int direction = GetDieDirection();
+
+        Debug.Log($"[DieRoutine] 방향 설정: {direction}");
+
+        _animator.SetInteger(_dieDirectionParam, direction);
+        _animator.SetBool(_isDeadParam, true);
+
+        Debug.Log($"Animator 파라미터 설정 완료 - DeathDirection: {direction}, IsDead: true");
+
+        GameManager.Instance?.GameOver();
+
+        yield return new WaitForSeconds(2f);
+
+        Destroy(gameObject);
+    }
+
+    private int GetDieDirection()
+    {
+        if (_playerMovement == null)
+            return 0;
+
+        Vector2 dir = _playerMovement.LastMoveDirection;
+
+        if (dir.sqrMagnitude < 0.01f)
+        {
+            dir = Vector2.down;
+        }
+
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        {
+            return dir.x > 0 ? 3 : 2;
+        }
+        else
+        {
+            return dir.y > 0 ? 0 : 1;
+        }
+    }
+
+    public void SetDieDirection(int direction)
+    {
+        _dieDirection = direction;
+        Debug.Log($"SetDieDirection 호출됨: {_dieDirection}");
     }
 
     public void TakeDamage(float damage)
     {
+        if (_isDead) return;
+
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
 
-        Debug.Log($"플레이어가 {damage}의 피해를 받았습니다. 현재 체력: {_currentHealth}");
+        Debug.Log($"플레이어가 {damage} 피해를 받았습니다. 현재 체력: {_currentHealth}");
 
-        if (_currentHealth <= 0)
-        {
-            CheckDeath();
-        }
+        CheckDeath();
     }
+
 
     public void DecreaseStamina(float amount)
     {
@@ -135,5 +198,9 @@ public class PlayerStats : MonoBehaviour
         _currentInventoryWeight -= amount;
         _currentInventoryWeight = Mathf.Clamp(_currentInventoryWeight, 0, _maxInventoryWeight);
     }
-
+    public void IncreaseMaxInventoryWeight(float amount)
+    {
+        _maxInventoryWeight += amount;
+        _maxInventoryWeight = Mathf.Max(0f, _maxInventoryWeight);
+    }
 }

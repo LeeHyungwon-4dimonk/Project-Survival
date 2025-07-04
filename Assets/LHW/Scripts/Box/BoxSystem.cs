@@ -6,6 +6,9 @@ public class BoxSystem : MonoBehaviour
     [SerializeField] private ItemSO[] _boxItem;
     [SerializeField] private int[] _boxStack;
 
+    public ItemSO[] BoxItem => _boxItem;
+    public int[] BoxStack => _boxStack;
+
     public event Action OnBoxSlotUpdated;
 
     private void Awake()

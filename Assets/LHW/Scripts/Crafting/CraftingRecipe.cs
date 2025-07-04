@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,7 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Recipe", menuName = "Assets/New CraftingRecipe")]
 public class CraftingRecipe : ScriptableObject
 {
-    [SerializeField] public float craftingTime;
-    [SerializeField] public List<ItemSO> reqItem = new();
+    [SerializeField] public int ProductID;
     [SerializeField] public ItemSO resultItem;
+    [SerializeField] public float craftingTime;
+    [SerializeField] public int ProductEnergy;
 }

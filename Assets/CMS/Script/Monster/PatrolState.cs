@@ -8,42 +8,61 @@ public class PatrolState : MonoBehaviour, IState
     private Monster _monster;
     private Rigidbody2D _rb;
 
-    [SerializeField] private float _patrolDistance = 3f;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private float _patrolSpeed = 2f;
 
-    private Vector2 _leftBound;
-    private Vector2 _rightBound;
-    private int _direction = 1;
+    private Transform[] _patrolPoints;
+
+    private int _currentPointIndex = 0;
+    private Vector2 _lastPosition;
+    private Vector2 _patrolTarget;
+
+    public void SetPatrolPoints(Transform[] points)
+    {
+        _patrolPoints = points;
+    }
+
     public void EnterState()
     {
-        if (!_monster) _monster = GetComponent<Monster>();
-        if (!_rb) _rb = GetComponent<Rigidbody2D>();
+        if (_monster == null) _monster = GetComponent<Monster>();
+        if (_rb == null) _rb = GetComponent<Rigidbody2D>();
+        if (_spriteRenderer == null) _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        Vector2 origin = _monster.SpawnPoint;
-        _leftBound = new Vector2(origin.x - _patrolDistance, origin.y);
-        _rightBound = new Vector2(origin.x + _patrolDistance, origin.y);
-    } 
+        _lastPosition = _rb.position;
+
+        if (_patrolPoints != null && _patrolPoints.Length > 0)
+        {
+            _patrolTarget = _patrolPoints[_currentPointIndex].position;
+        }
+        else
+        {
+            Debug.LogWarning("[PatrolState] PatrolPoints가 설정되지 않았습니다!");
+        }
+    }
 
     public void UpdateState()
     {
-        Vector2 newPosition = _rb.position + Vector2.right * _direction * _patrolSpeed * Time.fixedDeltaTime;
-        _rb.MovePosition(newPosition);
+        if (_patrolPoints == null || _patrolPoints.Length == 0) return;
 
-        if(_direction == 1 && newPosition.x >= _rightBound.x)
+        Vector2 direction = (_patrolTarget - _rb.position).normalized;
+        _rb.MovePosition(_rb.position + direction * _patrolSpeed * Time.fixedDeltaTime);
+
+        if (direction.x != 0)
+            _spriteRenderer.flipX = direction.x < 0;
+
+        if (Vector2.Distance(_rb.position, _patrolTarget) < 0.2f)
         {
-            _direction = -1; // 방향을 왼쪽으로 변경
-        }
-        else if(_direction == -1 && newPosition.x <= _leftBound.x)
-        {
-            _direction = 1; // 방향을 오른쪽으로 변경
+            SetNextPatrolPoint();
         }
     }
 
     public void ExitState()
     {
-    
     }
 
-   
-
+    private void SetNextPatrolPoint()
+    {
+        _currentPointIndex = (_currentPointIndex + 1) % _patrolPoints.Length;
+        _patrolTarget = _patrolPoints[_currentPointIndex].position;
+    }
 }

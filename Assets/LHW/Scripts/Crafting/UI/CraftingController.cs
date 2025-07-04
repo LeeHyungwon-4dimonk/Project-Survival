@@ -1,11 +1,132 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CraftingController : MonoBehaviour
+public class CraftingController : UIBase
 {
+    [SerializeField] private Image _image;
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private Button _craftButton;
+    [SerializeField] private Image _sliderImage;
+    [SerializeField] private Button _resultButton;
+    [SerializeField] private Image _resultImage;
+
+    private CraftingRecipe _currentRecipe;
+
+    private Coroutine _craftCoroutine;
+
+    private void Update()
+    {
+        UIUpdate();
+        CraftingUIUpdate();
+    }
+
+    /// <summary>
+    /// For OnClick Button Event. Get the current selected recipe.
+    /// </summary>
+    /// <param name="recipe"></param>
+    public void SelectRecipe(CraftingRecipe recipe)
+    {
+        _currentRecipe = recipe;
+    }
+
+    /// <summary>
+    /// Update Recipe Description based on currentRecipe.
+    /// </summary>
+    private void UIUpdate()
+    {
+        if (_currentRecipe != null) {
+            _image.sprite = _currentRecipe.resultItem.Icon;
+            _nameText.text = _currentRecipe.resultItem.Name;
+            _descriptionText.text = _currentRecipe.resultItem.Description;
+        }
+    }
+
+    /// <summary>
+    /// Update Create Button.
+    /// If item is Craftable, interaction will be occur.
+    /// </summary>
+    private void CraftingUIUpdate()
+    {
+        if (HasEnoughEnergy())
+            _craftButton.interactable = true;
+        else
+            _craftButton.interactable = false;
+    }
+
+    /// <summary>
+    /// For OnClick button event. Craft Item.
+    /// </summary>
+    public void CraftItem()
+    {
+        if (_craftCoroutine == null) {
+            ConsumeEnergy();
+            _craftCoroutine = StartCoroutine(CraftingTime());
+        }
+    }
+
+    /// <summary>
+    /// If recipe is craftable, consume material item.
+    /// </summary>
+    private void ConsumeEnergy()
+    {
+        // TODO : consume Energy
+    }
+
+    private bool HasEnoughEnergy()
+    {
+        // TODO : if energy is enough
+        return true;
+        // TODO : if energy is not enough
+        return false;
+    }
+
+    /// <summary>
+    /// Coroutine, UI bar Update for crafting time.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CraftingTime()
+    {
+        float process = 0f;
+        while (process < 1f) {
+            process += (float)Time.deltaTime / _currentRecipe.craftingTime;
+            _sliderImage.fillAmount = Mathf.Lerp(0f, 1f, process);
+            yield return null;
+        }
+        ResultPrint();
+        _craftCoroutine = null;
+    }
+
+
+    private void ResultPrint()
+    {
+        _resultImage.color = Color.white;
+        _resultImage.sprite = _currentRecipe.resultItem.Icon;
+        _resultButton.interactable = true;
+    }
+
+    public void GetItem()
+    {
+        if (_currentRecipe != null) {
+            InventoryManager.Instance.AddItemToInventory(_currentRecipe.resultItem);
+        }
+    }
+
+    public void GoToRepairMenu()
+    {
+        GameManager.Instance.InGameUIManager.ShowUI(UIType.Repair);
+    }
+
+    #region unused code
+
+    // Due to the crafting system update, crafting only consume energy
+    // code below is not used.
+    // saved the code in case of reusing.
+
+    /*
+
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _descriptionText;
@@ -107,13 +228,14 @@ public class CraftingController : MonoBehaviour
         _craftCoroutine = null;
     }
 
+   
     private void ResultPrint()
     {
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.resultItem.Icon;
         _resultButton.interactable = true;
     }
-
+   
     public void GetItem()
     {
         if (_currentRecipe != null)
@@ -122,6 +244,7 @@ public class CraftingController : MonoBehaviour
         }
     }
 
+    
     /// <summary>
     /// Compare Dictionary of inventory item and Recipe require item.
     /// If there's enough materials for recipe, return true.
@@ -188,4 +311,7 @@ public class CraftingController : MonoBehaviour
         }
         return possessItemsAndNum;
     }
+    */
+
+    #endregion
 }

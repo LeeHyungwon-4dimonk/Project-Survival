@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     #region private fields
 
     private InGameUIManager _inGameUIManager;
+    private DayNightCycleManager _dayNightManager;
 
     #endregion // private fields
 
@@ -38,6 +39,10 @@ public class GameManager : MonoBehaviour
     #region properties
 
     public InGameUIManager InGameUIManager { get; set; }
+    public DayNightCycleManager DayNightManager { get; set; }
+    public PlayerStats PlayerStats { get; set; } = new PlayerStats();
+    public bool IsUIOpen { get; set; }
+    public GameData GameData { get; set; } = new GameData();
 
     #endregion
 
@@ -52,18 +57,21 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.LoadScene("InGameScene");
     }
 
+    public void GameOver()
+    {
+        SceneManager.Instance.LoadScene("MainScene");
+    }
+
+    public void SkipDay()
+    {
+        DayNightManager.SkipToNextDay();
+    }
+
     #endregion // public funcs
 }
 
 
 public class GameData
 {
-
-
-
-
-    public GameData()
-    {
-
-    }
+    public int _energy;
 }

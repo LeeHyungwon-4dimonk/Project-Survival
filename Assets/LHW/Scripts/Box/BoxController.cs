@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BoxController : MonoBehaviour
+public class BoxController : UIBase
 {
     [SerializeField] private BoxSlotUnit[] _slots;
     [SerializeField] private BoxSystem _data;
@@ -26,8 +26,7 @@ public class BoxController : MonoBehaviour
 
     private void UpdateUISlot()
     {
-        for (int i = 0; i < _slots.Length; i++)
-        {
+        for (int i = 0; i < _slots.Length; i++) {
             _slots[i].UpdateUI(i);
         }
     }
