@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DecompositionController : MonoBehaviour
+public class DecompositionController : UIBase
 {
     [SerializeField] private DecompositionSlotUnit[] _slots;
     [SerializeField] private DecompositionSystem _data;
@@ -24,8 +24,7 @@ public class DecompositionController : MonoBehaviour
 
     private void UpdateUISlot()
     {
-        for(int i = 0; i < _slots.Length; i++)
-        {
+        for (int i = 0; i < _slots.Length; i++) {
             _slots[i].UpdateUI(i);
         }
     }

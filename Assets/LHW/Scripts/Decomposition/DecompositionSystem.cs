@@ -6,6 +6,9 @@ public class DecompositionSystem : MonoBehaviour
     [SerializeField] private ItemSO[] _decompositionItem;
     [SerializeField] private int[] _decompositionStack;
 
+    public ItemSO[] DecompositionItem => _decompositionItem;
+    public int[] DecompositionStack => _decompositionStack;
+
     public event Action OnDecompositionSlotUpdated;
 
     /// <summary>

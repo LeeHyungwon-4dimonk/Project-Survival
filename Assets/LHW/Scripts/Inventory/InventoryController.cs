@@ -38,11 +38,11 @@ public class InventoryController : MonoBehaviour
 
     private void UpdateWeightText()
     {
-        float weight = 0;
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].Item != null) weight += slots[i].Item.Weight * slots[i].ItemStack;
-        }
-        _weightText.text = $"kg {weight.ToString()} / 25";
+        PlayerStats stats = GameObject.FindWithTag("Player").GetComponent<PlayerStats>();
+
+        float weight = stats.CurrentInventoryWeight;
+        float maxWeight = stats.MaxInventoryWeight;
+        
+        _weightText.text = $"kg {weight.ToString()} / {maxWeight.ToString()}";
     }
 }
