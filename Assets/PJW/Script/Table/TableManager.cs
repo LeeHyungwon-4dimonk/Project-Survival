@@ -34,6 +34,8 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.BoxProb,         new BoxProbTable());
         RegisterAndLoadTable(TableType.AssemblyContent, new AssemblyContentTable());
         RegisterAndLoadTable(TableType.Monster,         new MonsterTable());
+        RegisterAndLoadTable(TableType.BoxSetup,        new BoxSetupTable());
+        RegisterAndLoadTable(TableType.SurvivalJournal, new SurvivalJournalTable());
         // TODO : 테이블이 생기면 계속 추가
 
         yield return new WaitUntil(() =>
@@ -42,7 +44,10 @@ public class TableManager : MonoBehaviour
             var bp = GetTable<BoxProbTable>(TableType.BoxProb)?.TBoxProb;
             var ac = GetTable<AssemblyContentTable>(TableType.AssemblyContent)?.Contents;
             var mt = GetTable<MonsterTable>(TableType.Monster)?.TMonster;
-            return it != null && bp != null && ac != null;
+            var bs = GetTable<BoxSetupTable>(TableType.BoxSetup)?.TBoxSetup;
+            var sj = GetTable<SurvivalJournalTable>(TableType.SurvivalJournal)?.TSurvivalJournal; 
+
+            return it != null && bp != null && ac != null && mt != null && bs != null && sj != null;
         });
 
         TItems = new List<System.Collections.IList>()
@@ -50,7 +55,10 @@ public class TableManager : MonoBehaviour
             GetTable<ItemTable>(TableType.Item).TItem,
             GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb,
             GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents,
-            GetTable<MonsterTable>(TableType.Monster).TMonster
+            GetTable<MonsterTable>(TableType.Monster).TMonster,
+            GetTable<BoxSetupTable>(TableType.BoxSetup).TBoxSetup,
+            GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal
+            
             // TODO : 테이블이 생기면 계속 추가
         };
     }
