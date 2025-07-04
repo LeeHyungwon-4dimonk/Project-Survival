@@ -72,8 +72,8 @@ public class BoxItemRandomSystem : MonoBehaviour
     private void ItemAddToBox()
     {
         ItemASelect();
-        ItemBSelect();
-        ItemCSelect();
+        //ItemBSelect();
+        //ItemCSelect();
         ItemDSelect();
     }
 
@@ -122,11 +122,10 @@ public class BoxItemRandomSystem : MonoBehaviour
     {
         if(_journalQueue.Count == 0) return;
 
-        float value = _itemBProbableDic[GameManager.Instance.DayNightManager.CurrentDay];        
+        float value = _itemBProbableDic[GameManager.Instance.DayNightManager.CurrentDay];
         float randomNum = Random.Range(0.0f, value);
         if (randomNum > value) return;
-        //콜렉션을 추가하는 함수(_journalStack.Pop());
-        
+        _data.AddCollection(_journalQueue.Dequeue(), 0);
     }
 
     /// <summary>
@@ -171,7 +170,6 @@ public class BoxItemRandomSystem : MonoBehaviour
         float randomNum = Random.Range(0.0f, value);
         if(randomNum > value) return;
         _data.AddItemToBoxSlot(_itemC_Food);
-        
     }
 
     /// <summary>
@@ -215,8 +213,8 @@ public class BoxItemRandomSystem : MonoBehaviour
 
         if (randomNum > 0.7f) return;
 
-        // need to make collection item slot in box inventory.
-        //_data.AddItemToBoxSlot(_weightedRandomD.GetRandomItem());
+
+        _data.AddCollection(_weightedRandomD.GetRandomItem(), 1);
     }
 
     /// <summary>
