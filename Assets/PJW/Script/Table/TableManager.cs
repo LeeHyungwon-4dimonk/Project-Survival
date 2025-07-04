@@ -9,6 +9,7 @@ public class TItem
 {
     public ItemData Item;
     public BoxProbData BoxProb;
+    public AssemblyContentData AssemblyConta;
     // TODO : 나중에 추가할 테이블도 추가해야 함
 }
 public class TableManager : MonoBehaviour
@@ -32,28 +33,28 @@ public class TableManager : MonoBehaviour
 
     private Dictionary<TableType, TableBase> _tables = new Dictionary<TableType, TableBase>();
 
-    /// <summary>
-    /// 첫 번째 리스트(TItem, TBoxProb, ...)들을 담는 래퍼 리스트
-    /// </summary>
     public List<System.Collections.IList> TItems { get; private set; }
 
     private IEnumerator LoadAllTablesAndWrap()
     {
-        RegisterAndLoadTable(TableType.Item,    new ItemTable());
-        RegisterAndLoadTable(TableType.BoxProb, new BoxProbTable());
+        RegisterAndLoadTable(TableType.Item,            new ItemTable());
+        RegisterAndLoadTable(TableType.BoxProb,         new BoxProbTable());
+        RegisterAndLoadTable(TableType.AssemblyContent, new AssemblyContentTable());
         // TODO : 테이블이 생기면 계속 추가
 
         yield return new WaitUntil(() =>
         {
             var it = GetTable<ItemTable>(TableType.Item)?.TItem;
             var bp = GetTable<BoxProbTable>(TableType.BoxProb)?.TBoxProb;
-            return it != null && bp != null;
+            var ac = GetTable<AssemblyContentTable>(TableType.AssemblyContent)?.Contents;
+            return it != null && bp != null && ac != null;
         });
 
         TItems = new List<System.Collections.IList>()
         {
             GetTable<ItemTable>(TableType.Item).TItem,
-            GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb
+            GetTable<BoxProbTable>(TableType.BoxProb).TBoxProb,
+            GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents
             // TODO : 테이블이 생기면 계속 추가
         };
     }
