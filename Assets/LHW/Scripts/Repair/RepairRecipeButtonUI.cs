@@ -8,6 +8,9 @@ public class RepairRecipeButtonUI : MonoBehaviour
     [SerializeField] Image _image;
     [SerializeField] TMP_Text _text;
 
+    [SerializeField] int _index;
+    public int Index => _index;
+
     private void Awake() => Init();
 
     private void Init()
@@ -21,8 +24,20 @@ public class RepairRecipeButtonUI : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnClick);
     }
 
+    private void Update()
+    {
+        IsRepaired();
+    }
+
     public void OnClick()
     {
-        GetComponentInParent<RepairController>().SelectRecipe(_recipe);
+        GetComponentInParent<RepairController>().SelectRecipe(_recipe, _index);
+    }
+
+    private void IsRepaired()
+    {
+        if (GameManager.Instance.GameData.RepairedTask[_index]) gameObject.GetComponent<Button>().interactable = false;
+        // Maybe add check image change?
+        else gameObject.GetComponent<Button>().interactable = true;
     }
 }

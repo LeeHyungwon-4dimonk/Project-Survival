@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class RepairController : UIBase
     [SerializeField] private Image _energyBarImage;
     [SerializeField] private TMP_Text _energyBarText;
 
-    [SerializeField] private Button[] _recipeButton;
+    private int _index;
 
     private RepairRecipeSO _currentRecipe;
 
@@ -37,9 +38,10 @@ public class RepairController : UIBase
         UpdateEnergyBarUI();
     }
 
-    public void SelectRecipe(RepairRecipeSO recipe)
+    public void SelectRecipe(RepairRecipeSO recipe, int index)
     {
         _currentRecipe = recipe;
+        _index = index;
     }
 
     private void UIUpdate()
@@ -67,7 +69,7 @@ public class RepairController : UIBase
     public void RepairShip()
     {
         ConsumeEnergy();
-        IsSolved();
+        SetSolved();
         Init();
     }
 
@@ -81,17 +83,20 @@ public class RepairController : UIBase
 
     private bool HasEnoughEnergy()
     {
-        if (_currentRecipe == null) return false;
+        if (_currentRecipe == null || IsSolved()) return false;
         else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
         else return false;
     }
 
     private bool IsSolved()
     {
-        // TODO : Quest? Task? Complete 
-        return true;
+        if (GameManager.Instance.GameData.RepairedTask[_index]) return true;
+        else return false;
+    }
 
-        return false;
+    private void SetSolved()
+    {
+        GameManager.Instance.GameData.RepairComplete(_index);
     }
 
     public void GoBackToCraftUI()
