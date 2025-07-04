@@ -4,6 +4,9 @@ using UnityEngine;
 
 public interface IInteractable
 {
+    // 타입분류
+    enum InteractionType { };
+
     // 플레이어가 가까이 갔을 때 UI 에 표시할 텍스트 (예: "E 확인하기")
     string GetDescription();
 
