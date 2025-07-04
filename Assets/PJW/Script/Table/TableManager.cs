@@ -36,6 +36,8 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.Monster,         new MonsterTable());
         RegisterAndLoadTable(TableType.BoxSetup,        new BoxSetupTable());
         RegisterAndLoadTable(TableType.SurvivalJournal, new SurvivalJournalTable());
+        RegisterAndLoadTable(TableType.CollectibleContent, new CollectibleContentTable());
+        RegisterAndLoadTable(TableType.FoodProb,        new FoodProbTable());
         // TODO : 테이블이 생기면 계속 추가
 
         yield return new WaitUntil(() =>
@@ -46,8 +48,17 @@ public class TableManager : MonoBehaviour
             var mt = GetTable<MonsterTable>(TableType.Monster)?.TMonster;
             var bs = GetTable<BoxSetupTable>(TableType.BoxSetup)?.TBoxSetup;
             var sj = GetTable<SurvivalJournalTable>(TableType.SurvivalJournal)?.TSurvivalJournal; 
+            var cc = GetTable<CollectibleContentTable>(TableType.CollectibleContent)?.TCollectibleContents;
+            var fp = GetTable<FoodProbTable>(TableType.FoodProb)?.TFoodProb;
 
-            return it != null && bp != null && ac != null && mt != null && bs != null && sj != null;
+            return it != null
+                && bp != null
+                && ac != null
+                && mt != null
+                && bs != null
+                && sj != null
+                && cc != null
+                && fp != null;
         });
 
         TItems = new List<System.Collections.IList>()
@@ -57,8 +68,9 @@ public class TableManager : MonoBehaviour
             GetTable<AssemblyContentTable>(TableType.AssemblyContent).Contents,
             GetTable<MonsterTable>(TableType.Monster).TMonster,
             GetTable<BoxSetupTable>(TableType.BoxSetup).TBoxSetup,
-            GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal
-            
+            GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal,
+            GetTable<CollectibleContentTable>(TableType.CollectibleContent).TCollectibleContents
+            GetTable<FoodProbTable>(TableType.FoodProb).TFoodProb
             // TODO : 테이블이 생기면 계속 추가
         };
     }
