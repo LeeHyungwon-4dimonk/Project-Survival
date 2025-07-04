@@ -39,6 +39,8 @@ public class TableManager : MonoBehaviour
         RegisterAndLoadTable(TableType.CollectibleContent, new CollectibleContentTable());
         RegisterAndLoadTable(TableType.FoodProb,        new FoodProbTable());
         RegisterAndLoadTable(TableType.FixContent,      new FixContentTable());
+        RegisterAndLoadTable(TableType.MissionAndReward, new MissionAndRewardTable());
+        RegisterAndLoadTable(TableType.StoryLineContent, new StoryLineContentTable());
         
         // TODO : 테이블이 생기면 계속 추가
 
@@ -53,6 +55,8 @@ public class TableManager : MonoBehaviour
             var cc = GetTable<CollectibleContentTable>(TableType.CollectibleContent)?.TCollectibleContents;
             var fp = GetTable<FoodProbTable>(TableType.FoodProb)?.TFoodProb;
             var fc = GetTable<FixContentTable>(TableType.FixContent)?.FixContents;
+            var mr = GetTable<MissionAndRewardTable>(TableType.MissionAndReward)?.TMissionAndReward;
+            var slc = GetTable<StoryLineContentTable>(TableType.StoryLineContent)?.TStoryLineContent;
 
             return it != null
                 && bp != null
@@ -62,7 +66,9 @@ public class TableManager : MonoBehaviour
                 && sj != null
                 && cc != null
                 && fp != null
-                && fc != null;
+                && fc != null
+                && mr != null
+                && slc != null;
         });
 
         TItems = new List<System.Collections.IList>()
@@ -75,7 +81,9 @@ public class TableManager : MonoBehaviour
             GetTable<SurvivalJournalTable>(TableType.SurvivalJournal).TSurvivalJournal,
             GetTable<CollectibleContentTable>(TableType.CollectibleContent).TCollectibleContents,
             GetTable<FoodProbTable>(TableType.FoodProb).TFoodProb,
-            GetTable<FixContentTable>(TableType.FixContent).FixContents
+            GetTable<FixContentTable>(TableType.FixContent).FixContents,
+            GetTable<MissionAndRewardTable>(TableType.MissionAndReward).TMissionAndReward,
+            GetTable<StoryLineContentTable>(TableType.StoryLineContent).TStoryLineContent
             // TODO : 테이블이 생기면 계속 추가
         };
     }

@@ -12,6 +12,8 @@ public enum TableType
     SurvivalJournal,
     CollectibleContent,
     FoodProb,
-    FixContent
+    FixContent,
+    MissionAndReward,
+    StoryLineContent
     // TODO: 새로운 테이블이 생기면 여기 추가
 }
