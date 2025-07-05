@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 485568697}
   - component: {fileID: 485568696}
   m_Layer: 0
-  m_Name: PJWTableManager
+  m_Name: TableManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
