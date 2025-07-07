@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-   #region Singleton
+    #region Singleton
     public static MenuController Instance { get; private set; }
     #endregion
 
@@ -13,6 +13,12 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject menuPopup;
     [SerializeField] private GameObject optionPanel;
     [SerializeField] private GameObject quitConfirmPanel;
+
+    [Header("Quick Menu")]
+    [SerializeField] private GameObject quickMenuPanel;
+    [SerializeField] private Button mainMenuButton;      
+    [SerializeField] private Button quickMenuOkButton;    
+    [SerializeField] private Button quickMenuCancelButton;
 
     [Header("Buttons")]
     [SerializeField] private Button backButton;
@@ -41,6 +47,10 @@ public class MenuController : MonoBehaviour
         if (quitButton != null)       quitButton.onClick.AddListener(OnQuit);
         if (confirmQuitButton != null) confirmQuitButton.onClick.AddListener(OnConfirmQuit);
         if (cancelQuitButton != null)  cancelQuitButton.onClick.AddListener(OnCancelQuit);
+
+        if (mainMenuButton != null)        mainMenuButton.onClick.AddListener(OnMainMenuButton);
+        if (quickMenuOkButton != null)     quickMenuOkButton.onClick.AddListener(OnQuickMenuOk);
+        if (quickMenuCancelButton != null) quickMenuCancelButton.onClick.AddListener(OnQuickMenuCancel);
     }
 
     private void Update()
@@ -53,12 +63,10 @@ public class MenuController : MonoBehaviour
     {
         if (_panelStack.Count > 0)
         {
-            // 이미 열린 창이 있으면 가장 마지막에 열린 창부터 닫는다
             HideTopPanel();
         }
         else
         {
-            // 아무 창도 열려 있지 않으면 메인 메뉴를 연다
             ShowPanel(menuPopup);
         }
     }
@@ -77,25 +85,9 @@ public class MenuController : MonoBehaviour
         top.SetActive(false);
     }
 
-    // 메뉴팝업의 Back 버튼 (또는 외부에서 호출)
-    public void OnBack()
-    {
-        HideTopPanel();
-    }
-
-    // Settings 버튼
-    public void OnSettings()
-    {
-        ShowPanel(optionPanel);
-    }
-
-    // Quit 버튼
-    public void OnQuit()
-    {
-        ShowPanel(quitConfirmPanel);
-    }
-
-    // Quit 확인
+    public void OnBack()          => HideTopPanel();
+    public void OnSettings()      => ShowPanel(optionPanel);
+    public void OnQuit()          => ShowPanel(quitConfirmPanel);
     public void OnConfirmQuit()
     {
 #if UNITY_EDITOR
@@ -104,9 +96,22 @@ public class MenuController : MonoBehaviour
         Application.Quit();
 #endif
     }
+    public void OnCancelQuit()    => HideTopPanel();
 
-    // Quit 취소
-    public void OnCancelQuit()
+    private void OnMainMenuButton()
+    {
+        ShowPanel(quickMenuPanel);
+    }
+
+    private void OnQuickMenuOk()
+    {
+        HideTopPanel();
+        // 2) 메인 메뉴 패널 닫기
+        HideTopPanel();
+        SceneManager.Instance.LoadScene("MainScene");
+    }
+
+    private void OnQuickMenuCancel()
     {
         HideTopPanel();
     }

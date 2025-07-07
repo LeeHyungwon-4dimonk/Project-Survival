@@ -28,11 +28,4 @@ public class SceneManager : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         }
     }
-
-    /* 이동할 씬
-    public void LoadStage1()
-    {
-        LoadScene("Stage1");
-    }
-    */
 }
