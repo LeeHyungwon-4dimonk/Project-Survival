@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd272528817290740b1dfc885e2d4987, type: 3}
-  m_Name: Sword
+  m_Name: Mococo
   m_EditorClassIdentifier: 
-  CollectionId: 1002
-  CollectionName: asdasd
-  CollectionDescription: asdasd
+  CollectionId: 6001
+  CollectionName: "\uD5A5\uAE30\uB85C\uC6B4 \uC528\uC557"
+  CollectionDescription: "\uC660\uC9C0 \uBAA8\uB974\uAC8C \uD5A5\uAE30\uB86D\uB2E4."
   CollectionType: 1
-  CollectionIcon: {fileID: 21300000, guid: 495c8b32a63551b4fb46b97a1906882e, type: 3}
-  SilhouetteSprite: {fileID: 21300000, guid: 49693731a44f0c54e8c8e4f59f4f91c5, type: 3}
+  CollectionIcon: {fileID: 21300000, guid: f9ce920c355a40b43a23af3ff5e60310, type: 3}
+  SilhouetteSprite: {fileID: 0}
