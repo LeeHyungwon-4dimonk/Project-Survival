@@ -7,7 +7,7 @@ using UnityEngine;
 public class CraftingRecipe : ScriptableObject
 {
     [SerializeField] public int ProductID;
-    [SerializeField] public ItemSO resultItem;
-    [SerializeField] public float craftingTime;
+    [SerializeField] public ItemSO ResultItem;
+    [SerializeField] public int CraftingType;
     [SerializeField] public int ProductEnergy;
 }

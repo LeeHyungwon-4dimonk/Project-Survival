@@ -12,8 +12,8 @@ public class CraftingRecipeButtonUI : MonoBehaviour
 
     private void Init()
     {
-        _resultImage.sprite = _recipe.resultItem.Icon;
-        _itemNameText.text = _recipe.resultItem.Name;
+        _resultImage.sprite = _recipe.ResultItem.Icon;
+        _itemNameText.text = _recipe.ResultItem.Name;
     }
 
     private void Start()

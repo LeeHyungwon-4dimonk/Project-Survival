@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +17,7 @@ public class CraftingController : UIBase
 
     private CraftingRecipe _currentRecipe;
 
-    private Coroutine _craftCoroutine;
+    //private Coroutine _craftCoroutine;
 
     private void Awake()
     {
@@ -46,10 +45,11 @@ public class CraftingController : UIBase
     /// </summary>
     private void UIUpdate()
     {
-        if (_currentRecipe != null) {
-            _image.sprite = _currentRecipe.resultItem.Icon;
-            _nameText.text = _currentRecipe.resultItem.Name;
-            _descriptionText.text = _currentRecipe.resultItem.Description;
+        if (_currentRecipe != null)
+        {
+            _image.sprite = _currentRecipe.ResultItem.Icon;
+            _nameText.text = _currentRecipe.ResultItem.Name;
+            _descriptionText.text = _currentRecipe.ResultItem.Description;
         }
     }
 
@@ -76,10 +76,8 @@ public class CraftingController : UIBase
     /// </summary>
     public void CraftItem()
     {
-        if (_craftCoroutine == null) {
-            ConsumeEnergy();
-            _craftCoroutine = StartCoroutine(CraftingTime());
-        }
+        ConsumeEnergy();
+        ResultPrint();
     }
 
     /// <summary>
@@ -87,7 +85,7 @@ public class CraftingController : UIBase
     /// </summary>
     private void ConsumeEnergy()
     {
-        if(HasEnoughEnergy())
+        if (HasEnoughEnergy())
         {
             GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
             _restrictPanel.SetActive(true);
@@ -96,10 +94,15 @@ public class CraftingController : UIBase
 
     private bool HasEnoughEnergy()
     {
-        if(_currentRecipe == null) return false;
-        else if(GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
+        if (_currentRecipe == null) return false;
+        else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
         else return false;
     }
+
+
+
+    /*
+    crafting time deleted 
 
     /// <summary>
     /// Coroutine, UI bar Update for crafting time.
@@ -116,20 +119,22 @@ public class CraftingController : UIBase
         ResultPrint();
         _craftCoroutine = null;
     }
+    */
 
 
     private void ResultPrint()
     {
         _resultImage.color = Color.white;
-        _resultImage.sprite = _currentRecipe.resultItem.Icon;
+        _resultImage.sprite = _currentRecipe.ResultItem.Icon;
         _resultButton.interactable = true;
         _restrictPanel.SetActive(false);
     }
 
     public void GetItem()
     {
-        if (_currentRecipe != null) {
-            InventoryManager.Instance.AddItemToInventory(_currentRecipe.resultItem);
+        if (_currentRecipe != null)
+        {
+            InventoryManager.Instance.AddItemToInventory(_currentRecipe.ResultItem);
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New BoxProb", menuName = "Assets/Create New BoxProb")]
 public class BoxProbSO : ScriptableObject
 {
-    public List<BoxProb> _boxProbs = new List<BoxProb>();
+    public List<BoxProb> BoxProbs = new List<BoxProb>();
 }
 
 [System.Serializable]
