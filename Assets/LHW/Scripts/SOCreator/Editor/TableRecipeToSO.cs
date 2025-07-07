@@ -1,6 +1,7 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 /// <summary>
 /// Create Recipe base on Table Data.(Will be fixed when table is created)
@@ -9,26 +10,25 @@ using System.IO;
 /// </summary>
 public class TableRecipeToSO : MonoBehaviour
 {
-    private static string _itemCSVPath = "/LHW/Scripts/Crafting/Editor/CSV/TestRecipe.csv";
     [MenuItem("Utilities/Generate Recipe")]
     public static void GenerateRecipe()
     {
-        string[] allLines = File.ReadAllLines(Application.dataPath + _itemCSVPath);        
+        var craftingRecipeTable = TableManager.Instance.GetTable<AssemblyContentTable>(TableType.AssemblyContent);
+        List<AssemblyContentData> tCraftingRecipe = craftingRecipeTable.Contents;
 
-        foreach (string s in allLines)
+        foreach (AssemblyContentData s in tCraftingRecipe)
         {
-            string[] splitData = s.Split(",");
+            CraftingRecipe craftingRecipe = ScriptableObject.CreateInstance<CraftingRecipe>();
+            int.TryParse(s.ProdID, out craftingRecipe.ProductID);
+            Debug.Log(craftingRecipe.ProductID);
+            string resultItemDataPath = s.ItemID;
+            Debug.Log(resultItemDataPath);
+            craftingRecipe.ResultItem = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObject/Item/{resultItemDataPath}.asset");
+            if (craftingRecipe.ResultItem == null) Debug.Log("Data not found");
+            int.TryParse(s.ProdType, out craftingRecipe.CraftingType);
+            int.TryParse(s.ProdEng, out craftingRecipe.ProductEnergy);
 
-            CraftingRecipe recipe = ScriptableObject.CreateInstance<CraftingRecipe>();
-            float.TryParse(splitData[0], out recipe.craftingTime);           
-
-            string lastItemDataPath = splitData[splitData.Length - 1];
-            recipe.resultItem = AssetDatabase.LoadAssetAtPath<ItemSO>(lastItemDataPath);
-                        
-            if (recipe.resultItem == null)
-                Debug.LogWarning($"SO not found at path: {lastItemDataPath}");
-
-            AssetDatabase.CreateAsset(recipe, $"Assets/LHW/RecipeData/{recipe.resultItem.Name}.asset");
+            AssetDatabase.CreateAsset(craftingRecipe, $"Assets/08.ScriptableObjects/CraftingRecipe/{craftingRecipe.ResultItem}.asset");
         }
 
         AssetDatabase.SaveAssets();

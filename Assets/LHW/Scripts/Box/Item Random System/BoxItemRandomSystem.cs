@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 enum BoxTier { Tier1, Tier2, Tier3 }
@@ -8,17 +9,8 @@ public class BoxItemRandomSystem : MonoBehaviour
     [SerializeField] BoxTier _tier;
     [SerializeField] BoxSystem _data;
 
-    [Header("Item - Normal")]
-    [SerializeField] ItemSO[] _itemA_Items1;
-
-    [Header("Item - Rare")]
-    [SerializeField] ItemSO[] _itemA_Items2;
-
-    [Header("Item - Unique")]
-    [SerializeField] ItemSO[] _itemA_Items3;
-
-    [Header("Item - Legendary")]
-    [SerializeField] ItemSO[] _itemA_Items4;
+    [Header("ItemSetUpA")]
+    [SerializeField] BoxSetUpASO _boxSetUpASO;
 
     [Header("Journal - List")]
     [SerializeField] CollectionSO[] _itemB_Journal;
@@ -31,7 +23,7 @@ public class BoxItemRandomSystem : MonoBehaviour
 
     private WeightedRandom<ItemSO> _weightedRandomA = new WeightedRandom<ItemSO>();
     private WeightedRandom<CollectionSO> _weightedRandomD = new WeightedRandom<CollectionSO>();
-    
+
     private Queue<CollectionSO> _journalQueue = new Queue<CollectionSO>();
 
     Dictionary<int, float> _itemBProbableDic = new Dictionary<int, float>();
@@ -42,13 +34,17 @@ public class BoxItemRandomSystem : MonoBehaviour
         // Item A init
         switch (_tier)
         {
-            case BoxTier.Tier1: ItemAInit(300, 145, 50, 10);
+            case BoxTier.Tier1:
+                ItemAInit(_boxSetUpASO, BoxTier.Tier1);
                 break;
-            case BoxTier.Tier2: ItemAInit(150, 200, 100, 100);
+            case BoxTier.Tier2:
+                ItemAInit(_boxSetUpASO, BoxTier.Tier2);
                 break;
-            case BoxTier.Tier3: ItemAInit(50, 125, 200, 250);
+            case BoxTier.Tier3:
+                ItemAInit(_boxSetUpASO, BoxTier.Tier3);
                 break;
         }
+
         // Item B init
         ItemBInit();
 
@@ -91,36 +87,48 @@ public class BoxItemRandomSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Set Item A weightRandom. (Materials)
-    /// </summary>
-    /// <param name="normal"></param>
-    /// <param name="rare"></param>
-    /// <param name="unique"></param>
-    /// <param name="legendary"></param>
-    private void ItemAInit(int normal, int rare, int unique, int legendary)
+    private void ItemAInit(BoxSetUpASO boxSetUpASO, BoxTier tier)
     {
-        for(int i = 0; i < _itemA_Items1.Length; i++)
+        switch (tier)
         {
-            _weightedRandomA.Add(_itemA_Items1[i], normal);
-        }
-        for(int i = 0; i < _itemA_Items2.Length; i++)
-        {
-            _weightedRandomA.Add(_itemA_Items2[i], rare);
-        }
-        for(int i = 0; i < _itemA_Items3.Length; i++)
-        {
-            _weightedRandomA.Add(_itemA_Items3[i], unique);
-        }
-        for (int i = 0; i < _itemA_Items4.Length; i++)
-        {
-            _weightedRandomA.Add(_itemA_Items4[i], legendary);
+            case BoxTier.Tier1:
+                for(int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
+                {
+                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
+                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType1 * 1000);
+                    _weightedRandomA.Add(item, inputNum);
+                }
+                break;
+
+            case BoxTier.Tier2:
+                for (int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
+                {
+                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
+                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType2 * 1000);
+                    _weightedRandomA.Add(item, inputNum);
+                }
+                break;
+            case BoxTier.Tier3:
+                for (int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
+                {
+                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
+                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType3 * 1000);
+                    _weightedRandomA.Add(item, inputNum);
+                }
+                break;
+
+            default:
+                break;
         }
     }
 
+
     private void ItemBSelect()
     {
-        if(_journalQueue.Count == 0) return;
+        if (_journalQueue.Count == 0) return;
 
         float value = _itemBProbableDic[GameManager.Instance.DayNightManager.CurrentDay];
         float randomNum = Random.Range(0.0f, value);
@@ -133,7 +141,7 @@ public class BoxItemRandomSystem : MonoBehaviour
     /// </summary>
     private void ItemBInit()
     {
-        for(int i = 0; i < _itemB_Journal.Length; i++)
+        for (int i = 0; i < _itemB_Journal.Length; i++)
         {
             _journalQueue.Enqueue(_itemB_Journal[i]);
         }
@@ -164,11 +172,11 @@ public class BoxItemRandomSystem : MonoBehaviour
 
     private void ItemCSelect()
     {
-        if(_itemCProbableDic.Count == 0) return;
+        if (_itemCProbableDic.Count == 0) return;
 
         float value = _itemCProbableDic[GameManager.Instance.DayNightManager.CurrentDay];
         float randomNum = Random.Range(0.0f, value);
-        if(randomNum > value) return;
+        if (randomNum > value) return;
         _data.AddItemToBoxSlot(_itemC_Food);
     }
 
@@ -181,7 +189,7 @@ public class BoxItemRandomSystem : MonoBehaviour
         // 의사 코드로 먼저 적습니다.
 
         // 일차 = key, 확률 = value로 된 dictionary를 생성하고, 데이터 테이블의 정보를 SO로 만들어놓는다.
-        
+
 
         // 딕셔너리 정보를 전부 저장 - 임시로 직접 입력해봄
         _itemCProbableDic[1] = 1;
@@ -222,7 +230,7 @@ public class BoxItemRandomSystem : MonoBehaviour
     /// </summary>
     private void ItemDInit()
     {
-        for(int i = 0; i < _itemD_Collection.Length; i++)
+        for (int i = 0; i < _itemD_Collection.Length; i++)
         {
             _weightedRandomD.Add(_itemD_Collection[i], 1);
         }
