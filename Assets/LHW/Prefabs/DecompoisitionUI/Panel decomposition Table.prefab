@@ -464,7 +464,9 @@ MonoBehaviour:
   - {fileID: 2554174185108493395}
   - {fileID: 8943409650192760860}
   - {fileID: 997354194219773114}
-  _data: {fileID: 0}
+  _data: {fileID: 3635081099736901149}
+  _energyBarImage: {fileID: 5282410883632932062}
+  _energyBarText: {fileID: 8047451206063827745}
 --- !u!114 &3635081099736901149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,10 +1190,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 681f5cfe0b3dcab4487b63a423f78fd3, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

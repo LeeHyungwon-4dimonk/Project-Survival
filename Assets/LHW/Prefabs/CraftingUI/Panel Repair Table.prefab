@@ -66,10 +66,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -473,6 +473,8 @@ MonoBehaviour:
   _descriptionText: {fileID: 7171736909104020145}
   _energyText: {fileID: 418589148619664536}
   _repairButton: {fileID: 3186752438098406798}
+  _energyBarImage: {fileID: 8009906119538145937}
+  _energyBarText: {fileID: 4286435093450536106}
   _recipeButton:
   - {fileID: 2088505261575980021}
   - {fileID: 9009472831316666770}

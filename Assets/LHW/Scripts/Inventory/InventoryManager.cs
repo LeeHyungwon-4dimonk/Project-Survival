@@ -305,9 +305,9 @@ public class InventoryManager : MonoBehaviour
     {
        if(_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
        {
-            _inventoryItem[startIndex] = null;
-            _inventoryStack[startIndex] = 0;
             _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;            
             OnInventorySlotChanged?.Invoke();
        }
     }
@@ -319,7 +319,6 @@ public class InventoryManager : MonoBehaviour
     public void ReturnItemFromDecomposition(int startIndex)
     {
         _decompositionSlotData.ReturnItemToInventory(startIndex);
-        _playerStats.AddInventoryWeight(_decompositionSlotData.DecompositionItem[startIndex].Weight * _decompositionSlotData.DecompositionStack[startIndex]);
         OnInventorySlotChanged?.Invoke();
     }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 852933356110906679}
   - component: {fileID: 9221554994531276265}
   m_Layer: 7
-  m_Name: dynamite
+  m_Name: Dynamite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f345ec717e84641b3bfcaa0c9db9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactionType: 0
   nameLabelUI: {fileID: 9198594508906347163}
   nameText: {fileID: 990016217015834582}
   holdProgressBarImage: {fileID: 2970779751524119676}
@@ -162,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemcon: {fileID: 9221554994531276265}
-  _dropType: 0
   _isLooted: 0
   _itemName: "\uC218\uC81C \uD3ED\uD0C4"
 --- !u!114 &9221554994531276265

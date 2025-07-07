@@ -12,15 +12,24 @@ public class CraftingController : UIBase
     [SerializeField] private Image _sliderImage;
     [SerializeField] private Button _resultButton;
     [SerializeField] private Image _resultImage;
+    [SerializeField] private Image _energyBarImage;
+    [SerializeField] private TMP_Text _energyBarText;
+    [SerializeField] private GameObject _restrictPanel;
 
     private CraftingRecipe _currentRecipe;
 
     private Coroutine _craftCoroutine;
 
+    private void Awake()
+    {
+        _restrictPanel.SetActive(false);
+    }
+
     private void Update()
     {
         UIUpdate();
         CraftingUIUpdate();
+        UpdateEnergyBarUI();
     }
 
     /// <summary>
@@ -56,6 +65,12 @@ public class CraftingController : UIBase
             _craftButton.interactable = false;
     }
 
+    private void UpdateEnergyBarUI()
+    {
+        _energyBarImage.fillAmount = (float)GameManager.Instance.GameData.Energy / GameManager.Instance.GameData.MaxEnergy;
+        _energyBarText.text = $"¿¡³ÊÁö : {GameManager.Instance.GameData.Energy}";
+    }
+
     /// <summary>
     /// For OnClick button event. Craft Item.
     /// </summary>
@@ -72,15 +87,18 @@ public class CraftingController : UIBase
     /// </summary>
     private void ConsumeEnergy()
     {
-        // TODO : consume Energy
+        if(HasEnoughEnergy())
+        {
+            GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
+            _restrictPanel.SetActive(true);
+        }
     }
 
     private bool HasEnoughEnergy()
     {
-        // TODO : if energy is enough
-        return true;
-        // TODO : if energy is not enough
-        return false;
+        if(_currentRecipe == null) return false;
+        else if(GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
+        else return false;
     }
 
     /// <summary>
@@ -105,6 +123,7 @@ public class CraftingController : UIBase
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.resultItem.Icon;
         _resultButton.interactable = true;
+        _restrictPanel.SetActive(false);
     }
 
     public void GetItem()

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,8 +9,10 @@ public class RepairController : UIBase
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private TMP_Text _energyText;
     [SerializeField] private Button _repairButton;
+    [SerializeField] private Image _energyBarImage;
+    [SerializeField] private TMP_Text _energyBarText;
 
-    [SerializeField] private Button[] _recipeButton;
+    private int _index;
 
     private RepairRecipeSO _currentRecipe;
 
@@ -32,11 +35,13 @@ public class RepairController : UIBase
     {
         UIUpdate();
         RepairUIUpdate();
+        UpdateEnergyBarUI();
     }
 
-    public void SelectRecipe(RepairRecipeSO recipe)
+    public void SelectRecipe(RepairRecipeSO recipe, int index)
     {
         _currentRecipe = recipe;
+        _index = index;
     }
 
     private void UIUpdate()
@@ -55,33 +60,43 @@ public class RepairController : UIBase
         else _repairButton.interactable = false;
     }
 
+    private void UpdateEnergyBarUI()
+    {
+        _energyBarImage.fillAmount = (float)GameManager.Instance.GameData.Energy / GameManager.Instance.GameData.MaxEnergy;
+        _energyBarText.text = $"¿¡³ÊÁö : {GameManager.Instance.GameData.Energy}";
+    }
+
     public void RepairShip()
     {
         ConsumeEnergy();
-        IsSolved();
+        SetSolved();
         Init();
     }
 
     private void ConsumeEnergy()
     {
-        // TODO : consume Energy
-        Debug.Log("Repair Success");
+        if (HasEnoughEnergy())
+        {
+            GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
+        }
     }
 
     private bool HasEnoughEnergy()
     {
-        // TODO : if energy is enough
-        return true;
-        // TODO : if energy is not enough
-        return false;
+        if (_currentRecipe == null || IsSolved()) return false;
+        else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
+        else return false;
     }
 
     private bool IsSolved()
     {
-        // TODO : Quest? Task? Complete 
-        return true;
+        if (GameManager.Instance.GameData.RepairedTask[_index]) return true;
+        else return false;
+    }
 
-        return false;
+    private void SetSolved()
+    {
+        GameManager.Instance.GameData.RepairComplete(_index);
     }
 
     public void GoBackToCraftUI()
