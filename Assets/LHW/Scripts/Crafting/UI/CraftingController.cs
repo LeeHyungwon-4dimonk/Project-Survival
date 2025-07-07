@@ -14,10 +14,16 @@ public class CraftingController : UIBase
     [SerializeField] private Image _resultImage;
     [SerializeField] private Image _energyBarImage;
     [SerializeField] private TMP_Text _energyBarText;
+    [SerializeField] private GameObject _restrictPanel;
 
     private CraftingRecipe _currentRecipe;
 
     private Coroutine _craftCoroutine;
+
+    private void Awake()
+    {
+        _restrictPanel.SetActive(false);
+    }
 
     private void Update()
     {
@@ -84,6 +90,7 @@ public class CraftingController : UIBase
         if(HasEnoughEnergy())
         {
             GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
+            _restrictPanel.SetActive(true);
         }
     }
 
@@ -116,6 +123,7 @@ public class CraftingController : UIBase
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.resultItem.Icon;
         _resultButton.interactable = true;
+        _restrictPanel.SetActive(false);
     }
 
     public void GetItem()
