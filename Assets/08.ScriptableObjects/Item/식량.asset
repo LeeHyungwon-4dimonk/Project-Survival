@@ -18,7 +18,7 @@ MonoBehaviour:
   Description: "\uBE75 \uCC98\uB7FC \uAC00\uACF5\uB41C \uC2DD\uB7C9 \uC785\uB2C8\uB2E4."
   Energy: 0
   Weight: 0.5
-  MaxStackSize: 1
+  MaxStackSize: 5
   IsDecomposable: 0
   ItemStats: 50
   Icon: {fileID: 21300000, guid: 88d49081b63e8f949b41f5346ecd74c2, type: 3}

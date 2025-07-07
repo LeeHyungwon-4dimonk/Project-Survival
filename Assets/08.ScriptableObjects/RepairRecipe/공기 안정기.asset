@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 715d19b01ce6e8740a05c68567f645cd, type: 3}
-  m_Name: "\uB3D9\uB825 \uCF54\uC5B4"
+  m_Name: "\uACF5\uAE30 \uC548\uC815\uAE30"
   m_EditorClassIdentifier: 
-  ProductId: 9001
+  ProductId: 9003
   Icon: {fileID: 775782, guid: f526885ba42156d4da8b27c883e7d374, type: 3}
   ProductType: 2
-  ProductName: "\uB3D9\uB825 \uCF54\uC5B4"
-  ProductDescription: "\uC6B0\uC8FC\uC120 \uB3D9\uB825\uC758 \uC911\uC2EC"
-  ProductEnergy: 150
+  ProductName: "\uACF5\uAE30 \uC548\uC815\uAE30"
+  ProductDescription: "\uC6B0\uC8FC\uC120 \uB0B4\uBD80 \uACF5\uAE30 \uC548\uC815\uC744
+    \uC704\uD55C \uBD80\uD488"
+  ProductEnergy: 75
