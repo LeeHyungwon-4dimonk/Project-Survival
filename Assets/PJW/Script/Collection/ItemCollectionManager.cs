@@ -57,14 +57,12 @@ public class ItemCollectionManager : MonoBehaviour
     {
         if (item == null)
         {
-            Debug.LogWarning("수집하려는 아이템이 null입니다. ItemCollectionManager.TryCollectItem(null) 호출됨.");
             return false;
         }
 
         if (!_collectedItemIds.Contains(item.CollectionId))
         {
             _collectedItemIds.Add(item.CollectionId); 
-            Debug.Log($"아이템 '{item.CollectionName}' (ID: {item.CollectionId}) 수집 완료!");
             SaveCollectedItems(); 
 
             if (ItemCollectionUI.Instance != null)
@@ -73,7 +71,6 @@ public class ItemCollectionManager : MonoBehaviour
             }
             return true;
         }
-        Debug.Log($"아이템 '{item.CollectionName}' (ID: {item.CollectionId})는 이미 수집되었습니다.");
         return false;
     }
 
@@ -100,7 +97,6 @@ public class ItemCollectionManager : MonoBehaviour
         string json = JsonUtility.ToJson(new CollectedIdsWrapper { ids = _collectedItemIds.ToList() });
         PlayerPrefs.SetString(COLLECTED_ITEMS_KEY, json);
         PlayerPrefs.Save(); 
-        Debug.Log("수집된 아이템 목록 저장 완료!");
     }
 
     /// <summary>
@@ -113,12 +109,10 @@ public class ItemCollectionManager : MonoBehaviour
             string json = PlayerPrefs.GetString(COLLECTED_ITEMS_KEY);
             CollectedIdsWrapper wrapper = JsonUtility.FromJson<CollectedIdsWrapper>(json);
             _collectedItemIds = new HashSet<int>(wrapper.ids);
-            Debug.Log($"수집된 아이템 목록 {_collectedItemIds.Count}개 불러옴.");
         }
         else
         {
             _collectedItemIds = new HashSet<int>(); 
-            Debug.Log("저장된 수집 기록이 없어 새로운 기록을 시작합니다.");
         }
     }
 
@@ -136,7 +130,6 @@ public class ItemCollectionManager : MonoBehaviour
         _collectedItemIds.Clear(); 
         PlayerPrefs.DeleteKey(COLLECTED_ITEMS_KEY); 
         PlayerPrefs.Save(); 
-        Debug.Log("수집 기록이 초기화되었습니다.");
         
         if (ItemCollectionUI.Instance != null)
         {

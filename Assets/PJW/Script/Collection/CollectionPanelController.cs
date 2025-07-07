@@ -20,6 +20,11 @@ public class CollectionPanelController : MonoBehaviour
         {
             ToggleCollectionPanel();
         }
+        if (Input.GetKeyDown(KeyCode.Escape) && isOpen)
+        {
+            CloseCollectionPanel();
+        }
+        
     }
 
     private void ToggleCollectionPanel()
@@ -28,5 +33,12 @@ public class CollectionPanelController : MonoBehaviour
 
         isOpen = !isOpen;
         collectionPanel.SetActive(isOpen);
+    }
+    private void CloseCollectionPanel()
+    {
+        if (collectionPanel == null) return;
+
+        isOpen = false;
+        collectionPanel.SetActive(false);
     }
 }
