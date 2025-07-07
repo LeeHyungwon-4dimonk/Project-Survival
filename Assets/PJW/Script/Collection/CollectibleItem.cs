@@ -21,10 +21,6 @@ public class CollectibleItem : MonoBehaviour
             }
 
             bool collected = ItemCollectionManager.Instance.TryCollectItem(CollectionData);
-            if (collected)
-            {
-                Destroy(gameObject); 
-            }
         }
     }
 }
