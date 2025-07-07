@@ -222,6 +222,7 @@ public class InventoryManager : MonoBehaviour
             _inventoryItem[i] = null;
             _inventoryStack[i] = 0;
         }
+        OnInventorySlotChanged?.Invoke();
     }
 
     /// <summary>
