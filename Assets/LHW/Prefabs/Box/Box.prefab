@@ -363,7 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tier: 0
   _data: {fileID: 7280720024626256613}
-  _boxSetUpASO: {fileID: 0}
+  _boxSetUpASO: {fileID: 11400000, guid: 099f4698099e3434e853b430f088b32c, type: 2}
   _itemB_Journal:
   - {fileID: 0}
   - {fileID: 0}
@@ -377,16 +377,16 @@ MonoBehaviour:
   - {fileID: 0}
   _itemC_Food: {fileID: 0}
   _itemD_Collection:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f5cc2ecc00fac3344a78f944454237fd, type: 2}
+  - {fileID: 11400000, guid: 3a2cb96ebcd04d24280bb177ac97201f, type: 2}
+  - {fileID: 11400000, guid: 656ebfd323600174e87c86ca05297c4a, type: 2}
+  - {fileID: 11400000, guid: b3fa243e95ca4e545a6fab06ca1790bf, type: 2}
+  - {fileID: 11400000, guid: 51e12837e2e1e5b49aba8f13e6b0c2f6, type: 2}
+  - {fileID: 11400000, guid: 1b69a2e1e599e8e4aa388da526122134, type: 2}
+  - {fileID: 11400000, guid: 49b63bc449b0c98408c957918e25f066, type: 2}
+  - {fileID: 11400000, guid: 48de17ccdbfacff4fbe02a93dcf3a83c, type: 2}
+  - {fileID: 11400000, guid: 39814a1086f3a62418e19697b02de419, type: 2}
+  - {fileID: 11400000, guid: 973e2729974c9a1478fa00fdd83c9ed7, type: 2}
 --- !u!1 &5583673139979207393
 GameObject:
   m_ObjectHideFlags: 0
