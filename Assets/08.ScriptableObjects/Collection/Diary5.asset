@@ -30,5 +30,5 @@ MonoBehaviour:
     \uC0AC\uB825\uC744 \uB2E4\uD574 \uC2F8\uC6E0\uC9C0\uB9CC, \uC721\uCCB4\uC801\uC778
     \uD55C\uACC4\uC5D0 \uB2E4\uB2E4\uB974\uACE0 \uC788\uC5C8\uB2E4."
   CollectionType: 0
-  CollectionIcon: {fileID: 21300000, guid: bf4c9845e8e3d0649b085339365db768, type: 3}
+  CollectionIcon: {fileID: 21300000, guid: e47a689d94d0a0046829cac1280cbc14, type: 3}
   SilhouetteSprite: {fileID: 0}
