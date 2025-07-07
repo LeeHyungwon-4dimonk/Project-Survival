@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemcon: {fileID: 7762389015690518022}
-  _isLooted: 0
   _itemName: "\uBA40\uCA61\uD55C \uBCF4\uC870\uBC30\uD130\uB9AC"
 --- !u!114 &7762389015690518022
 MonoBehaviour:
@@ -177,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36881ee8d3d79c14ebf594c57efb5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSO: {fileID: 11400000, guid: 6154f7fc3e0528646988567dae3d0d86, type: 2}
+  _itemSO: {fileID: 11400000, guid: bdb582f6806bc774cb8625460bc522d6, type: 2}
 --- !u!1001 &313832745531728014
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemcon: {fileID: 6929173881280583073}
-  _isLooted: 0
   _itemName: "\uAD11\uC11D"
 --- !u!114 &6929173881280583073
 MonoBehaviour:
@@ -177,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36881ee8d3d79c14ebf594c57efb5455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSO: {fileID: 11400000, guid: 864a7192cbe2ced45b9e3d6da251dfdc, type: 2}
+  _itemSO: {fileID: 11400000, guid: 47cfd5d6e6b8c8248aad1bd37f546cfe, type: 2}
 --- !u!1001 &3113762240950684303
 PrefabInstance:
   m_ObjectHideFlags: 0
