@@ -378,10 +378,10 @@ public class InventoryManager : MonoBehaviour
     {
         for (int i = 0; i < _boxSlotData.Length; i++)
         {
-            if (_boxSlotData[i] == _currentOpenedBox)
+            if (_boxSlotData[i] != null && _boxSlotData[i] == _currentOpenedBox)
             {
-                _boxSlotData[i].SendItemToInventory(startIndex);
                 _playerStats.AddInventoryWeight(_boxSlotData[i].BoxItem[startIndex].Weight * _boxSlotData[i].BoxStack[startIndex]);
+                _boxSlotData[i].SendItemToInventory(startIndex);                
                 OnInventorySlotChanged?.Invoke();
             }
         }
