@@ -155,11 +155,13 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 _playerStats.AddInventoryWeight(item.Weight * (amount - remain));
+                OnInventorySlotChanged?.Invoke();
                 Debug.Log("inventory full"); return false;
             }
         }
 
         _playerStats.AddInventoryWeight(item.Weight * amount);
+        OnInventorySlotChanged?.Invoke();
         return true;
     }
 
