@@ -215,6 +215,15 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    public void RemoveAllItemsInInventory()
+    {
+        for(int i = 0; i < _inventoryItem.Length;i++)
+        {
+            _inventoryItem[i] = null;
+            _inventoryStack[i] = 0;
+        }
+    }
+
     /// <summary>
     /// Try add item to Inventory.
     /// </summary>
