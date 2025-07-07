@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd272528817290740b1dfc885e2d4987, type: 3}
-  m_Name: 6010
+  m_Name: UnidentifiedCard
   m_EditorClassIdentifier: 
   CollectionId: 6010
   CollectionName: "\uC54C \uC218 \uC5C6\uB294 \uCE74\uB4DC"
