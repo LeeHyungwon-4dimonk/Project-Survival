@@ -16,6 +16,10 @@ public class PlayerMovement : MonoBehaviour
     private float _lastMoveX = 0f;
     private float _lastMoveY = -1f;
 
+    [SerializeField] private GameObject _inventoryPanel;
+    [SerializeField] private GameObject _craftingPanel;
+    [SerializeField] private GameObject _decompositionPanel;
+
     public Vector2 MoveInput => _moveInput;
     public bool IsRunning => _isRunning;
 
@@ -35,10 +39,34 @@ public class PlayerMovement : MonoBehaviour
         _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput.Normalize();
 
-        if (_moveInput.sqrMagnitude > 0f)
-        {
+        if (_moveInput.sqrMagnitude > 0f) {
             _lastMoveX = _moveInput.x;
             _lastMoveY = _moveInput.y;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            if (_craftingPanel.activeSelf == false) {
+                _craftingPanel.SetActive(true);
+            }
+            else {
+                _craftingPanel.SetActive(false);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            if (_inventoryPanel.activeSelf == false) {
+                _inventoryPanel.SetActive(true);
+            }
+            else {
+                _inventoryPanel.SetActive(false);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.X)) {
+            if (_decompositionPanel.activeSelf == false) {
+                _decompositionPanel.SetActive(true);
+            }
+            else {
+                _decompositionPanel.SetActive(false);
+            }
         }
 
         _anim.SetFloat("Horizontal", 1f);
@@ -57,8 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_moveInput.sqrMagnitude == 0f)
-        {
+        if (_moveInput.sqrMagnitude == 0f) {
             _isRunning = false;
             RecoverStamina();
             return;
@@ -72,30 +99,25 @@ public class PlayerMovement : MonoBehaviour
         float speed = _playerStats.MoveSpeed;
         bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
 
-        if (_playerStats.CurrentStamina <= 0f)
-        {
+        if (_playerStats.CurrentStamina <= 0f) {
             _canRun = false;
             _isRunning = false;
         }
 
-        if (!_isRunning && shiftHeld && _canRun && _playerStats.CurrentStamina >= 10f)
-        {
+        if (!_isRunning && shiftHeld && _canRun && _playerStats.CurrentStamina >= 10f) {
             _isRunning = true;
         }
 
-        if (_isRunning && shiftHeld)
-        {
+        if (_isRunning && shiftHeld) {
             speed = _playerStats.RunSpeed;
             _playerStats.DecreaseStamina(_playerStats.StaminaDecreaseRate * Time.fixedDeltaTime);
         }
-        else
-        {
+        else {
             _isRunning = false;
             RecoverStamina();
         }
 
-        if (!isForward)
-        {
+        if (!isForward) {
             speed *= 0.8f;
         }
 
@@ -106,8 +128,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerStats.RecoverStamina(_playerStats.StaminaRecoveryRate * Time.fixedDeltaTime);
 
-        if (_playerStats.CurrentStamina >= 50f)
-        {
+        if (_playerStats.CurrentStamina >= 50f) {
             _canRun = true;
         }
     }
