@@ -11,7 +11,7 @@ public class BoxSetUpASO : ScriptableObject
 [System.Serializable]
 public class BoxSetup
 {
-    public string ItemName;
+    public ItemSO ItemName;
     public float ProbType1;
     public float ProbType2;
     public float ProbType3;
