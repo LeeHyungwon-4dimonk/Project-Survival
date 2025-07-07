@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 485568697}
   - component: {fileID: 485568696}
   m_Layer: 0
-  m_Name: PJWTableManager
+  m_Name: TableManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5978,9 +5978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2d93e99c597264e84bf859d901b5ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allItems:
-  - {fileID: 11400000, guid: e198baf9d7573344a9ddf2e8c51950a0, type: 2}
-  - {fileID: 11400000, guid: 37f1541bafa0e3b439bc4dd258998fc6, type: 2}
+  allItems: []
 --- !u!222 &5392549590922307487
 CanvasRenderer:
   m_ObjectHideFlags: 0
