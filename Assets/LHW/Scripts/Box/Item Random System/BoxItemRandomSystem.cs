@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 enum BoxTier { Tier1, Tier2, Tier3 }
@@ -94,8 +93,7 @@ public class BoxItemRandomSystem : MonoBehaviour
             case BoxTier.Tier1:
                 for(int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
                 {
-                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
-                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    ItemSO item = boxSetUpASO.BoxSetUpA[i].ItemName;
                     int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType1 * 1000);
                     _weightedRandomA.Add(item, inputNum);
                 }
@@ -104,8 +102,7 @@ public class BoxItemRandomSystem : MonoBehaviour
             case BoxTier.Tier2:
                 for (int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
                 {
-                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
-                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    ItemSO item = boxSetUpASO.BoxSetUpA[i].ItemName;
                     int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType2 * 1000);
                     _weightedRandomA.Add(item, inputNum);
                 }
@@ -113,8 +110,7 @@ public class BoxItemRandomSystem : MonoBehaviour
             case BoxTier.Tier3:
                 for (int i = 0; i < boxSetUpASO.BoxSetUpA.Count; i++)
                 {
-                    string itemPath = boxSetUpASO.BoxSetUpA[i].ItemName;
-                    ItemSO item = AssetDatabase.LoadAssetAtPath<ItemSO>($"Assets/08.ScriptableObjects/Item/{itemPath}.asset");
+                    ItemSO item = boxSetUpASO.BoxSetUpA[i].ItemName;
                     int inputNum = (int)(boxSetUpASO.BoxSetUpA[i].ProbType3 * 1000);
                     _weightedRandomA.Add(item, inputNum);
                 }

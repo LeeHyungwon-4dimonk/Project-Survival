@@ -13,38 +13,38 @@ MonoBehaviour:
   m_Name: BoxSetUpA
   m_EditorClassIdentifier: 
   BoxSetUpA:
-  - ItemName: "\uB098\uBB34 \uC870\uAC01"
+  - ItemName: {fileID: 11400000, guid: 3d61b2a1acba4794984c798454c232d3, type: 2}
     ProbType1: 0.29999998
     ProbType2: 0.14999999
     ProbType3: 0.049999997
     ItemCount: 1
-  - ItemName: "\uBC84\uC12F"
+  - ItemName: {fileID: 11400000, guid: 09cbea87f640ed84fbd6b1eebb16710d, type: 2}
     ProbType1: 0.29999998
     ProbType2: 0.14999999
     ProbType3: 0.049999997
     ItemCount: 1
-  - ItemName: "\uAD11\uC11D"
+  - ItemName: {fileID: 11400000, guid: 47cfd5d6e6b8c8248aad1bd37f546cfe, type: 2}
     ProbType1: 0.145
     ProbType2: 0.19999999
     ProbType3: 0.125
     ItemCount: 1
-  - ItemName: "\uACE0\uCCA0"
+  - ItemName: {fileID: 11400000, guid: 1d35c4597e906b9449749e589747144a, type: 2}
     ProbType1: 0.145
     ProbType2: 0.19999999
     ProbType3: 0.125
     ItemCount: 1
-  - ItemName: "\uD68C\uB85C \uAE30\uD310"
+  - ItemName: {fileID: 11400000, guid: 6f1ee5a14cacfdc4fa50c34b708724ba, type: 2}
     ProbType1: 0.049999997
     ProbType2: 0.099999994
     ProbType3: 0.19999999
     ItemCount: 1
-  - ItemName: "\uD654\uD559 \uBB3C\uC9C8"
+  - ItemName: {fileID: 11400000, guid: dd6c5e9ece6cb1e428558169e41acc66, type: 2}
     ProbType1: 0.049999997
     ProbType2: 0.099999994
     ProbType3: 0.19999999
     ItemCount: 1
-  - ItemName: "\uBCF4\uC870\uBC30\uD130\uB9AC"
+  - ItemName: {fileID: 11400000, guid: bdb582f6806bc774cb8625460bc522d6, type: 2}
     ProbType1: 0.01
-    ProbType2: 0.09999999
+    ProbType2: 0.099999994
     ProbType3: 0.25
     ItemCount: 1
