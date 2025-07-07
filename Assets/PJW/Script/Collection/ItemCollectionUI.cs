@@ -31,7 +31,6 @@ public class ItemCollectionUI : MonoBehaviour
 
         if (ItemCollectionManager.Instance == null)
         {
-            Debug.LogError("ItemCollectionManager.Instance를 찾을 수 없습니다.");
             return;
         }
 
@@ -52,7 +51,5 @@ public class ItemCollectionUI : MonoBehaviour
                 ui.Initialize(item, isCollected);
             }
         }
-
-        Debug.Log($"도감 UI 업데이트: Diary({diaryGridRoot.childCount}) + CollectionItem({collectionGridRoot.childCount})");
     }
 }
