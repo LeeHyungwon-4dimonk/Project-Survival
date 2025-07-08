@@ -5,21 +5,20 @@ using UnityEngine;
 public class ContainerObject : MonoBehaviour
 {
     [SerializeField] private string _itemName;
-    [SerializeField] private bool isLooted;
     public string ItemName => _itemName;
 
-    [SerializeField] private GameObject _uiPanel; 
+    [SerializeField] private GameObject _uiPanel;
+
+
 
     public void OnOpen()
     {
-        Debug.Log($"{_itemName} 열기");
+        Debug.Log($"{_itemName} 상호작용");
 
-        if (!isLooted)
-        {
-            isLooted = true;
+        if (GameManager.Instance.IsUIOpen == false)
+            GameManager.Instance.InGameUIManager.ShowUI(UIType.Box);
 
-            _uiPanel.SetActive(true);
-        }
 
     }
 }
+

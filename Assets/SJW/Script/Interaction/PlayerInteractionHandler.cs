@@ -48,7 +48,13 @@ public class PlayerInteractionHandler : MonoBehaviour
                     _currentInteractable.Interact();
                     return;
                 }
+                else if (currentAdapter != null && currentAdapter.InteractionTypeValue == InteractableObjectAdapter.InteractionType.Container && GameManager.Instance.IsUIOpen == true)
+                {
+                    _currentInteractable.Interact();
+                }
             }
+
+
 
             // 나머지는 Hold로 진행
             if (Input.GetKey(KeyCode.Space))
