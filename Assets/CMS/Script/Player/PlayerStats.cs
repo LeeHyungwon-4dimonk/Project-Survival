@@ -30,6 +30,8 @@ public class PlayerStats : MonoBehaviour
     private float _currentStamina;
     private float _currentInventoryWeight = 0f;
     private bool _isDead = false;
+    private bool _isFlashing = false;
+    private Coroutine _flashCoroutine;
 
     public bool IsStaminaEmpty => _currentStamina <= 0f;
     public float MaxHealth => _maxHealth;
@@ -79,6 +81,11 @@ public class PlayerStats : MonoBehaviour
 
     private void DecreaseSurvivalStats()
     {
+        if (GameManager.Instance.DayNightManager.IsInBase)
+        {
+            return;
+        }
+
         const float saturationDecreaseRate = 0.3f;
         const float healthDamageRate = 5f;
 
@@ -141,8 +148,12 @@ public class PlayerStats : MonoBehaviour
 
         _currentHealth -= damage;
         _currentHealth = Mathf.Clamp(_currentHealth, 0f, _maxHealth);
+
         if (damageClip != null)
             _audioSource.PlayOneShot(damageClip);
+
+        if (_flashCoroutine == null)
+            _flashCoroutine = StartCoroutine(FlashSprite());
 
         CheckDeath();
     }
@@ -195,5 +206,32 @@ public class PlayerStats : MonoBehaviour
         _maxInventoryWeight = Mathf.Max(0f, _maxInventoryWeight);
     }
 
-    
+    private IEnumerator FlashSprite()
+    {
+        _isFlashing = true;
+
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        if (renderer == null)
+        {
+            _isFlashing = false;
+            yield break;
+        }
+
+        Color originalColor = renderer.color;
+        Color transparentColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.2f);
+
+        for (int i = 0; i < 2; i++)
+        {
+            renderer.color = transparentColor;
+            yield return new WaitForSeconds(0.05f);
+            renderer.color = originalColor;
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        renderer.color = originalColor;
+        _isFlashing = false;
+        _flashCoroutine = null;
+    }
+
+
 }

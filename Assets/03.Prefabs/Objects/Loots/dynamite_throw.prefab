@@ -150,7 +150,7 @@ MonoBehaviour:
   explosionDamage: 50
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
 --- !u!95 &-4191851696221707878
 Animator:
   serializedVersion: 5
