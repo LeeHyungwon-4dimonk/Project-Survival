@@ -118,4 +118,10 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
             else if (_startIsBoxSlot && _endIsBoxSlot) InventoryManager.Instance.MoveItemInBoxSlot(_startDragPoint, _endDragPoint);
         }
     }
+
+    public void OnDisable()
+    {
+        _endDragPoint = -1;
+        DragSlot.Instance.ClearDragSlot();
+    }
 }
