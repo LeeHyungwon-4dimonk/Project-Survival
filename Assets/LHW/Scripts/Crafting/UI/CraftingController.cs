@@ -7,6 +7,7 @@ public class CraftingController : UIBase
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private TMP_Text _energyRequireText;
     [SerializeField] private Button _craftButton;
     [SerializeField] private Image _sliderImage;
     [SerializeField] private Button _resultButton;
@@ -47,9 +48,19 @@ public class CraftingController : UIBase
     {
         if (_currentRecipe != null)
         {
+            _image.color = Color.white;
             _image.sprite = _currentRecipe.ResultItem.Icon;
             _nameText.text = _currentRecipe.ResultItem.Name;
             _descriptionText.text = _currentRecipe.ResultItem.Description;
+            _energyRequireText.text = $"요구 에너지 : {_currentRecipe.ProductEnergy.ToString()}";
+        }
+        else
+        {
+            _image.color = Color.clear;
+            _image.sprite = null;
+            _nameText.text = "";
+            _descriptionText.text = "";
+            _energyRequireText.text = "";
         }
     }
 
