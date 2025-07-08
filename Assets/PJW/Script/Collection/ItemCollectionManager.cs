@@ -17,6 +17,7 @@ public class ItemCollectionManager : MonoBehaviour
     public IReadOnlyCollection<int> CollectedItemIds => _collectedItemIds;
 
     private const string COLLECTED_ITEMS_KEY = "CollectedItemIds";
+    private const string VERSION_KEY = "SaveVersion";
 
     private void Awake()
     {
@@ -28,6 +29,13 @@ public class ItemCollectionManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        string savedVersion = PlayerPrefs.GetString(VERSION_KEY, "");
+        if (savedVersion != Application.version)
+        {
+            PlayerPrefs.DeleteKey(COLLECTED_ITEMS_KEY);
+            PlayerPrefs.SetString(VERSION_KEY, Application.version);
+            PlayerPrefs.Save();
+        }
 
         LoadCollectedItems(); 
     }
