@@ -99,18 +99,21 @@ public class CraftingController : UIBase
         if (HasEnoughEnergy())
         {
             GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
-            _restrictPanel.SetActive(true);
         }
     }
 
     private bool HasEnoughEnergy()
     {
-        if (_currentRecipe == null) return false;
+        if (_currentRecipe == null || ResultItemOutput()) return false;
         else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
         else return false;
     }
 
-
+    private bool ResultItemOutput()
+    {
+        if (_resultButton.interactable == true) return true;
+        else return false;
+    }
 
     /*
     crafting time deleted 
@@ -138,7 +141,7 @@ public class CraftingController : UIBase
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.ResultItem.Icon;
         _resultButton.interactable = true;
-        _restrictPanel.SetActive(false);
+        _restrictPanel.SetActive(true);
     }
 
     public void GetItem()
@@ -146,6 +149,7 @@ public class CraftingController : UIBase
         if (_currentRecipe != null)
         {
             InventoryManager.Instance.AddItemToInventory(_currentRecipe.ResultItem);
+            _restrictPanel.SetActive(false);
         }
     }
 
