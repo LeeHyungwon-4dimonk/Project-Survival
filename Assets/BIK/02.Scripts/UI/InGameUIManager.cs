@@ -50,7 +50,7 @@ public class InGameUIManager : MonoBehaviour
                 HideUI();
             }
             else {
-                // TODO Open Option to Here PLZ PJW
+                MenuController.Instance.HandleEscape();
             }
         }
     }

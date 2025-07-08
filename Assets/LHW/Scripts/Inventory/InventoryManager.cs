@@ -220,11 +220,14 @@ public class InventoryManager : MonoBehaviour
 
     public void RemoveAllItemsInInventory()
     {
-        for(int i = 0; i < _inventoryItem.Length;i++)
+        for (int i = 0; i < _inventoryItem.Length; i++)
         {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[i].Weight * _inventoryStack[i]);
-            _inventoryItem[i] = null;
-            _inventoryStack[i] = 0;
+            if (_inventoryItem[i] != null)
+            {
+                _playerStats.RemoveInventoryWeight(_inventoryItem[i].Weight * _inventoryStack[i]);
+                _inventoryItem[i] = null;
+                _inventoryStack[i] = 0;
+            }
         }
         OnInventorySlotChanged?.Invoke();
     }

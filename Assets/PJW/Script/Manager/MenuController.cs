@@ -16,8 +16,8 @@ public class MenuController : MonoBehaviour
 
     [Header("Quick Menu")]
     [SerializeField] private GameObject quickMenuPanel;
-    [SerializeField] private Button mainMenuButton;      
-    [SerializeField] private Button quickMenuOkButton;    
+    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button quickMenuOkButton;
     [SerializeField] private Button quickMenuCancelButton;
 
     [Header("Buttons")]
@@ -31,8 +31,7 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
+        if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
@@ -42,52 +41,60 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
-        if (backButton != null)       backButton.onClick.AddListener(OnBack);
-        if (settingsButton != null)   settingsButton.onClick.AddListener(OnSettings);
-        if (quitButton != null)       quitButton.onClick.AddListener(OnQuit);
-        if (confirmQuitButton != null) confirmQuitButton.onClick.AddListener(OnConfirmQuit);
-        if (cancelQuitButton != null)  cancelQuitButton.onClick.AddListener(OnCancelQuit);
+        if (backButton != null)
+            backButton.onClick.AddListener(OnBack);
+        if (settingsButton != null)
+            settingsButton.onClick.AddListener(OnSettings);
+        if (quitButton != null)
+            quitButton.onClick.AddListener(OnQuit);
+        if (confirmQuitButton != null)
+            confirmQuitButton.onClick.AddListener(OnConfirmQuit);
+        if (cancelQuitButton != null)
+            cancelQuitButton.onClick.AddListener(OnCancelQuit);
 
-        if (mainMenuButton != null)        mainMenuButton.onClick.AddListener(OnMainMenuButton);
-        if (quickMenuOkButton != null)     quickMenuOkButton.onClick.AddListener(OnQuickMenuOk);
-        if (quickMenuCancelButton != null) quickMenuCancelButton.onClick.AddListener(OnQuickMenuCancel);
+        if (mainMenuButton != null)
+            mainMenuButton.onClick.AddListener(OnMainMenuButton);
+        if (quickMenuOkButton != null)
+            quickMenuOkButton.onClick.AddListener(OnQuickMenuOk);
+        if (quickMenuCancelButton != null)
+            quickMenuCancelButton.onClick.AddListener(OnQuickMenuCancel);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            HandleEscape();
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //    HandleEscape();
     }
 
-    private void HandleEscape()
+    public void HandleEscape()
     {
-        if (_panelStack.Count > 0)
-        {
+        if (_panelStack.Count > 0) {
             HideTopPanel();
         }
-        else
-        {
+        else {
             ShowPanel(menuPopup);
         }
     }
 
     private void ShowPanel(GameObject panel)
     {
-        if (panel == null) return;
+        if (panel == null)
+            return;
         panel.SetActive(true);
         _panelStack.Push(panel);
     }
 
     private void HideTopPanel()
     {
-        if (_panelStack.Count == 0) return;
+        if (_panelStack.Count == 0)
+            return;
         var top = _panelStack.Pop();
         top.SetActive(false);
     }
 
-    public void OnBack()          => HideTopPanel();
-    public void OnSettings()      => ShowPanel(optionPanel);
-    public void OnQuit()          => ShowPanel(quitConfirmPanel);
+    public void OnBack() => HideTopPanel();
+    public void OnSettings() => ShowPanel(optionPanel);
+    public void OnQuit() => ShowPanel(quitConfirmPanel);
     public void OnConfirmQuit()
     {
 #if UNITY_EDITOR
@@ -96,7 +103,7 @@ public class MenuController : MonoBehaviour
         Application.Quit();
 #endif
     }
-    public void OnCancelQuit()    => HideTopPanel();
+    public void OnCancelQuit() => HideTopPanel();
 
     private void OnMainMenuButton()
     {
