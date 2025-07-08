@@ -57,11 +57,6 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.LoadScene("InGameScene");
     }
 
-    public void GameOver()
-    {
-        SceneManager.Instance.LoadScene("MainScene");
-    }
-
     public void SkipDay()
     {
         DayNightManager.SkipToNextDay();

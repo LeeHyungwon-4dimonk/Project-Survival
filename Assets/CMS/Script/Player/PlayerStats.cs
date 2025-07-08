@@ -109,7 +109,7 @@ public class PlayerStats : MonoBehaviour
         _animator.SetInteger(_dieDirectionParam, direction);
         _animator.SetBool(_isDeadParam, true);
 
-        GameManager.Instance?.GameOver();
+        DeathPanelController.Instance.ShowDeathPanel();
 
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
@@ -178,12 +178,14 @@ public class PlayerStats : MonoBehaviour
             return false;
         }
         _currentInventoryWeight += amount;
+        _currentInventoryWeight = Mathf.Round(_currentInventoryWeight * 10) * 0.1f;
         return true;
     }
 
     public void RemoveInventoryWeight(float amount)
     {
         _currentInventoryWeight -= amount;
+        _currentInventoryWeight = Mathf.Round(_currentInventoryWeight * 10) * 0.1f;
         _currentInventoryWeight = Mathf.Clamp(_currentInventoryWeight, 0f, _maxInventoryWeight);
     }
 
@@ -192,4 +194,6 @@ public class PlayerStats : MonoBehaviour
         _maxInventoryWeight += amount;
         _maxInventoryWeight = Mathf.Max(0f, _maxInventoryWeight);
     }
+
+    
 }
