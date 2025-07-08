@@ -155,7 +155,7 @@ public class CraftingController : UIBase
 
     public void GoToRepairMenu()
     {
-        GameManager.Instance.InGameUIManager.ShowUI(UIType.Repair);
+        InventoryManager.Instance.OpenRepairPanel();
     }
 
     #region unused code

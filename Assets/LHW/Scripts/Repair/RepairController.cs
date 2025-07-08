@@ -101,6 +101,6 @@ public class RepairController : UIBase
 
     public void GoBackToCraftUI()
     {
-        GameManager.Instance.InGameUIManager.HideUI();
+        InventoryManager.Instance.OpenRepairPanel();
     }
 }

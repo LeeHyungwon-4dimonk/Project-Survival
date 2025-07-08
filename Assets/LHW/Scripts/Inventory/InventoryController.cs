@@ -5,6 +5,7 @@ public class InventoryController : MonoBehaviour
 {
     [SerializeField] InventorySlotUnit[] slots;
     [SerializeField] TMP_Text _weightText;
+    [SerializeField] InventoryManager _inventoryManager;
 
     private void Start()
     {
@@ -37,8 +38,8 @@ public class InventoryController : MonoBehaviour
     }
 
     private void UpdateWeightText()
-    {
-        PlayerStats stats = GameObject.FindWithTag("Player").GetComponent<PlayerStats>();
+    {        
+        PlayerStats stats = GameManager.Instance.PlayerStats;
 
         float weight = stats.CurrentInventoryWeight;
         float maxWeight = stats.MaxInventoryWeight;

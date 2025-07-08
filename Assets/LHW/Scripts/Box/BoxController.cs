@@ -15,9 +15,9 @@ public class BoxController : UIBase
 
     private void OnEnable()
     {
+        _data = InventoryManager.Instance.CurrentOpenedBox;
         _data.OnBoxSlotUpdated += UpdateUISlot;
-        UpdateUISlot();
-        InventoryManager.Instance.OpenBox(this._data);
+        UpdateUISlot();        
     }
 
     private void OnDisable()
