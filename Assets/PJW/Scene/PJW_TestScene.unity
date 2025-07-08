@@ -948,6 +948,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7054560674072929183, guid: e870c169156be0347965852371a7f66a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6466,6 +6470,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathPanel: {fileID: 5423811348559234383}
   quitPanel: {fileID: 6448142564558376752}
+  deathOkButton: {fileID: 0}
+  deathCancelButton: {fileID: 0}
+  quitOkButton: {fileID: 0}
+  quitCancelButton: {fileID: 0}
 --- !u!224 &7355037956803525676
 RectTransform:
   m_ObjectHideFlags: 0
