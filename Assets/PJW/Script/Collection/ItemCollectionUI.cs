@@ -13,7 +13,6 @@ public class ItemCollectionUI : MonoBehaviour
     [SerializeField] private Transform collectionGridRoot;
     [SerializeField] private GameObject entryUIPrefab;
 
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,20 +23,29 @@ public class ItemCollectionUI : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        UpdateUI();
+    }
+
+    private void OnEnable()
+    {
+        UpdateUI();
+    }
+
     public void UpdateUI()
     {
         foreach (Transform child in diaryGridRoot)       Destroy(child.gameObject);
         foreach (Transform child in collectionGridRoot)  Destroy(child.gameObject);
 
-        if (ItemCollectionManager.Instance == null)
-        {
-            return;
-        }
+        var manager = ItemCollectionManager.Instance;
+        if (manager == null) return;
 
-        var collectedIds = ItemCollectionManager.Instance.CollectedItemIds;
-        var allItems     = ItemCollectionManager.Instance.GetAllItems();
+        var collectedIds = manager.CollectedItemIds;
+        var allItems = manager.GetAllItems()
+                              .OrderBy(i => i.CollectionId);
 
-        foreach (var item in allItems.OrderBy(i => i.CollectionId))
+        foreach (var item in allItems)
         {
             var parent = item.CollectionType == CollectionType.Diary
                          ? diaryGridRoot
