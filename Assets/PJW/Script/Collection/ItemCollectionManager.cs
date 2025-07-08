@@ -10,7 +10,7 @@ public class ItemCollectionManager : MonoBehaviour
 {
     public static ItemCollectionManager Instance { get; private set; }
 
-    [Header("Collection Data")]
+    [Header("Collection Data")]  
     [SerializeField] private List<CollectionSO> allItems;
     private HashSet<int> _collectedItemIds = new(); 
 
@@ -42,66 +42,45 @@ public class ItemCollectionManager : MonoBehaviour
 
     /*private void Update()
     {
+        // 테스트용: R 키로 초기화
         if (Input.GetKeyDown(KeyCode.R))
         {
             ResetCollection();
         }
     }*/
 
-    /// <summary>
-    /// 아이템을 수집 목록에 추가를 시도합니다.
-    /// </summary>
-    /// <param name="item">수집할 ItemSO 데이터</param>
-    /// <returns>새롭게 수집되었으면 true, 이미 수집된 아이템이면 false를 반환합니다.</returns>
     public bool TryCollectItem(CollectionSO item)
     {
         if (item == null)
-        {
             return false;
-        }
 
         if (!_collectedItemIds.Contains(item.CollectionId))
         {
-            _collectedItemIds.Add(item.CollectionId); 
-            SaveCollectedItems(); 
+            _collectedItemIds.Add(item.CollectionId);
+            SaveCollectedItems();
 
             if (ItemCollectionUI.Instance != null)
-            {
                 ItemCollectionUI.Instance.UpdateUI();
-            }
+
             return true;
         }
         return false;
     }
 
-    /// <summary>
-    /// 특정 아이템 ID가 수집되었는지 확인합니다.
-    /// </summary>
-    /// <param name="itemId">확인할 아이템의 고유 ID</param>
-    /// <returns>수집되었으면 true, 아니면 false를 반환합니다.</returns>
     public bool IsCollected(int itemId)
     {
         return _collectedItemIds.Contains(itemId);
     }
 
-    /// <summary>
-    /// 도감에 등록될 수 있는 모든 아이템 목록을 반환합니다.
-    /// </summary>
     public List<CollectionSO> GetAllItems() => allItems;
 
-    /// <summary>
-    /// 현재 수집된 아이템 ID 목록을 PlayerPrefs에 저장합니다.
-    /// </summary>
     private void SaveCollectedItems()
     {
         string json = JsonUtility.ToJson(new CollectedIdsWrapper { ids = _collectedItemIds.ToList() });
         PlayerPrefs.SetString(COLLECTED_ITEMS_KEY, json);
-        PlayerPrefs.Save(); 
+        PlayerPrefs.Save();
     }
 
-    /// <summary>
-    /// PlayerPrefs에서 수집된 아이템 ID 목록을 불러옵니다.
-    /// </summary>
     private void LoadCollectedItems()
     {
         if (PlayerPrefs.HasKey(COLLECTED_ITEMS_KEY))
@@ -112,7 +91,7 @@ public class ItemCollectionManager : MonoBehaviour
         }
         else
         {
-            _collectedItemIds = new HashSet<int>(); 
+            _collectedItemIds = new HashSet<int>();
         }
     }
 
@@ -122,18 +101,13 @@ public class ItemCollectionManager : MonoBehaviour
         public List<int> ids;
     }
 
-    /// <summary>
-    /// (테스트 용도) 모든 수집 기록을 초기화하고 UI를 갱신합니다.
-    /// </summary>
     public void ResetCollection()
     {
-        _collectedItemIds.Clear(); 
-        PlayerPrefs.DeleteKey(COLLECTED_ITEMS_KEY); 
-        PlayerPrefs.Save(); 
-        
+        _collectedItemIds.Clear();
+        PlayerPrefs.DeleteKey(COLLECTED_ITEMS_KEY);
+        PlayerPrefs.Save();
+
         if (ItemCollectionUI.Instance != null)
-        {
             ItemCollectionUI.Instance.UpdateUI();
-        }
     }
 }
