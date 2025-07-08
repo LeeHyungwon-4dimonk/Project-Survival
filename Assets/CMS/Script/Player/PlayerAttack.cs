@@ -69,6 +69,14 @@ public class PlayerAttack : MonoBehaviour
         Vector3 spawnPos = transform.position + (Vector3)(dir * 0.5f);
         GameObject bomb = Instantiate(_dynamiteThrowPrefab, spawnPos, Quaternion.identity);
 
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        Collider2D bombCollider = bomb.GetComponent<Collider2D>();
+
+        if (playerCollider != null && bombCollider != null)
+        {
+            Physics2D.IgnoreCollision(playerCollider, bombCollider);
+        }
+
         Physics2D.IgnoreCollision(bomb.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
         Rigidbody2D rb = bomb.GetComponent<Rigidbody2D>();

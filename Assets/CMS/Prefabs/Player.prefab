@@ -397,7 +397,7 @@ MonoBehaviour:
   _maxHealth: 100
   _maxSaturation: 100
   _moveSpeed: 5
-  _runSpeed: 7
+  _runSpeed: 8
   _maxStamina: 100
   _staminaDecreaseRate: 10
   _staminaRecoveryRate: 10
@@ -405,7 +405,7 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _dieDirectionParam: DeathDirection
   _isDeadParam: IsDead
-  _dieDirection: 0
+  damageClip: {fileID: 0}
 --- !u!114 &2795689190314697787
 MonoBehaviour:
   m_ObjectHideFlags: 0
