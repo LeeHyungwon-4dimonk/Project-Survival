@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BoxSlotUnit : ItemSlotUnit
 {
-    [SerializeField] BoxSystem _data;
+    [SerializeField] BoxController _controller;
 
     public override void Awake()
     {
@@ -17,7 +17,7 @@ public class BoxSlotUnit : ItemSlotUnit
     public override void UpdateUI(int index)
     {
         
-        _item = _data.ReadFromBoxSlot(index, out int stack);
+        _item = _controller.Data.ReadFromBoxSlot(index, out int stack);
         if (_item == null)
         {
             _image.color = Color.clear;
@@ -38,6 +38,6 @@ public class BoxSlotUnit : ItemSlotUnit
     /// </summary>
     public void OnClick()
     {
-        _data.SendItemToInventory(_index);
+        _controller.Data.SendItemToInventory(_index);
     }
 }

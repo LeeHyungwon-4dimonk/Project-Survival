@@ -175,7 +175,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_inventoryItem[index].Type == ItemType.Usable || _inventoryItem[index].Type == ItemType.Equip)
         {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight * _inventoryStack[index]);
+            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
             {
@@ -209,10 +209,12 @@ public class InventoryManager : MonoBehaviour
             if(remain <= 0) break;
 
             _playerStats.RemoveInventoryWeight(item.Weight * (amount - remain));
+            OnInventorySlotChanged?.Invoke();
             return false;
         }
 
         _playerStats.RemoveInventoryWeight(item.Weight * amount);
+        OnInventorySlotChanged?.Invoke();
         return true;
     }
 
@@ -380,22 +382,6 @@ public class InventoryManager : MonoBehaviour
                     _inventoryStack[startIndex] = 0;
                     OnInventorySlotChanged?.Invoke();
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Get Item to InventorySlot from box slot.
-    /// </summary>
-    /// <param name="startIndex"></param>
-    public void GetItemFromBox(int startIndex)
-    {
-        for (int i = 0; i < _boxSlotData.Length; i++)
-        {
-            if (_boxSlotData[i] != null && _boxSlotData[i] == _currentOpenedBox)
-            {
-                _boxSlotData[i].SendItemToInventory(startIndex);                
-                OnInventorySlotChanged?.Invoke();
             }
         }
     }

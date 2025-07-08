@@ -6,7 +6,7 @@ public class BoxCollectionUnit : MonoBehaviour
 {
     [SerializeField] Image _image;
 
-    [SerializeField] BoxSystem _data;
+    [SerializeField] BoxController _controller;
 
     [SerializeField] int _index;
 
@@ -19,9 +19,9 @@ public class BoxCollectionUnit : MonoBehaviour
 
     public void Update()
     {
-        if(_data.BoxCollection[_index] != null)
+        if(_controller.Data.BoxCollection[_index] != null)
         {
-            _collection = _data.BoxCollection[_index];
+            _collection = _controller.Data.BoxCollection[_index];
         }
         else
         {
@@ -44,6 +44,6 @@ public class BoxCollectionUnit : MonoBehaviour
 
     public void Onclick()
     {
-        _data.GetCollection(_index);
+        _controller.Data.GetCollection(_index);
     }
 }

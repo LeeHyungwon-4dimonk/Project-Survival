@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uC870\uC885 \uC81C\uC5B4\uC7A5\uCE58"
   m_EditorClassIdentifier: 
   ProductId: 9005
-  Icon: {fileID: 775782, guid: f526885ba42156d4da8b27c883e7d374, type: 3}
+  Icon: {fileID: 775782, guid: bac701be5b60d0a41b3739aaf32f8b49, type: 3}
   ProductType: 2
   ProductName: "\uC870\uC885 \uC81C\uC5B4\uC7A5\uCE58"
   ProductDescription: "\uC870\uC885 \uC2DC\uC2A4\uD15C \uCC98\uB9AC\uB97C \uC704\uD55C
