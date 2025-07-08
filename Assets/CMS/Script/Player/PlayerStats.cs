@@ -64,7 +64,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.PlayerStats = this;
-        StartCoroutine(SurvivalStatRoutine());
+        StartCoroutine(WaitAndStartSurvivalRoutine());
     }
 
     private IEnumerator SurvivalStatRoutine()
@@ -232,6 +232,13 @@ public class PlayerStats : MonoBehaviour
         _isFlashing = false;
         _flashCoroutine = null;
     }
-
+    private IEnumerator WaitAndStartSurvivalRoutine()
+    {
+        while (GameManager.Instance.DayNightManager == null)
+        {
+            yield return null;
+        }
+        StartCoroutine(SurvivalStatRoutine());
+    }
 
 }
