@@ -28,7 +28,7 @@ public class BoxItemRandomSystem : MonoBehaviour
     Dictionary<int, float> _itemBProbableDic = new Dictionary<int, float>();
     Dictionary<int, float> _itemCProbableDic = new Dictionary<int, float>();
 
-    private void Awake()
+    private void Init()
     {
         // Item A init
         switch (_tier)
@@ -56,6 +56,7 @@ public class BoxItemRandomSystem : MonoBehaviour
 
     private void OnEnable()
     {
+        Init();
         ItemAddToBox();
     }
 

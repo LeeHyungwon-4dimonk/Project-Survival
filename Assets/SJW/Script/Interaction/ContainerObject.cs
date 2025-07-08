@@ -18,7 +18,7 @@ public class ContainerObject : MonoBehaviour
         {
             isLooted = true;
 
-            //gameObject.SetActive(false);
+            _uiPanel.SetActive(true);
         }
 
     }
