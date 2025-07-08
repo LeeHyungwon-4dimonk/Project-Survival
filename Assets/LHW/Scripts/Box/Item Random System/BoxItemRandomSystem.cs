@@ -67,8 +67,8 @@ public class BoxItemRandomSystem : MonoBehaviour
     private void ItemAddToBox()
     {
         ItemASelect();
-        //ItemBSelect();
-        //ItemCSelect();
+        ItemBSelect();
+        ItemCSelect();
         ItemDSelect();
     }
 
@@ -127,6 +127,7 @@ public class BoxItemRandomSystem : MonoBehaviour
         if (_journalQueue.Count == 0) return;
 
         float value = _itemBProbableDic[GameManager.Instance.DayNightManager.CurrentDay];
+        Debug.Log(value);
         float randomNum = Random.Range(0.0f, value);
         if (randomNum > value) return;
         _data.AddCollection(_journalQueue.Dequeue(), 0);

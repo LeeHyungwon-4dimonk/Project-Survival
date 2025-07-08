@@ -85,6 +85,7 @@ public class InventoryManager : MonoBehaviour
                 // TODO : Where to Instantiate item?
                 Instantiate(_inventoryItem[startIndex].Prefab, position + new Vector3(1, 0 , -5), Quaternion.identity);
             }
+            _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
             OnInventorySlotChanged?.Invoke();
@@ -159,7 +160,7 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log("inventory full"); return false;
             }
         }
-
+        Debug.Log("Weight Up1");
         _playerStats.AddInventoryWeight(item.Weight * amount);
         OnInventorySlotChanged?.Invoke();
         return true;
@@ -174,7 +175,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_inventoryItem[index].Type == ItemType.Usable || _inventoryItem[index].Type == ItemType.Equip)
         {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
+            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight * _inventoryStack[index]);
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
             {
@@ -219,6 +220,7 @@ public class InventoryManager : MonoBehaviour
     {
         for(int i = 0; i < _inventoryItem.Length;i++)
         {
+            _playerStats.RemoveInventoryWeight(_inventoryItem[i].Weight * _inventoryStack[i]);
             _inventoryItem[i] = null;
             _inventoryStack[i] = 0;
         }
@@ -373,9 +375,9 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_boxSlotData[i].AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
                 {
+                    _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
                     _inventoryItem[startIndex] = null;
                     _inventoryStack[startIndex] = 0;
-                    _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
                     OnInventorySlotChanged?.Invoke();
                 }
             }
@@ -392,7 +394,6 @@ public class InventoryManager : MonoBehaviour
         {
             if (_boxSlotData[i] != null && _boxSlotData[i] == _currentOpenedBox)
             {
-                _playerStats.AddInventoryWeight(_boxSlotData[i].BoxItem[startIndex].Weight * _boxSlotData[i].BoxStack[startIndex]);
                 _boxSlotData[i].SendItemToInventory(startIndex);                
                 OnInventorySlotChanged?.Invoke();
             }

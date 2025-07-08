@@ -4,49 +4,53 @@ using UnityEngine;
 
 public class DynamiteBomb : MonoBehaviour
 {
-    [SerializeField] private float explosionDelay = 4f;
+    [SerializeField] private float fuseTime = 2.5f;
     [SerializeField] private float explosionRadius = 2f;
     [SerializeField] private float explosionDamage = 50f;
     [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private Rigidbody2D rb;
-    private bool hasLanded = false;
-
-    private void Awake()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        StartCoroutine(FuseRoutine()); 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator FuseRoutine()
     {
-        if (!hasLanded)
+        float timer = 0f;
+        float blinkInterval = 0.2f;
+
+        while (timer < 1f)
         {
-            hasLanded = true;
-            rb.velocity = Vector2.zero;
-            rb.isKinematic = true;
-            StartCoroutine(ExplodeAfterDelay());
+            timer += Time.deltaTime;
+            yield return null;
         }
+
+        while (timer < fuseTime)
+        {
+            if (spriteRenderer != null)
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            timer += blinkInterval;
+            yield return new WaitForSeconds(blinkInterval);
+        }
+
+        spriteRenderer.enabled = true;
+        TriggerExplosion();
     }
 
-    private IEnumerator ExplodeAfterDelay()
+    private void TriggerExplosion()
     {
-        yield return new WaitForSeconds(explosionDelay);
-        Explode();
-    }
+        Debug.Log("ÆøÅº ÅÍÁü!");
 
-    private void Explode()
-    {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, targetLayer);
         foreach (var hit in hits)
         {
-            var monsterStats = hit.GetComponent<MonsterStats>();
-            if (monsterStats != null)
-            {
-                monsterStats.TakeDamage(explosionDamage);
-            }
+            MonsterStats monster = hit.GetComponent<MonsterStats>();
+            if (monster != null)
+                monster.TakeDamage(explosionDamage);
         }
 
-        Debug.Log("ÆøÅº Æø¹ß!");
         Destroy(gameObject);
     }
 

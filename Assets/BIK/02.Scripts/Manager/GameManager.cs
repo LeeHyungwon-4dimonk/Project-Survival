@@ -58,11 +58,6 @@ public class GameManager : MonoBehaviour
         InventoryManager.Instance?.RemoveAllItemsInInventory();
     }
 
-    public void GameOver()
-    {
-        SceneManager.Instance.LoadScene("MainScene");
-    }
-
     public void SkipDay()
     {
         DayNightManager.SkipToNextDay();
