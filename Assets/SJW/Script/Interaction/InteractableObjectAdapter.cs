@@ -50,6 +50,18 @@ public class InteractableObjectAdapter : MonoBehaviour, IInteractable
                 break;
 
             case InteractionType.Container:
+                var box = GetComponent<ContainerObject>();
+                if (box != null)
+                {
+                    box.OnOpen();
+                }
+                else
+                {
+                    Debug.LogWarning($"{gameObject.name}: FieldDrop 타입이지만 LootableObject 컴포넌트 없음");
+                }
+                break;
+
+
                 Debug.Log($"{gameObject.name} Container 상호작용 실행 (추후 구현)");
                 break;
 
