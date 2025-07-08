@@ -50,7 +50,7 @@ public class BoxSystem : MonoBehaviour
         {
             if (_boxItem[i] != null)
             {
-                InventoryManager.Instance.GetItemFromBox(i);
+                SendItemToInventory(i);
             }
         }
         for (int i = 0; i < _boxCollection.Length; i++)

@@ -7,6 +7,7 @@ public class CraftingController : UIBase
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private TMP_Text _energyRequireText;
     [SerializeField] private Button _craftButton;
     [SerializeField] private Image _sliderImage;
     [SerializeField] private Button _resultButton;
@@ -47,9 +48,19 @@ public class CraftingController : UIBase
     {
         if (_currentRecipe != null)
         {
+            _image.color = Color.white;
             _image.sprite = _currentRecipe.ResultItem.Icon;
             _nameText.text = _currentRecipe.ResultItem.Name;
             _descriptionText.text = _currentRecipe.ResultItem.Description;
+            _energyRequireText.text = $"요구 에너지 : {_currentRecipe.ProductEnergy.ToString()}";
+        }
+        else
+        {
+            _image.color = Color.clear;
+            _image.sprite = null;
+            _nameText.text = "";
+            _descriptionText.text = "";
+            _energyRequireText.text = "";
         }
     }
 
@@ -88,18 +99,21 @@ public class CraftingController : UIBase
         if (HasEnoughEnergy())
         {
             GameManager.Instance.GameData.DecreaseEnergy(_currentRecipe.ProductEnergy);
-            _restrictPanel.SetActive(true);
         }
     }
 
     private bool HasEnoughEnergy()
     {
-        if (_currentRecipe == null) return false;
+        if (_currentRecipe == null || ResultItemOutput()) return false;
         else if (GameManager.Instance.GameData.Energy >= _currentRecipe.ProductEnergy) return true;
         else return false;
     }
 
-
+    private bool ResultItemOutput()
+    {
+        if (_resultButton.interactable == true) return true;
+        else return false;
+    }
 
     /*
     crafting time deleted 
@@ -127,7 +141,7 @@ public class CraftingController : UIBase
         _resultImage.color = Color.white;
         _resultImage.sprite = _currentRecipe.ResultItem.Icon;
         _resultButton.interactable = true;
-        _restrictPanel.SetActive(false);
+        _restrictPanel.SetActive(true);
     }
 
     public void GetItem()
@@ -135,6 +149,7 @@ public class CraftingController : UIBase
         if (_currentRecipe != null)
         {
             InventoryManager.Instance.AddItemToInventory(_currentRecipe.ResultItem);
+            _restrictPanel.SetActive(false);
         }
     }
 

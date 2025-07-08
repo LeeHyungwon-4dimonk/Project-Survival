@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\uAD11\uC18D \uBE44\uD589 \uC7A5\uCE58"
   m_EditorClassIdentifier: 
   ProductId: 9004
-  Icon: {fileID: 775782, guid: f526885ba42156d4da8b27c883e7d374, type: 3}
+  Icon: {fileID: 775782, guid: bac701be5b60d0a41b3739aaf32f8b49, type: 3}
   ProductType: 2
   ProductName: "\uAD11\uC18D \uBE44\uD589 \uC7A5\uCE58"
   ProductDescription: "\uAD11\uC18D \uC774\uB3D9\uC744 \uC704\uD55C \uBD80\uD488"
