@@ -446,9 +446,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BoxSystem, Assembly-CSharp
-        m_MethodName: GetAllBoxItemIntoInventory
+      - m_Target: {fileID: 8785354343898709256}
+        m_TargetAssemblyTypeName: BoxController, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -705,6 +705,10 @@ PrefabInstance:
       propertyPath: _index
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7114158329664105993, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 7166380546490994840, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
       propertyPath: m_Name
       value: BoxSlotUnit_UI (1)
@@ -818,6 +822,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7317171936371151251, guid: c0d7fc7966e9a984f955b195a8e64b9d, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 8403891192749069273, guid: c0d7fc7966e9a984f955b195a8e64b9d, type: 3}
       propertyPath: m_Name
       value: BoxCollectionUnit_UI
@@ -936,6 +944,10 @@ PrefabInstance:
       propertyPath: _index
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7317171936371151251, guid: c0d7fc7966e9a984f955b195a8e64b9d, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 8403891192749069273, guid: c0d7fc7966e9a984f955b195a8e64b9d, type: 3}
       propertyPath: m_Name
       value: BoxCollectionUnit_UI (1)
@@ -1053,6 +1065,10 @@ PrefabInstance:
       propertyPath: _index
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7114158329664105993, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 7166380546490994840, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
       propertyPath: m_Name
       value: BoxSlotUnit_UI (5)
@@ -1170,6 +1186,10 @@ PrefabInstance:
       propertyPath: _index
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7114158329664105993, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 7166380546490994840, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
       propertyPath: m_Name
       value: BoxSlotUnit_UI (2)
@@ -1283,6 +1303,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7114158329664105993, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 7166380546490994840, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
       propertyPath: m_Name
       value: BoxSlotUnit_UI
@@ -1400,6 +1424,10 @@ PrefabInstance:
       propertyPath: _index
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7114158329664105993, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
+      propertyPath: _controller
+      value: 
+      objectReference: {fileID: 8785354343898709256}
     - target: {fileID: 7166380546490994840, guid: 98fa564b3b091f34b8ed620a4a22afc2, type: 3}
       propertyPath: m_Name
       value: BoxSlotUnit_UI (3)

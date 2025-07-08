@@ -387,22 +387,6 @@ public class InventoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get Item to InventorySlot from box slot.
-    /// </summary>
-    /// <param name="startIndex"></param>
-    public void GetItemFromBox(int startIndex)
-    {
-        for (int i = 0; i < _boxSlotData.Length; i++)
-        {
-            if (_boxSlotData[i] != null && _boxSlotData[i] == _currentOpenedBox)
-            {
-                _boxSlotData[i].SendItemToInventory(startIndex);                
-                OnInventorySlotChanged?.Invoke();
-            }
-        }
-    }
-
-    /// <summary>
     /// Move Item in the Box slot.
     /// </summary>
     /// <param name="startIndex"></param>

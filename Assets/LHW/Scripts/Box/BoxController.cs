@@ -5,6 +5,7 @@ public class BoxController : UIBase
     [SerializeField] private BoxSlotUnit[] _slots;
     [SerializeField] private BoxCollectionUnit[] _collection;
     [SerializeField] private BoxSystem _data;
+    public BoxSystem Data => _data;
 
     private void Start()
     {
@@ -38,5 +39,10 @@ public class BoxController : UIBase
         for (int i = 0; i < _slots.Length; i++) {
             _slots[i].UpdateUI(i);
         }
+    }
+
+    public void OnClick()
+    {
+        _data.GetAllBoxItemIntoInventory();
     }
 }
