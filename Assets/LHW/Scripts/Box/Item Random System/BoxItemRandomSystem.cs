@@ -56,7 +56,11 @@ public class BoxItemRandomSystem : MonoBehaviour
 
     private void OnEnable()
     {
-        Init();
+        Init();        
+    }
+
+    public void Start()
+    {
         ItemAddToBox();
     }
 
