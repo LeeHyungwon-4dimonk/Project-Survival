@@ -175,7 +175,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_inventoryItem[index].Type == ItemType.Usable || _inventoryItem[index].Type == ItemType.Equip)
         {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight * _inventoryStack[index]);
+            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
             {
