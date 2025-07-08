@@ -12,7 +12,14 @@ public class ContainerObject : MonoBehaviour
 
     public void OnOpen()
     {
-        Debug.Log($"{_itemName} 열어보기");
+        Debug.Log($"{_itemName} 열기");
+
+        if (!isLooted)
+        {
+            isLooted = true;
+
+            //gameObject.SetActive(false);
+        }
 
     }
 }
