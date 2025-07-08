@@ -106,12 +106,11 @@ public abstract class ItemSlotUnit : MonoBehaviour, IPointerClickHandler, IBegin
         {
             if (_endIsDecompositionSlot) InventoryManager.Instance.SendItemToDecomposition(_startDragPoint);
             else if (_endIsQuickSlot) InventoryManager.Instance.AddQuickSlotItem(_endDragPoint, _startDragPoint);
-            else InventoryManager.Instance.ReturnItemToBox(_startDragPoint);
+            else if (_endIsBoxSlot) InventoryManager.Instance.ReturnItemToBox(_startDragPoint);
         }
         else if (_startIsInventorySlot == false && _endIsInventorySlot == true)
         {
             if (_endIsDecompositionSlot) InventoryManager.Instance.ReturnItemFromDecomposition(_startDragPoint);
-            else InventoryManager.Instance.ReturnItemToBox(_startDragPoint);
         }
         else
         {

@@ -6,11 +6,23 @@ using UnityEngine.EventSystems;
 public class ItemEntryUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI References")]
-    [SerializeField] private Image backgroundImage;      // ← 새로 추가
+    [SerializeField] private Image backgroundImage;
     [SerializeField] private Image icon;
     [SerializeField] private GameObject tooltipPanel;
     [SerializeField] private Text nameText;
     [SerializeField] private Text descriptionText;
+    
+    [Header("Sound")]
+    [SerializeField] private AudioClip hoverClip;
+    private AudioSource _audioSource;
+    private bool _isCollected = false;
+
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.playOnAwake = false;
+    }
 
     /// <summary>
     /// 아이템 엔트리를 초기화합니다.
@@ -19,16 +31,13 @@ public class ItemEntryUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// <param name="isCollected">획득 여부</param>
     public void Initialize(CollectionSO item, bool isCollected)
     {
-        // 1) 배경은 항상 표시, 또는 isCollected 따라 바꿀 수 있음
+        _isCollected = isCollected;
+
         if (backgroundImage != null)
         {
-            // 예: SO에 배경 스프라이트가 있다면 할당
-            // backgroundImage.sprite = item.BackgroundSprite;
-            // backgroundImage.color = isCollected ? Color.white : new Color(1,1,1,0.5f);
             backgroundImage.gameObject.SetActive(true);
         }
 
-        // 2) 아이콘/텍스트 처리 (기존 코드)
         if (!isCollected)
         {
             if (icon != null)
@@ -49,7 +58,6 @@ public class ItemEntryUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             descriptionText.text = item.CollectionDescription;
         }
 
-        // 3) 툴팁 비활성화
         if (tooltipPanel != null)
             tooltipPanel.SetActive(false);
     }
@@ -59,6 +67,11 @@ public class ItemEntryUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (tooltipPanel == null) return;
         tooltipPanel.transform.SetAsLastSibling();
         tooltipPanel.SetActive(true);
+        
+        if (_isCollected && hoverClip != null)
+        {
+            _audioSource.PlayOneShot(hoverClip);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
