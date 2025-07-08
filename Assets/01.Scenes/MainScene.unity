@@ -455,7 +455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &180749941
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2434,7 +2434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114660324495345796, guid: f32d628d70fd4a04dafdc10352f00f7c, type: 3}
       propertyPath: buttonText
-      value: "\uB124 "
+      value: "\uB124"
       objectReference: {fileID: 0}
     - target: {fileID: 114827750117084474, guid: f32d628d70fd4a04dafdc10352f00f7c, type: 3}
       propertyPath: m_text
