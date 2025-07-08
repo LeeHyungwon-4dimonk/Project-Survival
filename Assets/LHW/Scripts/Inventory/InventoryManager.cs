@@ -209,10 +209,12 @@ public class InventoryManager : MonoBehaviour
             if(remain <= 0) break;
 
             _playerStats.RemoveInventoryWeight(item.Weight * (amount - remain));
+            OnInventorySlotChanged?.Invoke();
             return false;
         }
 
         _playerStats.RemoveInventoryWeight(item.Weight * amount);
+        OnInventorySlotChanged?.Invoke();
         return true;
     }
 
