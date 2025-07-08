@@ -39,6 +39,7 @@ public class DayNightCycleManager : MonoBehaviour
     public int CurrentDay => _currentDay;
     public bool IsDayTime => _isDay;
     public bool IsNightOvertime => _isNightOvertime;
+    public bool IsInBase => _isInBase;
 
     #endregion
 
@@ -64,6 +65,7 @@ public class DayNightCycleManager : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.DayNightManager = this;
+        EnterBase();
         StartCoroutine(DayNightCycleRoutine());
     }
 

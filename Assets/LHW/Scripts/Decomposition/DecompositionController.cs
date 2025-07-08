@@ -12,23 +12,23 @@ public class DecompositionController : UIBase
     private void Start()
     {
         _data.OnDecompositionSlotUpdated += UpdateUISlot;
-        _data.OnDecompositionSlotUpdated += UpdateEnergyBarUI;
         UpdateUISlot();
-        UpdateEnergyBarUI();
     }
 
     private void OnEnable()
     {
         _data.OnDecompositionSlotUpdated += UpdateUISlot;
-        _data.OnDecompositionSlotUpdated += UpdateEnergyBarUI;
         UpdateUISlot();
-        UpdateEnergyBarUI();
     }
 
     private void OnDisable()
     {
         _data.OnDecompositionSlotUpdated -= UpdateUISlot;
-        _data.OnDecompositionSlotUpdated -= UpdateEnergyBarUI;
+    }
+
+    private void Update()
+    {
+        UpdateEnergyBarUI();
     }
 
     private void UpdateUISlot()

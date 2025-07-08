@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - Interactable Object
-  - 
-  - 
+  - Obstacle
+  - Monster
   - 
   - 
   - 
@@ -46,4 +46,13 @@ TagManager:
     locked: 0
   - name: Collection
     uniqueID: 3211063239
+    locked: 0
+  - name: Object
+    uniqueID: 2410528649
+    locked: 0
+  - name: Monster
+    uniqueID: 3224213501
+    locked: 0
+  - name: Player
+    uniqueID: 132737283
     locked: 0
