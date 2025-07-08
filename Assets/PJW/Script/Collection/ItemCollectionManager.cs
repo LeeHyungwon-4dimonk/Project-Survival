@@ -40,13 +40,13 @@ public class ItemCollectionManager : MonoBehaviour
         }
     }
 
-    /*private void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
             ResetCollection();
         }
-    }*/
+    }
 
     /// <summary>
     /// 아이템을 수집 목록에 추가를 시도합니다.
