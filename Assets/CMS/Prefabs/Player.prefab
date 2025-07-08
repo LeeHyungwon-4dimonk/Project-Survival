@@ -71,7 +71,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 10
   m_PointLightOuterAngle: 60
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 5
+  m_PointLightOuterRadius: 8
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -418,8 +418,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec404c7319d194d43ae786a594a256f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dynamitePrefab: {fileID: 0}
-  _throwPoint: {fileID: 0}
+  _dynamiteThrowPrefab: {fileID: 7819347214549289551, guid: d19dad6907a78ba4bbaeea52fd513d52, type: 3}
+  _throwForce: 5
+  _dynamiteItemSO: {fileID: 11400000, guid: 23431c2c3ab0b4c4fbaae74487409707, type: 2}
 --- !u!114 &2151168113169201468
 MonoBehaviour:
   m_ObjectHideFlags: 0

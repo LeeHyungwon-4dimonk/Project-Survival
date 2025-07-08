@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.Instance.LoadScene("InGameScene");
+        InventoryManager.Instance?.RemoveAllItemsInInventory();
     }
 
     public void SkipDay()

@@ -8,40 +8,24 @@ public class DynamiteBomb : MonoBehaviour
     [SerializeField] private float explosionRadius = 2f;
     [SerializeField] private float explosionDamage = 50f;
     [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+
+    private Animator _animator;
 
     private void Start()
     {
-        StartCoroutine(FuseRoutine()); 
+        _animator = GetComponent<Animator>();
+        StartCoroutine(FuseRoutine());
     }
 
     private IEnumerator FuseRoutine()
     {
-        float timer = 0f;
-        float blinkInterval = 0.2f;
+        yield return new WaitForSeconds(fuseTime);
 
-        while (timer < 1f)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        while (timer < fuseTime)
-        {
-            if (spriteRenderer != null)
-                spriteRenderer.enabled = !spriteRenderer.enabled;
-
-            timer += blinkInterval;
-            yield return new WaitForSeconds(blinkInterval);
-        }
-
-        spriteRenderer.enabled = true;
-        TriggerExplosion();
+        GetComponent<Animator>()?.SetTrigger("Explode");
     }
-
-    private void TriggerExplosion()
+    public void TriggerExplosion()
     {
-        Debug.Log("∆¯≈∫ ≈Õ¡¸!");
+        Debug.Log("¥Ÿ¿Ã≥ ∏∂¿Ã∆Æ ∆¯πﬂ!");
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, explosionRadius, targetLayer);
         foreach (var hit in hits)
