@@ -9,79 +9,77 @@ public class SMonsterAttack : MonoBehaviour
     [SerializeField] private float _monsterPauseTime = 0.3f;
 
     private Rigidbody2D _monsterRb;
-    private Coroutine _attackCoroutine;
+    private bool _canAttack = true;
+    private PlayerStats _playerInRange;
 
     private void Awake()
     {
         _monsterRb = GetComponent<Rigidbody2D>();
     }
 
+    private void Update()
+    {
+        if (_playerInRange != null && _canAttack)
+        {
+            StartCoroutine(AttackRoutine(_playerInRange));
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && _attackCoroutine == null)
+        if (other.CompareTag("Player"))
         {
             PlayerStats player = other.GetComponent<PlayerStats>();
             if (player != null)
             {
-                _attackCoroutine = StartCoroutine(AttackLoop(player));
+                _playerInRange = player;
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && _attackCoroutine != null)
+        if (other.CompareTag("Player"))
         {
-            StopCoroutine(_attackCoroutine);
-            _attackCoroutine = null;
+            PlayerStats player = other.GetComponent<PlayerStats>();
+            if (_playerInRange == player)
+            {
+                _playerInRange = null;
+            }
         }
     }
 
-    private IEnumerator AttackLoop(PlayerStats player)
+    private IEnumerator AttackRoutine(PlayerStats player)
     {
-        while (player != null)
+        _canAttack = false;
+
+        if (_monsterRb != null)
+            _monsterRb.velocity = Vector2.zero;
+
+        player.TakeDamage(_attackDamage);
+
+        Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+        if (playerRb != null)
         {
-            if (_monsterRb != null)
-                _monsterRb.velocity = Vector2.zero;
-
-            player.TakeDamage(_attackDamage);
-
-            SpriteRenderer renderer = player.GetComponent<SpriteRenderer>();
-            if (renderer != null)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    renderer.enabled = false;
-                    yield return new WaitForSeconds(0.05f);
-                    renderer.enabled = true;
-                    yield return new WaitForSeconds(0.05f);
-                }
-            }
-
-            Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-            if (playerRb != null)
-            {
-                Vector2 knockbackDir = (playerRb.position - (Vector2)transform.position).normalized;
-                playerRb.velocity = Vector2.zero;
-                playerRb.AddForce(knockbackDir * _knockbackForce, ForceMode2D.Impulse);
-
-                yield return new WaitForSeconds(0.1f); 
-                playerRb.velocity = Vector2.zero;
-            }
-
-            yield return new WaitForSeconds(_monsterPauseTime);
-
-            yield return new WaitForSeconds(_hitCooldown);
+            Vector2 knockbackDir = (playerRb.position - (Vector2)transform.position).normalized;
+            yield return ApplyKnockback(playerRb, knockbackDir, _knockbackForce, 0.15f);
         }
 
-        _attackCoroutine = null;
+        yield return new WaitForSeconds(_monsterPauseTime + _hitCooldown);
+
+        _canAttack = true;
     }
-    private IEnumerator StopPlayerKnockback(Rigidbody2D rb, float delay)
+
+    private IEnumerator ApplyKnockback(Rigidbody2D rb, Vector2 direction, float force, float stopDelay)
     {
-        yield return new WaitForSeconds(delay);
-        if (rb != null)
-            rb.velocity = Vector2.zero;
+        if (rb == null) yield break;
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(direction * force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(stopDelay);
+
+        rb.velocity = Vector2.zero;
     }
-
-
 }
+

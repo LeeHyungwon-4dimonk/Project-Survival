@@ -92,6 +92,10 @@ PrefabInstance:
       value: MonsterSpawner3
       objectReference: {fileID: 0}
     - target: {fileID: 5968606939321014463, guid: 36ae3c84707b21a48965ccfafdb17a58, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5968606939321014463, guid: 36ae3c84707b21a48965ccfafdb17a58, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -158,6 +162,10 @@ PrefabInstance:
       value: MonsterSpawner1
       objectReference: {fileID: 0}
     - target: {fileID: 6357671998591413800, guid: e45cd30b8c043ad4db33b89800fd9039, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6357671998591413800, guid: e45cd30b8c043ad4db33b89800fd9039, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -179,6 +187,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1797190950219526396}
     m_Modifications:
+    - target: {fileID: 788652794520567476, guid: 537aee7797e7f38428a5961068477b89, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 788652794520567476, guid: 537aee7797e7f38428a5961068477b89, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
@@ -285,6 +297,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6767850753251741117, guid: 8c3d10fcc46c7cf438e9a1df1030a823, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8308228329291103626, guid: 8c3d10fcc46c7cf438e9a1df1030a823, type: 3}
       propertyPath: m_Name
       value: BMonsterSpawner
@@ -307,6 +323,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1797190950219526396}
     m_Modifications:
+    - target: {fileID: 802251024380043128, guid: 83d763fbecf003b4989d010554632e2d, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 802251024380043128, guid: 83d763fbecf003b4989d010554632e2d, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
@@ -414,6 +434,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5951981060366301420, guid: dd392826f0f56024aad674367a14f6b7, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951981060366301420, guid: dd392826f0f56024aad674367a14f6b7, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -484,6 +508,10 @@ PrefabInstance:
       value: MonsterSpawner6
       objectReference: {fileID: 0}
     - target: {fileID: 5628576130096789219, guid: 00854b9f6228e7745890552c7491ed1d, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5628576130096789219, guid: 00854b9f6228e7745890552c7491ed1d, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -505,6 +533,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1797190950219526396}
     m_Modifications:
+    - target: {fileID: 3135378032894524360, guid: 29b68f8cd73cdcc438a405207e270399, type: 3}
+      propertyPath: _respawnDelay
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3135378032894524360, guid: 29b68f8cd73cdcc438a405207e270399, type: 3}
       propertyPath: _patrolPoints.Array.size
       value: 2

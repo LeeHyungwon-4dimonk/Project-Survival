@@ -11,63 +11,45 @@ public class AttackState : MonoBehaviour, IState
 
     private Animator _animator;
     private Monster _monster;
-    private Coroutine _attackRoutine;
-    private bool _isAttacking;
+
+    private float _lastAttackTime = -Mathf.Infinity;
 
     public void EnterState()
     {
         if (_monster == null) _monster = GetComponent<Monster>();
         if (_animator == null) _animator = GetComponent<Animator>();
 
-        if (!_isAttacking)
-        {
-            _attackRoutine = StartCoroutine(AttackLoop());
-            _isAttacking = true;
-        }
+        _animator.SetBool("IsAttacking", false);
     }
 
-    public void UpdateState() { }
+    public void UpdateState()
+    {
+        if (_monster.Player == null) return;
+
+        float distance = Vector2.Distance(transform.position, _monster.Player.position);
+
+        if (distance <= _monster.AttackRadius)
+        {
+            if (Time.time >= _lastAttackTime + _attackCooldown)
+            {
+                _lastAttackTime = Time.time;
+                _animator.SetBool("IsAttacking", true);
+                StartCoroutine(PerformAttack());
+            }
+        }
+    }
 
     public void ExitState()
     {
-        if (_attackRoutine != null)
-        {
-            StopCoroutine(_attackRoutine);
-            _attackRoutine = null;
-        }
-
-        _isAttacking = false;
-
-        if (_animator != null)
-            _animator.SetBool("IsAttacking", false);
+        _animator.SetBool("IsAttacking", false);
     }
 
-    private IEnumerator AttackLoop()
+    private IEnumerator PerformAttack()
     {
-        while (true)
-        {
-            if (_monster.Player != null)
-            {
-                float distance = Vector2.Distance(transform.position, _monster.Player.position);
-
-                if (distance <= _monster.AttackRadius)
-                {
-                    _animator.SetBool("IsAttacking", true);
-
-                    Fire();
-                    yield return new WaitForSeconds(0.5f);
-                    Fire();
-
-                    _animator.SetBool("IsAttacking", false);
-                }
-
-                yield return new WaitForSeconds(_attackCooldown);
-            }
-            else
-            {
-                yield return null;
-            }
-        }
+        Fire();
+        yield return new WaitForSeconds(0.5f);
+        Fire();
+        _animator.SetBool("IsAttacking", false);
     }
 
     private void Fire()
@@ -75,7 +57,6 @@ public class AttackState : MonoBehaviour, IState
         if (_bulletPrefab == null || _firePoint == null || _monster.Player == null) return;
 
         Vector2 dir = (_monster.Player.position - _firePoint.position).normalized;
-
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.Euler(0f, 0f, angle);
 
