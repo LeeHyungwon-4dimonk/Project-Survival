@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject _inventoryPanel;
     [SerializeField] private GameObject _craftingPanel;
     [SerializeField] private GameObject _decompositionPanel;
+    [SerializeField] private AudioSource _footstepAudio;
 
     public Vector2 MoveInput => _moveInput;
     public bool IsRunning => _isRunning;
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        HandleFootstepAudio();
         _moveInput.x = Input.GetAxisRaw("Horizontal");
         _moveInput.y = Input.GetAxisRaw("Vertical");
         _moveInput.Normalize();
@@ -130,6 +132,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (_playerStats.CurrentStamina >= 50f) {
             _canRun = true;
+        }
+    }
+
+    private void HandleFootstepAudio()
+    {
+        bool isMoving = _moveInput.sqrMagnitude > 0.01f;
+
+        if (isMoving && !_footstepAudio.isPlaying)
+        {
+            _footstepAudio.Play();
+        }
+        else if (!isMoving && _footstepAudio.isPlaying)
+        {
+            _footstepAudio.Stop();
         }
     }
 }

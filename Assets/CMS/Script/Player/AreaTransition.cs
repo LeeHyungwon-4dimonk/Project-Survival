@@ -9,6 +9,8 @@ public class AreaTransition : MonoBehaviour
     [SerializeField] private Vector2 playerPosOffset;
     [SerializeField] private Transform _exitPos;
     [SerializeField] private bool _isEnteringBase;
+    [SerializeField] private AudioSource _portal;
+
 
     private FollowCamera _followCamera;
 
@@ -24,15 +26,16 @@ public class AreaTransition : MonoBehaviour
 
         Debug.Log("Transition Triggered!");
 
+        if (_portal != null && !_portal.isPlaying)
+            _portal.Play();
+
         _followCamera.MinCameraBoundary = _secondMinCameraBoundary;
         _followCamera.MaxCameraBoundary = _secondMaxCameraBoundary;
 
-        if (_isEnteringBase) {
+        if (_isEnteringBase)
             GameManager.Instance.DayNightManager.EnterBase();
-        }
-        else {
+        else
             GameManager.Instance.DayNightManager.ExitBase();
-        }
 
         StartCoroutine(DelayedTeleport(collision.transform));
     }
