@@ -29,7 +29,7 @@ public class BoxSystem : MonoBehaviour
 
     public void RemoveAllItem()
     {
-        for(int i = 0; i < _boxItem.Length; i++)
+        for (int i = 0; i < _boxItem.Length; i++)
         {
             _boxItem[i] = null;
             _boxStack[i] = 0;
@@ -46,13 +46,19 @@ public class BoxSystem : MonoBehaviour
     /// </summary>
     public void GetAllBoxItemIntoInventory()
     {
-        for(int i = 0; i < _boxItem.Length; i++)
+        for (int i = 0; i < _boxItem.Length; i++)
         {
-            InventoryManager.Instance.GetItemFromBox(i);
+            if (_boxItem[i] != null)
+            {
+                InventoryManager.Instance.GetItemFromBox(i);
+            }
         }
         for (int i = 0; i < _boxCollection.Length; i++)
         {
-            GetCollection(i);
+            if (_boxCollection[i] != null)
+            {
+                GetCollection(i);
+            }
         }
     }
 
@@ -124,7 +130,7 @@ public class BoxSystem : MonoBehaviour
 
     public void GetCollection(int index)
     {
-        if(_boxCollection[index] != null)
+        if (_boxCollection[index] != null)
         {
             ItemCollectionManager.Instance.TryCollectItem(_boxCollection[index]);
             _boxCollection[index] = null;

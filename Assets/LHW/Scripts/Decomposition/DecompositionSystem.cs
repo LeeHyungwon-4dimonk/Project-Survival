@@ -66,10 +66,10 @@ public class DecompositionSystem : MonoBehaviour
             _decompositionItem[i] = null;
             _decompositionStack[i] = 0;
         }
-        OnDecompositionSlotUpdated?.Invoke();
 
         Debug.Log(energy);
         GameManager.Instance.GameData.IncraseEnergy(energy);
+        OnDecompositionSlotUpdated?.Invoke();
     }
 
     /// <summary>

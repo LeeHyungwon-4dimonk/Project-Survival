@@ -2432,6 +2432,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3238995638541957149, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f5b819a0ecfee9438d56dbe0ae3fa11, type: 3}
+    - target: {fileID: 3238995638541957149, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238995638541957149, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -481816663814208724, guid: df927c45c9943b54294bd9d2ff3a8a8b, type: 2}
     - target: {fileID: 3354316881492821091, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
       propertyPath: m_Name
       value: PJWCanvas
@@ -2444,6 +2456,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5378595452425039170, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
+      propertyPath: openClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f5b819a0ecfee9438d56dbe0ae3fa11, type: 3}
+    - target: {fileID: 5378595452425039170, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
+      propertyPath: closeClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8f5b819a0ecfee9438d56dbe0ae3fa11, type: 3}
     - target: {fileID: 5378595452425039170, guid: 010981f56d265134a85d2e35bd26be12, type: 3}
       propertyPath: collectionPanel
       value: 
