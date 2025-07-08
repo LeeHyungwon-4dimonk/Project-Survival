@@ -1,0 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ContainerObject : MonoBehaviour
+{
+    [SerializeField] private string _itemName;
+    [SerializeField] private bool isLooted;
+    public string ItemName => _itemName;
+
+
+
+    public void OnOpen()
+    {
+        Debug.Log($"{_itemName} 열어보기");
+
+    }
+}
