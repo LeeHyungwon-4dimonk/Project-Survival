@@ -34,11 +34,12 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     [SerializeField] DecompositionSystem _decompositionSlotData;
-    [SerializeField] BoxSystem[] _boxSlotData;
+
     [SerializeField] HotbarController _hotbarController;
-    [SerializeField] PlayerStats _playerStats;
+    [SerializeField] GameManager _gameManager;
 
     private BoxSystem _currentOpenedBox;
+    public BoxSystem CurrentOpenedBox => _currentOpenedBox;
 
     public int InventoryCount => _inventoryItem.Length;
 
@@ -46,6 +47,78 @@ public class InventoryManager : MonoBehaviour
     private int[] _inventoryStack;
 
     public static event Action OnInventorySlotChanged;
+
+    [SerializeField] InventoryController _inventoryController;
+
+    [SerializeField] CraftingController _craftingController;
+
+    [SerializeField] DecompositionController _decompositionController;
+
+    [SerializeField] RepairController _repairController;
+
+    [SerializeField] BoxController _boxController;
+    public BoxController BoxController => _boxController;
+
+    public void OpenInventory()
+    {
+        if (_inventoryController.gameObject.activeSelf)
+        {
+            _inventoryController.gameObject.SetActive(false);
+        }
+        else
+        {
+            _inventoryController.gameObject.SetActive(true);
+        }
+    }
+
+    public void OpenCraftingPanel()
+    {
+        if (_craftingController.gameObject.activeSelf)
+        {
+            _craftingController.gameObject.SetActive(false);
+        }
+        else
+        {
+            _craftingController.gameObject.SetActive(true);
+        }
+    }
+
+    public void OpenDecompositionPanel()
+    {
+        if (_decompositionController.gameObject.activeSelf)
+        {
+            _decompositionController.gameObject.SetActive(false);
+        }
+        else
+        {
+            _decompositionController.gameObject.SetActive(true);
+        }
+
+    }
+
+    public void OpenRepairPanel()
+    {
+        if (_repairController.gameObject.activeSelf)
+        {
+            _repairController.gameObject.SetActive(false);
+        }
+        else
+        {
+            _repairController.gameObject.SetActive(true);
+        }
+    }
+
+    public void OpenBoxPanel()
+    {
+        if (_boxController.gameObject.activeSelf)
+        {
+            _boxController.gameObject.SetActive(false);
+        }
+        else
+        {
+            _boxController.gameObject.SetActive(true);
+        }
+    }
 
     #region Inventory
 
@@ -83,9 +156,9 @@ public class InventoryManager : MonoBehaviour
             for (int i = 0; i < _inventoryStack[startIndex]; i++)
             {
                 // TODO : Where to Instantiate item?
-                Instantiate(_inventoryItem[startIndex].Prefab, position + new Vector3(1, 0 , -5), Quaternion.identity);
+                Instantiate(_inventoryItem[startIndex].Prefab, position + new Vector3(1, 0, -5), Quaternion.identity);
             }
-            _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
+            GameManager.Instance.PlayerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
             _inventoryItem[startIndex] = null;
             _inventoryStack[startIndex] = 0;
             OnInventorySlotChanged?.Invoke();
@@ -149,19 +222,19 @@ public class InventoryManager : MonoBehaviour
                     remain = InventoryTryAdd(item, i, remain);
                     if (remain <= 0) break;
                 }
-            }            
+            }
 
             if (remain <= 0) break;
 
             else
             {
-                _playerStats.AddInventoryWeight(item.Weight * (amount - remain));
+                GameManager.Instance.PlayerStats.AddInventoryWeight(item.Weight * (amount - remain));
                 OnInventorySlotChanged?.Invoke();
                 Debug.Log("inventory full"); return false;
             }
         }
         Debug.Log("Weight Up1");
-        _playerStats.AddInventoryWeight(item.Weight * amount);
+        GameManager.Instance.PlayerStats.AddInventoryWeight(item.Weight * amount);
         OnInventorySlotChanged?.Invoke();
         return true;
     }
@@ -175,7 +248,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (_inventoryItem[index].Type == ItemType.Usable || _inventoryItem[index].Type == ItemType.Equip)
         {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
+            GameManager.Instance.PlayerStats.RemoveInventoryWeight(_inventoryItem[index].Weight);
             _inventoryStack[index]--;
             if (_inventoryStack[index] <= 0)
             {
@@ -196,9 +269,9 @@ public class InventoryManager : MonoBehaviour
     public bool RemoveItemFromInventory(ItemSO item, int amount = 1)
     {
         int remain = amount;
-        while(remain > 0)
+        while (remain > 0)
         {
-            for(int i = 0; i < _inventoryItem.Length;i++)
+            for (int i = 0; i < _inventoryItem.Length; i++)
             {
                 if (_inventoryItem[i] == item)
                 {
@@ -206,14 +279,14 @@ public class InventoryManager : MonoBehaviour
                     if (remain <= 0) break;
                 }
             }
-            if(remain <= 0) break;
+            if (remain <= 0) break;
 
-            _playerStats.RemoveInventoryWeight(item.Weight * (amount - remain));
+            GameManager.Instance.PlayerStats.RemoveInventoryWeight(item.Weight * (amount - remain));
             OnInventorySlotChanged?.Invoke();
             return false;
         }
 
-        _playerStats.RemoveInventoryWeight(item.Weight * amount);
+        GameManager.Instance.PlayerStats.RemoveInventoryWeight(item.Weight * amount);
         OnInventorySlotChanged?.Invoke();
         return true;
     }
@@ -224,7 +297,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (_inventoryItem[i] != null)
             {
-                _playerStats.RemoveInventoryWeight(_inventoryItem[i].Weight * _inventoryStack[i]);
+                GameManager.Instance.PlayerStats.RemoveInventoryWeight(_inventoryItem[i].Weight * _inventoryStack[i]);
                 _inventoryItem[i] = null;
                 _inventoryStack[i] = 0;
             }
@@ -253,7 +326,7 @@ public class InventoryManager : MonoBehaviour
         else if (item.MaxStackSize > _inventoryStack[index])
         {
             amount -= (item.MaxStackSize - _inventoryStack[index]);
-            _inventoryStack[index] = item.MaxStackSize;            
+            _inventoryStack[index] = item.MaxStackSize;
             OnInventorySlotChanged?.Invoke();
             return amount;
         }
@@ -262,7 +335,7 @@ public class InventoryManager : MonoBehaviour
         {
             return amount;
         }
-    }    
+    }
 
     /// <summary>
     /// Try remove item.
@@ -272,7 +345,7 @@ public class InventoryManager : MonoBehaviour
     /// <returns></returns>
     private int InventoryTryRemove(int index, int amount)
     {
-        if(amount <= _inventoryStack[index])
+        if (amount <= _inventoryStack[index])
         {
             _inventoryStack[index] -= amount;
             if (_inventoryStack[index] == 0)
@@ -282,7 +355,7 @@ public class InventoryManager : MonoBehaviour
             OnInventorySlotChanged?.Invoke();
             return 0;
         }
-        else if(amount > _inventoryStack[index])
+        else if (amount > _inventoryStack[index])
         {
             amount -= _inventoryStack[index];
             _inventoryStack[index] = 0;
@@ -322,13 +395,13 @@ public class InventoryManager : MonoBehaviour
     /// <param name="endindex"></param>
     public void SendItemToDecomposition(int startIndex)
     {
-       if(_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
-       {
-            _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
+        if (_decompositionSlotData.AddItemToDecompositionSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
+        {
+            GameManager.Instance.PlayerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
             _inventoryItem[startIndex] = null;
-            _inventoryStack[startIndex] = 0;            
+            _inventoryStack[startIndex] = 0;
             OnInventorySlotChanged?.Invoke();
-       }
+        }
     }
 
     /// <summary>
@@ -374,18 +447,12 @@ public class InventoryManager : MonoBehaviour
     {
         if (startIndex == -1) return;
 
-        for (int i = 0; i < _boxSlotData.Length; i++)
+        if (_currentOpenedBox.AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
         {
-            if (_boxSlotData[i] == _currentOpenedBox)
-            {
-                if (_boxSlotData[i].AddItemToBoxSlot(_inventoryItem[startIndex], _inventoryStack[startIndex]))
-                {
-                    _playerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
-                    _inventoryItem[startIndex] = null;
-                    _inventoryStack[startIndex] = 0;
-                    OnInventorySlotChanged?.Invoke();
-                }
-            }
+            GameManager.Instance.PlayerStats.RemoveInventoryWeight(_inventoryItem[startIndex].Weight * _inventoryStack[startIndex]);
+            _inventoryItem[startIndex] = null;
+            _inventoryStack[startIndex] = 0;
+            OnInventorySlotChanged?.Invoke();
         }
     }
 
@@ -396,10 +463,7 @@ public class InventoryManager : MonoBehaviour
     /// <param name="endIndex"></param>
     public void MoveItemInBoxSlot(int startIndex, int endIndex)
     {
-        for (int i = 0; i < _boxSlotData.Length; i++)
-        {
-            _boxSlotData[i].MoveItemInBoxSlot(startIndex, endIndex);
-        }
+        _currentOpenedBox.MoveItemInBoxSlot(startIndex, endIndex);
     }
 
     #endregion

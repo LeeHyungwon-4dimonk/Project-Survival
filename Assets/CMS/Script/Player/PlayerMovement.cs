@@ -47,28 +47,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Z)) {
-            if (_craftingPanel.activeSelf == false) {
-                _craftingPanel.SetActive(true);
-            }
-            else {
-                _craftingPanel.SetActive(false);
-            }
+            InventoryManager.Instance.OpenCraftingPanel();
         }
         if (Input.GetKeyDown(KeyCode.Tab)) {
-            if (_inventoryPanel.activeSelf == false) {
-                _inventoryPanel.SetActive(true);
-            }
-            else {
-                _inventoryPanel.SetActive(false);
-            }
+            InventoryManager.Instance.OpenInventory();
         }
         if (Input.GetKeyDown(KeyCode.X)) {
-            if (_decompositionPanel.activeSelf == false) {
-                _decompositionPanel.SetActive(true);
-            }
-            else {
-                _decompositionPanel.SetActive(false);
-            }
+            InventoryManager.Instance.OpenDecompositionPanel();
         }
 
         _anim.SetFloat("Horizontal", 1f);
