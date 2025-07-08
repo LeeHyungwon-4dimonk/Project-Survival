@@ -37,6 +37,7 @@ public class DecompositionSystem : MonoBehaviour
             if(item!= null && item.IsDecomposable)
             {
                 InventoryManager.Instance.SendItemToDecomposition(i);
+                OnDecompositionSlotUpdated?.Invoke();
             }
         }
     }
@@ -50,6 +51,7 @@ public class DecompositionSystem : MonoBehaviour
         for(int i = 0; i < _decompositionItem.Length; i++)
         {
             InventoryManager.Instance.ReturnItemFromDecomposition(i);
+            OnDecompositionSlotUpdated?.Invoke();
         }
     }
 
@@ -110,10 +112,12 @@ public class DecompositionSystem : MonoBehaviour
 
             else
             {
+                OnDecompositionSlotUpdated?.Invoke();
                 Debug.Log("slot is full"); return false;
             }
         }
 
+        OnDecompositionSlotUpdated?.Invoke();
         return true;
     }
 
