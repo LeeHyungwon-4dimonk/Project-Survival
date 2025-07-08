@@ -278,8 +278,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCF54\uD321 \uBC1C\uC0AC\uB300"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
-  m_sharedMaterial: {fileID: -6638094663087109030, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
+  m_sharedMaterial: {fileID: 170552620760400497, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -412,8 +412,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBC1C\uC0AC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
-  m_sharedMaterial: {fileID: -6638094663087109030, guid: d8fe2eddd12603544ae0c07382d42e96, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
+  m_sharedMaterial: {fileID: 170552620760400497, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -659,6 +659,18 @@ PrefabInstance:
     - target: {fileID: 4413871461341666140, guid: 7d54371faf5269547b2784a8f9bf3797, type: 3}
       propertyPath: m_Name
       value: InventorySlot_UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6854510192548720499, guid: 7d54371faf5269547b2784a8f9bf3797, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
+    - target: {fileID: 6854510192548720499, guid: 7d54371faf5269547b2784a8f9bf3797, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 170552620760400497, guid: 4395fcfa5c5dde941a45bf9e8fa47be3, type: 2}
+    - target: {fileID: 6854510192548720499, guid: 7d54371faf5269547b2784a8f9bf3797, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
