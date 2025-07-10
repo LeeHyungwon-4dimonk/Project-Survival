@@ -60,3 +60,13 @@ public void SaveData(GameData gameData){
 | Chore            | 빌드 테스트 업데이트, 패키지 매니저를 설정하는 경우(프로덕션 코드 변경 X) |
 | Rename           | 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우                |
 | Remove           | 파일을 삭제하는 작업만 수행한 경우                         |
+
+
+## 시연 영상
+* 본인이 구현한 기능 위주로 편집함
+* 인벤토리, 퀵슬롯, 분해시스템, 제작 시스템, 수리 시스템, 상자 시스템 및 아이템 랜덤 등장 시스템 등
+
+https://github.com/user-attachments/assets/bb31a20d-8be6-4c7d-a0d2-a13bee7e7d16
+
+
+
